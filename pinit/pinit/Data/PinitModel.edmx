@@ -1,0 +1,1249 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="PinitModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Board">
+          <Key>
+            <PropertyRef Name="BoardId" />
+          </Key>
+          <Property Name="BoardId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="BoardName" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="BoardOwner" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="DateCreated" Type="datetime" Nullable="false" />
+          <Property Name="PrivateComments" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="BoardFollow">
+          <Key>
+            <PropertyRef Name="StreamId" />
+            <PropertyRef Name="BoardId" />
+          </Key>
+          <Property Name="StreamId" Type="int" Nullable="false" />
+          <Property Name="BoardId" Type="int" Nullable="false" />
+          <Property Name="DateCreated" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Comment">
+          <Key>
+            <PropertyRef Name="CommentId" />
+          </Key>
+          <Property Name="CommentId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserName" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="PinId" Type="int" Nullable="false" />
+          <Property Name="CommentText" Type="text" Nullable="false" />
+          <Property Name="DateCommented" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="FollowStream">
+          <Key>
+            <PropertyRef Name="StreamId" />
+          </Key>
+          <Property Name="StreamId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="StreamName" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="UserName" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="DateCreated" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Friend">
+          <Key>
+            <PropertyRef Name="SourceUser" />
+            <PropertyRef Name="TargetUser" />
+          </Key>
+          <Property Name="SourceUser" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="TargetUser" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="RequestStatus" Type="varchar" MaxLength="9" Nullable="false" />
+          <Property Name="DateRequested" Type="datetime" Nullable="false" />
+          <Property Name="DateModified" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Picture">
+          <Key>
+            <PropertyRef Name="PictureId" />
+          </Key>
+          <Property Name="PictureId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ImageUrl" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="DateUploaded" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Pin">
+          <Key>
+            <PropertyRef Name="PinId" />
+          </Key>
+          <Property Name="PinId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PictureId" Type="int" Nullable="false" />
+          <Property Name="BoardId" Type="int" Nullable="false" />
+          <Property Name="DateCreated" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="PinTag">
+          <Key>
+            <PropertyRef Name="PinId" />
+            <PropertyRef Name="TagId" />
+          </Key>
+          <Property Name="PinId" Type="int" Nullable="false" />
+          <Property Name="TagId" Type="int" Nullable="false" />
+          <Property Name="DateTaged" Type="datetime" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'Pinit.dbo.Repin' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="Repin">
+          <Key>
+            <PropertyRef Name="PinId" />
+            <PropertyRef Name="TargetPinId" />
+          </Key>
+          <Property Name="PinId" Type="int" Nullable="false" />
+          <Property Name="TargetPinId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Tag">
+          <Key>
+            <PropertyRef Name="TagId" />
+          </Key>
+          <Property Name="TagId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TagName" Type="varchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <EntityType Name="UserInfo">
+          <Key>
+            <PropertyRef Name="UserName" />
+          </Key>
+          <Property Name="UserName" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="FirstName" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="LastName" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Email" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="Password" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="DateRegistered" Type="datetime" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'Pinit.dbo.UserLike' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="UserLike">
+          <Key>
+            <PropertyRef Name="UserName" />
+            <PropertyRef Name="PinId" />
+            <PropertyRef Name="DateLiked" />
+          </Key>
+          <Property Name="UserName" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="PinId" Type="int" Nullable="false" />
+          <Property Name="DateLiked" Type="datetime" Nullable="false" />
+        </EntityType>
+        <Association Name="FK__Board__BoardOwne__1ED998B2">
+          <End Role="UserInfo" Type="Self.UserInfo" Multiplicity="1" />
+          <End Role="Board" Type="Self.Board" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserInfo">
+              <PropertyRef Name="UserName" />
+            </Principal>
+            <Dependent Role="Board">
+              <PropertyRef Name="BoardOwner" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__BoardFoll__Board__239E4DCF">
+          <End Role="Board" Type="Self.Board" Multiplicity="1" />
+          <End Role="BoardFollow" Type="Self.BoardFollow" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Board">
+              <PropertyRef Name="BoardId" />
+            </Principal>
+            <Dependent Role="BoardFollow">
+              <PropertyRef Name="BoardId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__BoardFoll__Strea__22AA2996">
+          <End Role="FollowStream" Type="Self.FollowStream" Multiplicity="1" />
+          <End Role="BoardFollow" Type="Self.BoardFollow" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FollowStream">
+              <PropertyRef Name="StreamId" />
+            </Principal>
+            <Dependent Role="BoardFollow">
+              <PropertyRef Name="StreamId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Comment__PinId__3A81B327">
+          <End Role="Pin" Type="Self.Pin" Multiplicity="1" />
+          <End Role="Comment" Type="Self.Comment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Pin">
+              <PropertyRef Name="PinId" />
+            </Principal>
+            <Dependent Role="Comment">
+              <PropertyRef Name="PinId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Comment__UserNam__398D8EEE">
+          <End Role="UserInfo" Type="Self.UserInfo" Multiplicity="1" />
+          <End Role="Comment" Type="Self.Comment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserInfo">
+              <PropertyRef Name="UserName" />
+            </Principal>
+            <Dependent Role="Comment">
+              <PropertyRef Name="UserName" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__FollowStr__UserN__1A14E395">
+          <End Role="UserInfo" Type="Self.UserInfo" Multiplicity="1" />
+          <End Role="FollowStream" Type="Self.FollowStream" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserInfo">
+              <PropertyRef Name="UserName" />
+            </Principal>
+            <Dependent Role="FollowStream">
+              <PropertyRef Name="UserName" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Friend__SourceUs__15502E78">
+          <End Role="UserInfo" Type="Self.UserInfo" Multiplicity="1" />
+          <End Role="Friend" Type="Self.Friend" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserInfo">
+              <PropertyRef Name="UserName" />
+            </Principal>
+            <Dependent Role="Friend">
+              <PropertyRef Name="SourceUser" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Friend__TargetUs__164452B1">
+          <End Role="UserInfo" Type="Self.UserInfo" Multiplicity="1" />
+          <End Role="Friend" Type="Self.Friend" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserInfo">
+              <PropertyRef Name="UserName" />
+            </Principal>
+            <Dependent Role="Friend">
+              <PropertyRef Name="TargetUser" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Pin__BoardId__2B3F6F97">
+          <End Role="Board" Type="Self.Board" Multiplicity="1" />
+          <End Role="Pin" Type="Self.Pin" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Board">
+              <PropertyRef Name="BoardId" />
+            </Principal>
+            <Dependent Role="Pin">
+              <PropertyRef Name="BoardId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Pin__PictureId__2A4B4B5E">
+          <End Role="Picture" Type="Self.Picture" Multiplicity="1" />
+          <End Role="Pin" Type="Self.Pin" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Picture">
+              <PropertyRef Name="PictureId" />
+            </Principal>
+            <Dependent Role="Pin">
+              <PropertyRef Name="PictureId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__PinTag__PinId__30F848ED">
+          <End Role="Pin" Type="Self.Pin" Multiplicity="1" />
+          <End Role="PinTag" Type="Self.PinTag" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Pin">
+              <PropertyRef Name="PinId" />
+            </Principal>
+            <Dependent Role="PinTag">
+              <PropertyRef Name="PinId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__PinTag__TagId__31EC6D26">
+          <End Role="Tag" Type="Self.Tag" Multiplicity="1" />
+          <End Role="PinTag" Type="Self.PinTag" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tag">
+              <PropertyRef Name="TagId" />
+            </Principal>
+            <Dependent Role="PinTag">
+              <PropertyRef Name="TagId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Repin__PinId__34C8D9D1">
+          <End Role="Pin" Type="Self.Pin" Multiplicity="1" />
+          <End Role="Repin" Type="Self.Repin" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Pin">
+              <PropertyRef Name="PinId" />
+            </Principal>
+            <Dependent Role="Repin">
+              <PropertyRef Name="PinId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Repin__TargetPin__35BCFE0A">
+          <End Role="Pin" Type="Self.Pin" Multiplicity="1" />
+          <End Role="Repin" Type="Self.Repin" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Pin">
+              <PropertyRef Name="PinId" />
+            </Principal>
+            <Dependent Role="Repin">
+              <PropertyRef Name="TargetPinId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__UserLike__PinId__3F466844">
+          <End Role="Pin" Type="Self.Pin" Multiplicity="1" />
+          <End Role="UserLike" Type="Self.UserLike" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Pin">
+              <PropertyRef Name="PinId" />
+            </Principal>
+            <Dependent Role="UserLike">
+              <PropertyRef Name="PinId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__UserLike__UserNa__3E52440B">
+          <End Role="UserInfo" Type="Self.UserInfo" Multiplicity="1" />
+          <End Role="UserLike" Type="Self.UserLike" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserInfo">
+              <PropertyRef Name="UserName" />
+            </Principal>
+            <Dependent Role="UserLike">
+              <PropertyRef Name="UserName" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="UP_AcceptOrRejectFriendShipRequest" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="FromUser" Type="varchar" Mode="In" />
+          <Parameter Name="ToUser" Type="varchar" Mode="In" />
+          <Parameter Name="accepted" Type="bit" Mode="In" />
+        </Function>
+        <Function Name="UP_Comment" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="pinid" Type="int" Mode="In" />
+          <Parameter Name="username" Type="varchar" Mode="In" />
+          <Parameter Name="commenttext" Type="text" Mode="In" />
+        </Function>
+        <Function Name="UP_Delete_Pin" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="pinid" Type="int" Mode="In" />
+        </Function>
+        <Function Name="UP_Display_Stream" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="streamid" Type="int" Mode="In" />
+        </Function>
+        <Function Name="UP_Follow" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="boardid" Type="int" Mode="In" />
+          <Parameter Name="streamid" Type="int" Mode="In" />
+        </Function>
+        <Function Name="UP_KeyWordSearchOnTags" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="KeyWork" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="UP_Like" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="pinid" Type="int" Mode="In" />
+          <Parameter Name="username" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="UP_Login" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="username" Type="varchar" Mode="In" />
+          <Parameter Name="password" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="UP_New_Board" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="boardname" Type="varchar" Mode="In" />
+          <Parameter Name="owner" Type="varchar" Mode="In" />
+          <Parameter Name="privatecomments" Type="bit" Mode="In" />
+        </Function>
+        <Function Name="UP_New_Stream" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="streamname" Type="varchar" Mode="In" />
+          <Parameter Name="username" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="UP_Pin" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="imgurl" Type="varchar" Mode="In" />
+          <Parameter Name="boardid" Type="int" Mode="In" />
+        </Function>
+        <Function Name="UP_Repin" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="pinid" Type="int" Mode="In" />
+          <Parameter Name="boardid" Type="int" Mode="In" />
+        </Function>
+        <Function Name="UP_SendFriendShipRequest" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="FromUser" Type="varchar" Mode="In" />
+          <Parameter Name="ToUser" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="UP_SignUp" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="username" Type="varchar" Mode="In" />
+          <Parameter Name="password" Type="varchar" Mode="In" />
+          <Parameter Name="FirstName" Type="varchar" Mode="In" />
+          <Parameter Name="LastName" Type="varchar" Mode="In" />
+          <Parameter Name="Email" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="UP_UpdateProfile" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="username" Type="varchar" Mode="In" />
+          <Parameter Name="newPassword" Type="varchar" Mode="In" />
+          <Parameter Name="newFirstName" Type="varchar" Mode="In" />
+          <Parameter Name="newLastName" Type="varchar" Mode="In" />
+          <Parameter Name="newEmail" Type="varchar" Mode="In" />
+        </Function>
+        <EntityContainer Name="PinitModelStoreContainer">
+          <EntitySet Name="Board" EntityType="Self.Board" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="BoardFollow" EntityType="Self.BoardFollow" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Comment" EntityType="Self.Comment" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="FollowStream" EntityType="Self.FollowStream" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Friend" EntityType="Self.Friend" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Picture" EntityType="Self.Picture" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Pin" EntityType="Self.Pin" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PinTag" EntityType="Self.PinTag" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Tag" EntityType="Self.Tag" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserInfo" EntityType="Self.UserInfo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Repin" EntityType="Self.Repin" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [Repin].[PinId] AS [PinId], 
+    [Repin].[TargetPinId] AS [TargetPinId]
+    FROM [dbo].[Repin] AS [Repin]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="UserLike" EntityType="Self.UserLike" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [UserLike].[UserName] AS [UserName], 
+    [UserLike].[PinId] AS [PinId], 
+    [UserLike].[DateLiked] AS [DateLiked]
+    FROM [dbo].[UserLike] AS [UserLike]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="FK__Board__BoardOwne__1ED998B2" Association="Self.FK__Board__BoardOwne__1ED998B2">
+            <End Role="UserInfo" EntitySet="UserInfo" />
+            <End Role="Board" EntitySet="Board" />
+          </AssociationSet>
+          <AssociationSet Name="FK__BoardFoll__Board__239E4DCF" Association="Self.FK__BoardFoll__Board__239E4DCF">
+            <End Role="Board" EntitySet="Board" />
+            <End Role="BoardFollow" EntitySet="BoardFollow" />
+          </AssociationSet>
+          <AssociationSet Name="FK__BoardFoll__Strea__22AA2996" Association="Self.FK__BoardFoll__Strea__22AA2996">
+            <End Role="FollowStream" EntitySet="FollowStream" />
+            <End Role="BoardFollow" EntitySet="BoardFollow" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Comment__PinId__3A81B327" Association="Self.FK__Comment__PinId__3A81B327">
+            <End Role="Pin" EntitySet="Pin" />
+            <End Role="Comment" EntitySet="Comment" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Comment__UserNam__398D8EEE" Association="Self.FK__Comment__UserNam__398D8EEE">
+            <End Role="UserInfo" EntitySet="UserInfo" />
+            <End Role="Comment" EntitySet="Comment" />
+          </AssociationSet>
+          <AssociationSet Name="FK__FollowStr__UserN__1A14E395" Association="Self.FK__FollowStr__UserN__1A14E395">
+            <End Role="UserInfo" EntitySet="UserInfo" />
+            <End Role="FollowStream" EntitySet="FollowStream" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Friend__SourceUs__15502E78" Association="Self.FK__Friend__SourceUs__15502E78">
+            <End Role="UserInfo" EntitySet="UserInfo" />
+            <End Role="Friend" EntitySet="Friend" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Friend__TargetUs__164452B1" Association="Self.FK__Friend__TargetUs__164452B1">
+            <End Role="UserInfo" EntitySet="UserInfo" />
+            <End Role="Friend" EntitySet="Friend" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Pin__BoardId__2B3F6F97" Association="Self.FK__Pin__BoardId__2B3F6F97">
+            <End Role="Board" EntitySet="Board" />
+            <End Role="Pin" EntitySet="Pin" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Pin__PictureId__2A4B4B5E" Association="Self.FK__Pin__PictureId__2A4B4B5E">
+            <End Role="Picture" EntitySet="Picture" />
+            <End Role="Pin" EntitySet="Pin" />
+          </AssociationSet>
+          <AssociationSet Name="FK__PinTag__PinId__30F848ED" Association="Self.FK__PinTag__PinId__30F848ED">
+            <End Role="Pin" EntitySet="Pin" />
+            <End Role="PinTag" EntitySet="PinTag" />
+          </AssociationSet>
+          <AssociationSet Name="FK__PinTag__TagId__31EC6D26" Association="Self.FK__PinTag__TagId__31EC6D26">
+            <End Role="Tag" EntitySet="Tag" />
+            <End Role="PinTag" EntitySet="PinTag" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Repin__PinId__34C8D9D1" Association="Self.FK__Repin__PinId__34C8D9D1">
+            <End Role="Pin" EntitySet="Pin" />
+            <End Role="Repin" EntitySet="Repin" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Repin__TargetPin__35BCFE0A" Association="Self.FK__Repin__TargetPin__35BCFE0A">
+            <End Role="Pin" EntitySet="Pin" />
+            <End Role="Repin" EntitySet="Repin" />
+          </AssociationSet>
+          <AssociationSet Name="FK__UserLike__PinId__3F466844" Association="Self.FK__UserLike__PinId__3F466844">
+            <End Role="Pin" EntitySet="Pin" />
+            <End Role="UserLike" EntitySet="UserLike" />
+          </AssociationSet>
+          <AssociationSet Name="FK__UserLike__UserNa__3E52440B" Association="Self.FK__UserLike__UserNa__3E52440B">
+            <End Role="UserInfo" EntitySet="UserInfo" />
+            <End Role="UserLike" EntitySet="UserLike" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="PinitModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Board">
+          <Key>
+            <PropertyRef Name="BoardId" />
+          </Key>
+          <Property Name="BoardId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="BoardName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="BoardOwner" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="DateCreated" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="PrivateComments" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="UserInfo" Relationship="Self.FK__Board__BoardOwne__1ED998B2" FromRole="Board" ToRole="UserInfo" />
+          <NavigationProperty Name="BoardFollows" Relationship="Self.FK__BoardFoll__Board__239E4DCF" FromRole="Board" ToRole="BoardFollow" />
+          <NavigationProperty Name="Pins" Relationship="Self.FK__Pin__BoardId__2B3F6F97" FromRole="Board" ToRole="Pin" />
+        </EntityType>
+        <EntityType Name="BoardFollow">
+          <Key>
+            <PropertyRef Name="StreamId" />
+            <PropertyRef Name="BoardId" />
+          </Key>
+          <Property Name="StreamId" Type="Int32" Nullable="false" />
+          <Property Name="BoardId" Type="Int32" Nullable="false" />
+          <Property Name="DateCreated" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Board" Relationship="Self.FK__BoardFoll__Board__239E4DCF" FromRole="BoardFollow" ToRole="Board" />
+          <NavigationProperty Name="FollowStream" Relationship="Self.FK__BoardFoll__Strea__22AA2996" FromRole="BoardFollow" ToRole="FollowStream" />
+        </EntityType>
+        <EntityType Name="Comment">
+          <Key>
+            <PropertyRef Name="CommentId" />
+          </Key>
+          <Property Name="CommentId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="PinId" Type="Int32" Nullable="false" />
+          <Property Name="CommentText" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="DateCommented" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Pin" Relationship="Self.FK__Comment__PinId__3A81B327" FromRole="Comment" ToRole="Pin" />
+          <NavigationProperty Name="UserInfo" Relationship="Self.FK__Comment__UserNam__398D8EEE" FromRole="Comment" ToRole="UserInfo" />
+        </EntityType>
+        <EntityType Name="FollowStream">
+          <Key>
+            <PropertyRef Name="StreamId" />
+          </Key>
+          <Property Name="StreamId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="StreamName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="UserName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="DateCreated" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="BoardFollows" Relationship="Self.FK__BoardFoll__Strea__22AA2996" FromRole="FollowStream" ToRole="BoardFollow" />
+          <NavigationProperty Name="UserInfo" Relationship="Self.FK__FollowStr__UserN__1A14E395" FromRole="FollowStream" ToRole="UserInfo" />
+        </EntityType>
+        <EntityType Name="Friend">
+          <Key>
+            <PropertyRef Name="SourceUser" />
+            <PropertyRef Name="TargetUser" />
+          </Key>
+          <Property Name="SourceUser" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="TargetUser" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="RequestStatus" Type="String" MaxLength="9" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="DateRequested" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="DateModified" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="UserInfo" Relationship="Self.FK__Friend__SourceUs__15502E78" FromRole="Friend" ToRole="UserInfo" />
+          <NavigationProperty Name="UserInfo1" Relationship="Self.FK__Friend__TargetUs__164452B1" FromRole="Friend" ToRole="UserInfo" />
+        </EntityType>
+        <EntityType Name="Picture">
+          <Key>
+            <PropertyRef Name="PictureId" />
+          </Key>
+          <Property Name="PictureId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ImageUrl" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="DateUploaded" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Pins" Relationship="Self.FK__Pin__PictureId__2A4B4B5E" FromRole="Picture" ToRole="Pin" />
+        </EntityType>
+        <EntityType Name="Pin">
+          <Key>
+            <PropertyRef Name="PinId" />
+          </Key>
+          <Property Name="PinId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PictureId" Type="Int32" Nullable="false" />
+          <Property Name="BoardId" Type="Int32" Nullable="false" />
+          <Property Name="DateCreated" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Board" Relationship="Self.FK__Pin__BoardId__2B3F6F97" FromRole="Pin" ToRole="Board" />
+          <NavigationProperty Name="Comments" Relationship="Self.FK__Comment__PinId__3A81B327" FromRole="Pin" ToRole="Comment" />
+          <NavigationProperty Name="Picture" Relationship="Self.FK__Pin__PictureId__2A4B4B5E" FromRole="Pin" ToRole="Picture" />
+          <NavigationProperty Name="PinTags" Relationship="Self.FK__PinTag__PinId__30F848ED" FromRole="Pin" ToRole="PinTag" />
+          <NavigationProperty Name="UserLikes" Relationship="Self.FK__UserLike__PinId__3F466844" FromRole="Pin" ToRole="UserLike" />
+          <NavigationProperty Name="Pin1" Relationship="Self.Repin" FromRole="Pin" ToRole="Pin1" />
+          <NavigationProperty Name="Pins" Relationship="Self.Repin" FromRole="Pin1" ToRole="Pin" />
+        </EntityType>
+        <EntityType Name="PinTag">
+          <Key>
+            <PropertyRef Name="PinId" />
+            <PropertyRef Name="TagId" />
+          </Key>
+          <Property Name="PinId" Type="Int32" Nullable="false" />
+          <Property Name="TagId" Type="Int32" Nullable="false" />
+          <Property Name="DateTaged" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Pin" Relationship="Self.FK__PinTag__PinId__30F848ED" FromRole="PinTag" ToRole="Pin" />
+          <NavigationProperty Name="Tag" Relationship="Self.FK__PinTag__TagId__31EC6D26" FromRole="PinTag" ToRole="Tag" />
+        </EntityType>
+        <EntityType Name="Tag">
+          <Key>
+            <PropertyRef Name="TagId" />
+          </Key>
+          <Property Name="TagId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TagName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="PinTags" Relationship="Self.FK__PinTag__TagId__31EC6D26" FromRole="Tag" ToRole="PinTag" />
+        </EntityType>
+        <EntityType Name="UserInfo">
+          <Key>
+            <PropertyRef Name="UserName" />
+          </Key>
+          <Property Name="UserName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="FirstName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="LastName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Email" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Password" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="DateRegistered" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Boards" Relationship="Self.FK__Board__BoardOwne__1ED998B2" FromRole="UserInfo" ToRole="Board" />
+          <NavigationProperty Name="Comments" Relationship="Self.FK__Comment__UserNam__398D8EEE" FromRole="UserInfo" ToRole="Comment" />
+          <NavigationProperty Name="FollowStreams" Relationship="Self.FK__FollowStr__UserN__1A14E395" FromRole="UserInfo" ToRole="FollowStream" />
+          <NavigationProperty Name="Friends" Relationship="Self.FK__Friend__SourceUs__15502E78" FromRole="UserInfo" ToRole="Friend" />
+          <NavigationProperty Name="Friends1" Relationship="Self.FK__Friend__TargetUs__164452B1" FromRole="UserInfo" ToRole="Friend" />
+          <NavigationProperty Name="UserLikes" Relationship="Self.FK__UserLike__UserNa__3E52440B" FromRole="UserInfo" ToRole="UserLike" />
+        </EntityType>
+        <EntityType Name="UserLike">
+          <Key>
+            <PropertyRef Name="UserName" />
+            <PropertyRef Name="PinId" />
+            <PropertyRef Name="DateLiked" />
+          </Key>
+          <Property Name="UserName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="PinId" Type="Int32" Nullable="false" />
+          <Property Name="DateLiked" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Pin" Relationship="Self.FK__UserLike__PinId__3F466844" FromRole="UserLike" ToRole="Pin" />
+          <NavigationProperty Name="UserInfo" Relationship="Self.FK__UserLike__UserNa__3E52440B" FromRole="UserLike" ToRole="UserInfo" />
+        </EntityType>
+        <Association Name="FK__Board__BoardOwne__1ED998B2">
+          <End Role="UserInfo" Type="Self.UserInfo" Multiplicity="1" />
+          <End Role="Board" Type="Self.Board" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserInfo">
+              <PropertyRef Name="UserName" />
+            </Principal>
+            <Dependent Role="Board">
+              <PropertyRef Name="BoardOwner" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__BoardFoll__Board__239E4DCF">
+          <End Role="Board" Type="Self.Board" Multiplicity="1" />
+          <End Role="BoardFollow" Type="Self.BoardFollow" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Board">
+              <PropertyRef Name="BoardId" />
+            </Principal>
+            <Dependent Role="BoardFollow">
+              <PropertyRef Name="BoardId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Pin__BoardId__2B3F6F97">
+          <End Role="Board" Type="Self.Board" Multiplicity="1" />
+          <End Role="Pin" Type="Self.Pin" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Board">
+              <PropertyRef Name="BoardId" />
+            </Principal>
+            <Dependent Role="Pin">
+              <PropertyRef Name="BoardId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__BoardFoll__Strea__22AA2996">
+          <End Role="FollowStream" Type="Self.FollowStream" Multiplicity="1" />
+          <End Role="BoardFollow" Type="Self.BoardFollow" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FollowStream">
+              <PropertyRef Name="StreamId" />
+            </Principal>
+            <Dependent Role="BoardFollow">
+              <PropertyRef Name="StreamId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Comment__PinId__3A81B327">
+          <End Role="Pin" Type="Self.Pin" Multiplicity="1" />
+          <End Role="Comment" Type="Self.Comment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Pin">
+              <PropertyRef Name="PinId" />
+            </Principal>
+            <Dependent Role="Comment">
+              <PropertyRef Name="PinId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Comment__UserNam__398D8EEE">
+          <End Role="UserInfo" Type="Self.UserInfo" Multiplicity="1" />
+          <End Role="Comment" Type="Self.Comment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserInfo">
+              <PropertyRef Name="UserName" />
+            </Principal>
+            <Dependent Role="Comment">
+              <PropertyRef Name="UserName" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__FollowStr__UserN__1A14E395">
+          <End Role="UserInfo" Type="Self.UserInfo" Multiplicity="1" />
+          <End Role="FollowStream" Type="Self.FollowStream" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserInfo">
+              <PropertyRef Name="UserName" />
+            </Principal>
+            <Dependent Role="FollowStream">
+              <PropertyRef Name="UserName" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Friend__SourceUs__15502E78">
+          <End Role="UserInfo" Type="Self.UserInfo" Multiplicity="1" />
+          <End Role="Friend" Type="Self.Friend" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserInfo">
+              <PropertyRef Name="UserName" />
+            </Principal>
+            <Dependent Role="Friend">
+              <PropertyRef Name="SourceUser" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Friend__TargetUs__164452B1">
+          <End Role="UserInfo" Type="Self.UserInfo" Multiplicity="1" />
+          <End Role="Friend" Type="Self.Friend" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserInfo">
+              <PropertyRef Name="UserName" />
+            </Principal>
+            <Dependent Role="Friend">
+              <PropertyRef Name="TargetUser" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Pin__PictureId__2A4B4B5E">
+          <End Role="Picture" Type="Self.Picture" Multiplicity="1" />
+          <End Role="Pin" Type="Self.Pin" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Picture">
+              <PropertyRef Name="PictureId" />
+            </Principal>
+            <Dependent Role="Pin">
+              <PropertyRef Name="PictureId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__PinTag__PinId__30F848ED">
+          <End Role="Pin" Type="Self.Pin" Multiplicity="1" />
+          <End Role="PinTag" Type="Self.PinTag" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Pin">
+              <PropertyRef Name="PinId" />
+            </Principal>
+            <Dependent Role="PinTag">
+              <PropertyRef Name="PinId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__UserLike__PinId__3F466844">
+          <End Role="Pin" Type="Self.Pin" Multiplicity="1" />
+          <End Role="UserLike" Type="Self.UserLike" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Pin">
+              <PropertyRef Name="PinId" />
+            </Principal>
+            <Dependent Role="UserLike">
+              <PropertyRef Name="PinId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__PinTag__TagId__31EC6D26">
+          <End Role="Tag" Type="Self.Tag" Multiplicity="1" />
+          <End Role="PinTag" Type="Self.PinTag" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tag">
+              <PropertyRef Name="TagId" />
+            </Principal>
+            <Dependent Role="PinTag">
+              <PropertyRef Name="TagId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__UserLike__UserNa__3E52440B">
+          <End Role="UserInfo" Type="Self.UserInfo" Multiplicity="1" />
+          <End Role="UserLike" Type="Self.UserLike" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserInfo">
+              <PropertyRef Name="UserName" />
+            </Principal>
+            <Dependent Role="UserLike">
+              <PropertyRef Name="UserName" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Repin">
+          <End Role="Pin" Type="Self.Pin" Multiplicity="*" />
+          <End Role="Pin1" Type="Self.Pin" Multiplicity="*" />
+        </Association>
+        <EntityContainer Name="PinitEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Boards" EntityType="Self.Board" />
+          <EntitySet Name="BoardFollows" EntityType="Self.BoardFollow" />
+          <EntitySet Name="Comments" EntityType="Self.Comment" />
+          <EntitySet Name="FollowStreams" EntityType="Self.FollowStream" />
+          <EntitySet Name="Friends" EntityType="Self.Friend" />
+          <EntitySet Name="Pictures" EntityType="Self.Picture" />
+          <EntitySet Name="Pins" EntityType="Self.Pin" />
+          <EntitySet Name="PinTags" EntityType="Self.PinTag" />
+          <EntitySet Name="Tags" EntityType="Self.Tag" />
+          <EntitySet Name="UserInfoes" EntityType="Self.UserInfo" />
+          <EntitySet Name="UserLikes" EntityType="Self.UserLike" />
+          <AssociationSet Name="FK__Board__BoardOwne__1ED998B2" Association="Self.FK__Board__BoardOwne__1ED998B2">
+            <End Role="UserInfo" EntitySet="UserInfoes" />
+            <End Role="Board" EntitySet="Boards" />
+          </AssociationSet>
+          <AssociationSet Name="FK__BoardFoll__Board__239E4DCF" Association="Self.FK__BoardFoll__Board__239E4DCF">
+            <End Role="Board" EntitySet="Boards" />
+            <End Role="BoardFollow" EntitySet="BoardFollows" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Pin__BoardId__2B3F6F97" Association="Self.FK__Pin__BoardId__2B3F6F97">
+            <End Role="Board" EntitySet="Boards" />
+            <End Role="Pin" EntitySet="Pins" />
+          </AssociationSet>
+          <AssociationSet Name="FK__BoardFoll__Strea__22AA2996" Association="Self.FK__BoardFoll__Strea__22AA2996">
+            <End Role="FollowStream" EntitySet="FollowStreams" />
+            <End Role="BoardFollow" EntitySet="BoardFollows" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Comment__PinId__3A81B327" Association="Self.FK__Comment__PinId__3A81B327">
+            <End Role="Pin" EntitySet="Pins" />
+            <End Role="Comment" EntitySet="Comments" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Comment__UserNam__398D8EEE" Association="Self.FK__Comment__UserNam__398D8EEE">
+            <End Role="UserInfo" EntitySet="UserInfoes" />
+            <End Role="Comment" EntitySet="Comments" />
+          </AssociationSet>
+          <AssociationSet Name="FK__FollowStr__UserN__1A14E395" Association="Self.FK__FollowStr__UserN__1A14E395">
+            <End Role="UserInfo" EntitySet="UserInfoes" />
+            <End Role="FollowStream" EntitySet="FollowStreams" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Friend__SourceUs__15502E78" Association="Self.FK__Friend__SourceUs__15502E78">
+            <End Role="UserInfo" EntitySet="UserInfoes" />
+            <End Role="Friend" EntitySet="Friends" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Friend__TargetUs__164452B1" Association="Self.FK__Friend__TargetUs__164452B1">
+            <End Role="UserInfo" EntitySet="UserInfoes" />
+            <End Role="Friend" EntitySet="Friends" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Pin__PictureId__2A4B4B5E" Association="Self.FK__Pin__PictureId__2A4B4B5E">
+            <End Role="Picture" EntitySet="Pictures" />
+            <End Role="Pin" EntitySet="Pins" />
+          </AssociationSet>
+          <AssociationSet Name="FK__PinTag__PinId__30F848ED" Association="Self.FK__PinTag__PinId__30F848ED">
+            <End Role="Pin" EntitySet="Pins" />
+            <End Role="PinTag" EntitySet="PinTags" />
+          </AssociationSet>
+          <AssociationSet Name="FK__UserLike__PinId__3F466844" Association="Self.FK__UserLike__PinId__3F466844">
+            <End Role="Pin" EntitySet="Pins" />
+            <End Role="UserLike" EntitySet="UserLikes" />
+          </AssociationSet>
+          <AssociationSet Name="FK__PinTag__TagId__31EC6D26" Association="Self.FK__PinTag__TagId__31EC6D26">
+            <End Role="Tag" EntitySet="Tags" />
+            <End Role="PinTag" EntitySet="PinTags" />
+          </AssociationSet>
+          <AssociationSet Name="FK__UserLike__UserNa__3E52440B" Association="Self.FK__UserLike__UserNa__3E52440B">
+            <End Role="UserInfo" EntitySet="UserInfoes" />
+            <End Role="UserLike" EntitySet="UserLikes" />
+          </AssociationSet>
+          <AssociationSet Name="Repin" Association="Self.Repin">
+            <End Role="Pin" EntitySet="Pins" />
+            <End Role="Pin1" EntitySet="Pins" />
+          </AssociationSet>
+          <FunctionImport Name="UP_AcceptOrRejectFriendShipRequest" ReturnType="Collection(PinitModel.UP_AcceptOrRejectFriendShipRequest_Result)">
+            <Parameter Name="FromUser" Mode="In" Type="String" />
+            <Parameter Name="ToUser" Mode="In" Type="String" />
+            <Parameter Name="accepted" Mode="In" Type="Boolean" />
+          </FunctionImport>
+          <FunctionImport Name="UP_Comment" ReturnType="Collection(PinitModel.UP_Comment_Result)">
+            <Parameter Name="pinid" Mode="In" Type="Int32" />
+            <Parameter Name="username" Mode="In" Type="String" />
+            <Parameter Name="commenttext" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="UP_Delete_Pin" ReturnType="Collection(PinitModel.UP_Delete_Pin_Result)">
+            <Parameter Name="pinid" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="UP_Display_Stream" ReturnType="Collection(PinitModel.UP_Display_Stream_Result)">
+            <Parameter Name="streamid" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="UP_Follow" ReturnType="Collection(PinitModel.UP_Follow_Result)">
+            <Parameter Name="boardid" Mode="In" Type="Int32" />
+            <Parameter Name="streamid" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="UP_KeyWordSearchOnTags" ReturnType="Collection(Int32)">
+            <Parameter Name="KeyWork" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="UP_Like" ReturnType="Collection(PinitModel.UP_Like_Result)">
+            <Parameter Name="pinid" Mode="In" Type="Int32" />
+            <Parameter Name="username" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="UP_Login" ReturnType="Collection(PinitModel.UP_Login_Result)">
+            <Parameter Name="username" Mode="In" Type="String" />
+            <Parameter Name="password" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="UP_New_Board" ReturnType="Collection(PinitModel.UP_New_Board_Result)">
+            <Parameter Name="boardname" Mode="In" Type="String" />
+            <Parameter Name="owner" Mode="In" Type="String" />
+            <Parameter Name="privatecomments" Mode="In" Type="Boolean" />
+          </FunctionImport>
+          <FunctionImport Name="UP_New_Stream" ReturnType="Collection(PinitModel.UP_New_Stream_Result)">
+            <Parameter Name="streamname" Mode="In" Type="String" />
+            <Parameter Name="username" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="UP_Pin" ReturnType="Collection(PinitModel.UP_Pin_Result)">
+            <Parameter Name="imgurl" Mode="In" Type="String" />
+            <Parameter Name="boardid" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="UP_Repin" ReturnType="Collection(PinitModel.UP_Repin_Result)">
+            <Parameter Name="pinid" Mode="In" Type="Int32" />
+            <Parameter Name="boardid" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="UP_SendFriendShipRequest" ReturnType="Collection(PinitModel.UP_SendFriendShipRequest_Result)">
+            <Parameter Name="FromUser" Mode="In" Type="String" />
+            <Parameter Name="ToUser" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="UP_SignUp" ReturnType="Collection(PinitModel.UP_SignUp_Result)">
+            <Parameter Name="username" Mode="In" Type="String" />
+            <Parameter Name="password" Mode="In" Type="String" />
+            <Parameter Name="FirstName" Mode="In" Type="String" />
+            <Parameter Name="LastName" Mode="In" Type="String" />
+            <Parameter Name="Email" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="UP_UpdateProfile" ReturnType="Collection(PinitModel.UP_UpdateProfile_Result)">
+            <Parameter Name="username" Mode="In" Type="String" />
+            <Parameter Name="newPassword" Mode="In" Type="String" />
+            <Parameter Name="newFirstName" Mode="In" Type="String" />
+            <Parameter Name="newLastName" Mode="In" Type="String" />
+            <Parameter Name="newEmail" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="FI_SignUp" ReturnType="Collection(PinitModel.UP_SignUp_Result)">
+            <Parameter Name="username" Mode="In" Type="String" />
+            <Parameter Name="password" Mode="In" Type="String" />
+            <Parameter Name="FirstName" Mode="In" Type="String" />
+            <Parameter Name="LastName" Mode="In" Type="String" />
+            <Parameter Name="Email" Mode="In" Type="String" />
+          </FunctionImport>
+        </EntityContainer>
+        <ComplexType Name="UP_AcceptOrRejectFriendShipRequest_Result">
+          <Property Type="Boolean" Name="Success" Nullable="true" />
+          <Property Type="String" Name="msg" Nullable="false" MaxLength="22" />
+        </ComplexType>
+        <ComplexType Name="UP_Comment_Result">
+          <Property Type="Boolean" Name="Success" Nullable="true" />
+          <Property Type="String" Name="msg" Nullable="false" MaxLength="1" />
+        </ComplexType>
+        <ComplexType Name="UP_Delete_Pin_Result">
+          <Property Type="Boolean" Name="Success" Nullable="true" />
+          <Property Type="String" Name="msg" Nullable="false" MaxLength="46" />
+        </ComplexType>
+        <ComplexType Name="UP_Display_Stream_Result">
+          <Property Type="Boolean" Name="Success" Nullable="true" />
+          <Property Type="String" Name="ImageUrl" Nullable="false" MaxLength="255" />
+        </ComplexType>
+        <ComplexType Name="UP_Follow_Result">
+          <Property Type="Boolean" Name="Success" Nullable="true" />
+          <Property Type="String" Name="msg" Nullable="false" MaxLength="1" />
+        </ComplexType>
+        <ComplexType Name="UP_Like_Result">
+          <Property Type="Boolean" Name="Success" Nullable="true" />
+          <Property Type="String" Name="msg" Nullable="false" MaxLength="1" />
+        </ComplexType>
+        <ComplexType Name="UP_Login_Result">
+          <Property Type="Boolean" Name="Success" Nullable="true" />
+          <Property Type="String" Name="msg" Nullable="false" MaxLength="1" />
+        </ComplexType>
+        <ComplexType Name="UP_New_Board_Result">
+          <Property Type="Boolean" Name="Success" Nullable="true" />
+          <Property Type="String" Name="msg" Nullable="false" MaxLength="21" />
+        </ComplexType>
+        <ComplexType Name="UP_New_Stream_Result">
+          <Property Type="Boolean" Name="Success" Nullable="true" />
+          <Property Type="String" Name="msg" Nullable="false" MaxLength="1" />
+        </ComplexType>
+        <ComplexType Name="UP_Pin_Result">
+          <Property Type="Boolean" Name="Success" Nullable="true" />
+          <Property Type="String" Name="msg" Nullable="false" MaxLength="1" />
+        </ComplexType>
+        <ComplexType Name="UP_Repin_Result">
+          <Property Type="Boolean" Name="Success" Nullable="true" />
+          <Property Type="String" Name="msg" Nullable="false" MaxLength="1" />
+        </ComplexType>
+        <ComplexType Name="UP_SendFriendShipRequest_Result">
+          <Property Type="Boolean" Name="Success" Nullable="true" />
+          <Property Type="String" Name="msg" Nullable="false" MaxLength="1" />
+        </ComplexType>
+        <ComplexType Name="UP_SignUp_Result">
+          <Property Type="Boolean" Name="Success" Nullable="true" />
+          <Property Type="String" Name="msg" Nullable="false" MaxLength="18" />
+        </ComplexType>
+        <ComplexType Name="UP_UpdateProfile_Result">
+          <Property Type="Boolean" Name="Success" Nullable="true" />
+          <Property Type="String" Name="msg" Nullable="false" MaxLength="1" />
+        </ComplexType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="PinitModelStoreContainer" CdmEntityContainer="PinitEntities">
+          <EntitySetMapping Name="Boards">
+            <EntityTypeMapping TypeName="PinitModel.Board">
+              <MappingFragment StoreEntitySet="Board">
+                <ScalarProperty Name="BoardId" ColumnName="BoardId" />
+                <ScalarProperty Name="BoardName" ColumnName="BoardName" />
+                <ScalarProperty Name="BoardOwner" ColumnName="BoardOwner" />
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+                <ScalarProperty Name="PrivateComments" ColumnName="PrivateComments" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="BoardFollows">
+            <EntityTypeMapping TypeName="PinitModel.BoardFollow">
+              <MappingFragment StoreEntitySet="BoardFollow">
+                <ScalarProperty Name="StreamId" ColumnName="StreamId" />
+                <ScalarProperty Name="BoardId" ColumnName="BoardId" />
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Comments">
+            <EntityTypeMapping TypeName="PinitModel.Comment">
+              <MappingFragment StoreEntitySet="Comment">
+                <ScalarProperty Name="CommentId" ColumnName="CommentId" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="PinId" ColumnName="PinId" />
+                <ScalarProperty Name="CommentText" ColumnName="CommentText" />
+                <ScalarProperty Name="DateCommented" ColumnName="DateCommented" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="FollowStreams">
+            <EntityTypeMapping TypeName="PinitModel.FollowStream">
+              <MappingFragment StoreEntitySet="FollowStream">
+                <ScalarProperty Name="StreamId" ColumnName="StreamId" />
+                <ScalarProperty Name="StreamName" ColumnName="StreamName" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Friends">
+            <EntityTypeMapping TypeName="PinitModel.Friend">
+              <MappingFragment StoreEntitySet="Friend">
+                <ScalarProperty Name="SourceUser" ColumnName="SourceUser" />
+                <ScalarProperty Name="TargetUser" ColumnName="TargetUser" />
+                <ScalarProperty Name="RequestStatus" ColumnName="RequestStatus" />
+                <ScalarProperty Name="DateRequested" ColumnName="DateRequested" />
+                <ScalarProperty Name="DateModified" ColumnName="DateModified" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Pictures">
+            <EntityTypeMapping TypeName="PinitModel.Picture">
+              <MappingFragment StoreEntitySet="Picture">
+                <ScalarProperty Name="PictureId" ColumnName="PictureId" />
+                <ScalarProperty Name="ImageUrl" ColumnName="ImageUrl" />
+                <ScalarProperty Name="DateUploaded" ColumnName="DateUploaded" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Pins">
+            <EntityTypeMapping TypeName="PinitModel.Pin">
+              <MappingFragment StoreEntitySet="Pin">
+                <ScalarProperty Name="PinId" ColumnName="PinId" />
+                <ScalarProperty Name="PictureId" ColumnName="PictureId" />
+                <ScalarProperty Name="BoardId" ColumnName="BoardId" />
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PinTags">
+            <EntityTypeMapping TypeName="PinitModel.PinTag">
+              <MappingFragment StoreEntitySet="PinTag">
+                <ScalarProperty Name="PinId" ColumnName="PinId" />
+                <ScalarProperty Name="TagId" ColumnName="TagId" />
+                <ScalarProperty Name="DateTaged" ColumnName="DateTaged" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tags">
+            <EntityTypeMapping TypeName="PinitModel.Tag">
+              <MappingFragment StoreEntitySet="Tag">
+                <ScalarProperty Name="TagId" ColumnName="TagId" />
+                <ScalarProperty Name="TagName" ColumnName="TagName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserInfoes">
+            <EntityTypeMapping TypeName="PinitModel.UserInfo">
+              <MappingFragment StoreEntitySet="UserInfo">
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="DateRegistered" ColumnName="DateRegistered" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserLikes">
+            <EntityTypeMapping TypeName="PinitModel.UserLike">
+              <MappingFragment StoreEntitySet="UserLike">
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="PinId" ColumnName="PinId" />
+                <ScalarProperty Name="DateLiked" ColumnName="DateLiked" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="Repin" TypeName="PinitModel.Repin" StoreEntitySet="Repin">
+            <EndProperty Name="Pin">
+              <ScalarProperty Name="PinId" ColumnName="PinId" />
+            </EndProperty>
+            <EndProperty Name="Pin1">
+              <ScalarProperty Name="PinId" ColumnName="TargetPinId" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <FunctionImportMapping FunctionImportName="UP_AcceptOrRejectFriendShipRequest" FunctionName="PinitModel.Store.UP_AcceptOrRejectFriendShipRequest">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="PinitModel.UP_AcceptOrRejectFriendShipRequest_Result">
+                <ScalarProperty Name="Success" ColumnName="Success" />
+                <ScalarProperty Name="msg" ColumnName="msg" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="UP_Comment" FunctionName="PinitModel.Store.UP_Comment">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="PinitModel.UP_Comment_Result">
+                <ScalarProperty Name="Success" ColumnName="Success" />
+                <ScalarProperty Name="msg" ColumnName="msg" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="UP_Delete_Pin" FunctionName="PinitModel.Store.UP_Delete_Pin">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="PinitModel.UP_Delete_Pin_Result">
+                <ScalarProperty Name="Success" ColumnName="Success" />
+                <ScalarProperty Name="msg" ColumnName="msg" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="UP_Display_Stream" FunctionName="PinitModel.Store.UP_Display_Stream">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="PinitModel.UP_Display_Stream_Result">
+                <ScalarProperty Name="Success" ColumnName="Success" />
+                <ScalarProperty Name="ImageUrl" ColumnName="ImageUrl" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="UP_Follow" FunctionName="PinitModel.Store.UP_Follow">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="PinitModel.UP_Follow_Result">
+                <ScalarProperty Name="Success" ColumnName="Success" />
+                <ScalarProperty Name="msg" ColumnName="msg" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="UP_KeyWordSearchOnTags" FunctionName="PinitModel.Store.UP_KeyWordSearchOnTags" />
+          <FunctionImportMapping FunctionImportName="UP_Like" FunctionName="PinitModel.Store.UP_Like">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="PinitModel.UP_Like_Result">
+                <ScalarProperty Name="Success" ColumnName="Success" />
+                <ScalarProperty Name="msg" ColumnName="msg" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="UP_Login" FunctionName="PinitModel.Store.UP_Login">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="PinitModel.UP_Login_Result">
+                <ScalarProperty Name="Success" ColumnName="Success" />
+                <ScalarProperty Name="msg" ColumnName="msg" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="UP_New_Board" FunctionName="PinitModel.Store.UP_New_Board">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="PinitModel.UP_New_Board_Result">
+                <ScalarProperty Name="Success" ColumnName="Success" />
+                <ScalarProperty Name="msg" ColumnName="msg" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="UP_New_Stream" FunctionName="PinitModel.Store.UP_New_Stream">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="PinitModel.UP_New_Stream_Result">
+                <ScalarProperty Name="Success" ColumnName="Success" />
+                <ScalarProperty Name="msg" ColumnName="msg" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="UP_Pin" FunctionName="PinitModel.Store.UP_Pin">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="PinitModel.UP_Pin_Result">
+                <ScalarProperty Name="Success" ColumnName="Success" />
+                <ScalarProperty Name="msg" ColumnName="msg" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="UP_Repin" FunctionName="PinitModel.Store.UP_Repin">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="PinitModel.UP_Repin_Result">
+                <ScalarProperty Name="Success" ColumnName="Success" />
+                <ScalarProperty Name="msg" ColumnName="msg" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="UP_SendFriendShipRequest" FunctionName="PinitModel.Store.UP_SendFriendShipRequest">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="PinitModel.UP_SendFriendShipRequest_Result">
+                <ScalarProperty Name="Success" ColumnName="Success" />
+                <ScalarProperty Name="msg" ColumnName="msg" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="UP_SignUp" FunctionName="PinitModel.Store.UP_SignUp">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="PinitModel.UP_SignUp_Result">
+                <ScalarProperty Name="Success" ColumnName="Success" />
+                <ScalarProperty Name="msg" ColumnName="msg" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="UP_UpdateProfile" FunctionName="PinitModel.Store.UP_UpdateProfile">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="PinitModel.UP_UpdateProfile_Result">
+                <ScalarProperty Name="Success" ColumnName="Success" />
+                <ScalarProperty Name="msg" ColumnName="msg" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="FI_SignUp" FunctionName="PinitModel.Store.UP_SignUp">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="PinitModel.UP_SignUp_Result">
+                <ScalarProperty Name="Success" ColumnName="Success" />
+                <ScalarProperty Name="msg" ColumnName="msg" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

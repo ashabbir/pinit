@@ -1,29 +1,24 @@
 ﻿@using pinit.Models;
-@using Microsoft.AspNet.Identity;
 @{
     ViewBag.Title = "Manage Account";
 }
-
 <h2>@ViewBag.Title.</h2>
 
-<p class="text-success">@ViewBag.StatusMessage</p>
-<div class="row">
-    <div class="col-md-12">
-        @if (ViewBag.HasLocalPassword)
-        {
-            @Html.Partial("_ChangePasswordPartial")
-        }
-        else
-        {
-            @Html.Partial("_SetPasswordPartial")
-        }
+<div class="container theme-showcase">
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <div>
+                <p class="text-success">@ViewBag.StatusMessage</p>
 
-        <section id="externalLogins">
-            @Html.Action("RemoveAccountList")
-            @Html.Partial("_ExternalLoginsListPartial", new { Action = "LinkLogin", ReturnUrl = ViewBag.ReturnUrl })
-        </section>
+                @Html.Partial("_ChangePasswordPartial")
+
+
+            </div>
+        </div>
     </div>
 </div>
+
+
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
 }

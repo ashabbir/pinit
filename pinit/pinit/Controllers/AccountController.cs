@@ -32,6 +32,7 @@ namespace pinit.Controllers
         [AllowAnonymous]
         public ActionResult Login(string returnUrl)
         {
+            System.Web.Security.FormsAuthentication.SignOut();
             ViewBag.ReturnUrl = returnUrl;
             return View();
         }
@@ -45,11 +46,21 @@ namespace pinit.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = await UserManager.FindAsync(model.UserName, model.Password);
-                if (user != null)
+                //var user = await UserManager.FindAsync(model.UserName, model.Password);
+                var isauthenticated = model.FormAuthentication(model.UserName, model.Password);
+                if (isauthenticated)
                 {
-                    await SignInAsync(user, model.RememberMe);
-                    return RedirectToLocal(returnUrl);
+                    //await SignInAsync(user, false);
+                    System.Web.Security.FormsAuthentication.SetAuthCookie(model.UserName, false);
+                    if (Url.IsLocalUrl(returnUrl) && returnUrl.Length > 1 && returnUrl.StartsWith("/")
+                        && !returnUrl.StartsWith("//") && !returnUrl.StartsWith("/\\"))
+                    {
+                        return RedirectToLocal(returnUrl);
+                    }
+                    else
+                    {
+                        return RedirectToAction("Index", "Home");
+                    }
                 }
                 else
                 {
@@ -74,20 +85,22 @@ namespace pinit.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Register(RegisterViewModel model)
+        public  ActionResult Register(RegisterViewModel model)
         {
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser() { UserName = model.UserName };
-                var result = await UserManager.CreateAsync(user, model.Password);
-                if (result.Succeeded)
+                var msg = "";
+                var res = model.CreateAccount(out msg);
+                if (res)
                 {
-                    await SignInAsync(user, isPersistent: false);
+                    System.Web.Security.FormsAuthentication.SetAuthCookie(model.UserName, false);
                     return RedirectToAction("Index", "Home");
                 }
                 else
                 {
-                    AddErrors(result);
+                    List<string> errors = new List<string>();
+                    errors.Add(msg);
+                    AddErrors(errors);
                 }
             }
 
@@ -124,7 +137,7 @@ namespace pinit.Controllers
                 : message == ManageMessageId.RemoveLoginSuccess ? "The external login was removed."
                 : message == ManageMessageId.Error ? "An error has occurred."
                 : "";
-            ViewBag.HasLocalPassword = HasPassword();
+            ViewBag.HasLocalPassword = true;
             ViewBag.ReturnUrl = Url.Action("Manage");
             return View();
         }
@@ -133,49 +146,26 @@ namespace pinit.Controllers
         // POST: /Account/Manage
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Manage(ManageUserViewModel model)
+        public ActionResult Manage(ManageUserViewModel model)
         {
-            bool hasPassword = HasPassword();
-            ViewBag.HasLocalPassword = hasPassword;
+            var msg = "";
+           
+            ViewBag.HasLocalPassword = true;
             ViewBag.ReturnUrl = Url.Action("Manage");
-            if (hasPassword)
-            {
+          
                 if (ModelState.IsValid)
                 {
-                    IdentityResult result = await UserManager.ChangePasswordAsync(User.Identity.GetUserId(), model.OldPassword, model.NewPassword);
-                    if (result.Succeeded)
+                    var res = model.CustomChangePassword(User.Identity.GetUserName(), model.NewPassword, model.OldPassword);
+                    if (res)
                     {
                         return RedirectToAction("Manage", new { Message = ManageMessageId.ChangePasswordSuccess });
                     }
                     else
                     {
-                        AddErrors(result);
+                        AddErrors("Password could not be changed");
                     }
                 }
-            }
-            else
-            {
-                // User does not have a password so remove any validation errors caused by a missing OldPassword field
-                ModelState state = ModelState["OldPassword"];
-                if (state != null)
-                {
-                    state.Errors.Clear();
-                }
-
-                if (ModelState.IsValid)
-                {
-                    IdentityResult result = await UserManager.AddPasswordAsync(User.Identity.GetUserId(), model.NewPassword);
-                    if (result.Succeeded)
-                    {
-                        return RedirectToAction("Manage", new { Message = ManageMessageId.SetPasswordSuccess });
-                    }
-                    else
-                    {
-                        AddErrors(result);
-                    }
-                }
-            }
-
+          
             // If we got this far, something failed, redisplay form
             return View(model);
         }
@@ -289,8 +279,9 @@ namespace pinit.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult LogOff()
         {
-            AuthenticationManager.SignOut();
-            return RedirectToAction("Index", "Home");
+            //AuthenticationManager.SignOut();
+            System.Web.Security.FormsAuthentication.SignOut();
+            return RedirectToAction("Login");
         }
 
         //
@@ -336,6 +327,14 @@ namespace pinit.Controllers
             AuthenticationManager.SignOut(DefaultAuthenticationTypes.ExternalCookie);
             var identity = await UserManager.CreateIdentityAsync(user, DefaultAuthenticationTypes.ApplicationCookie);
             AuthenticationManager.SignIn(new AuthenticationProperties() { IsPersistent = isPersistent }, identity);
+            
+        }
+
+        private void AddErrors(string result)
+        {
+
+            ModelState.AddModelError("", result);
+          
         }
 
         private void AddErrors(IdentityResult result)
@@ -346,14 +345,18 @@ namespace pinit.Controllers
             }
         }
 
+        private void AddErrors(List<string> result)
+        {
+            foreach (var error in result)
+            {
+                ModelState.AddModelError("", error);
+            }
+        }
+
         private bool HasPassword()
         {
-            var user = UserManager.FindById(User.Identity.GetUserId());
-            if (user != null)
-            {
-                return user.PasswordHash != null;
-            }
-            return false;
+           
+            return true;
         }
 
         public enum ManageMessageId

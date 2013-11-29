@@ -1,4 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using pinit.Data;
+using System.Linq;
 
 namespace pinit.Models
 {
@@ -26,6 +28,24 @@ namespace pinit.Models
         [Display(Name = "Confirm new password")]
         [Compare("NewPassword", ErrorMessage = "The new password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
+
+        public bool CustomChangePassword(string username, string password , string oldPassword)
+        {
+
+            using (var db = new PinitEntities())
+            {
+                var userinfo = db.UserInfoes.FirstOrDefault(x => x.UserName == username && x.Password == oldPassword);
+                if (userinfo == null)
+                {
+                    return false;
+                }
+                userinfo.Password = password;
+                db.SaveChanges();
+                return true;
+            }
+
+
+        }
     }
 
     public class LoginViewModel
@@ -39,8 +59,44 @@ namespace pinit.Models
         [Display(Name = "Password")]
         public string Password { get; set; }
 
-        [Display(Name = "Remember me?")]
-        public bool RememberMe { get; set; }
+        public ApplicationUser CustomLogin(string username, string password)
+        {
+            var user = new ApplicationUser();
+            using (var db = new PinitEntities())
+            {
+                var userinfo = db.UserInfoes.FirstOrDefault(x => x.UserName == username && x.Password == password);
+                if (userinfo == null)
+                {
+                    return null;
+                }
+                user = new ApplicationUser
+                {
+                    UserName = userinfo.UserName,
+                    Id = userinfo.UserName
+                };
+            }
+
+
+            return user;
+        }
+
+
+        public bool FormAuthentication(string username, string password)
+        {
+
+            using (var db = new PinitEntities())
+            {
+                var userinfo = db.UserInfoes.FirstOrDefault(x => x.UserName == username && x.Password == password);
+                if (userinfo == null)
+                {
+                    return false;
+                }
+                return true;
+            }
+
+
+        }
+
     }
 
     public class RegisterViewModel
@@ -59,5 +115,43 @@ namespace pinit.Models
         [Display(Name = "Confirm password")]
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
+
+        [Required]
+        [Display(Name = "First name")]
+        public string FirstName { get; set; }
+
+        [Required]
+        [Display(Name = "Last name")]
+        public string LastName { get; set; }
+
+        [Required]
+        [Display(Name = "Email")]
+        [DataType(DataType.EmailAddress)]
+        public string Email { get; set; }
+
+
+        public bool CreateAccount(out string msg)
+        {
+            msg = "account was not created";
+            var toreturn = false;
+            using (var db = new PinitEntities())
+            {
+                var result = db.FI_SignUp(UserName, Password, FirstName, LastName, Email);
+                var res = result.FirstOrDefault();
+                if (res == null)
+                {
+                    return toreturn;
+                }
+                if (res.Success ?? false)
+                {
+                    msg = "account was created";
+                    toreturn = true;
+                }
+
+
+            }
+            return toreturn;
+
+        }
     }
 }

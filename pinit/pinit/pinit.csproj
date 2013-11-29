@@ -43,6 +43,8 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -160,6 +162,96 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Data\Board.cs">
+      <DependentUpon>PinitModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\BoardFollow.cs">
+      <DependentUpon>PinitModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\Comment.cs">
+      <DependentUpon>PinitModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\FollowStream.cs">
+      <DependentUpon>PinitModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\Friend.cs">
+      <DependentUpon>PinitModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\Picture.cs">
+      <DependentUpon>PinitModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\Pin.cs">
+      <DependentUpon>PinitModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\PinitModel.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>PinitModel.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\PinitModel.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>PinitModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\PinitModel.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>PinitModel.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Data\PinTag.cs">
+      <DependentUpon>PinitModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\Tag.cs">
+      <DependentUpon>PinitModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\UP_AcceptOrRejectFriendShipRequest_Result.cs">
+      <DependentUpon>PinitModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\UP_Comment_Result.cs">
+      <DependentUpon>PinitModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\UP_Delete_Pin_Result.cs">
+      <DependentUpon>PinitModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\UP_Display_Stream_Result.cs">
+      <DependentUpon>PinitModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\UP_Follow_Result.cs">
+      <DependentUpon>PinitModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\UP_Like_Result.cs">
+      <DependentUpon>PinitModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\UP_Login_Result.cs">
+      <DependentUpon>PinitModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\UP_New_Board_Result.cs">
+      <DependentUpon>PinitModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\UP_New_Stream_Result.cs">
+      <DependentUpon>PinitModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\UP_Pin_Result.cs">
+      <DependentUpon>PinitModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\UP_Repin_Result.cs">
+      <DependentUpon>PinitModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\UP_SendFriendShipRequest_Result.cs">
+      <DependentUpon>PinitModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\UP_SignUp_Result.cs">
+      <DependentUpon>PinitModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\UP_UpdateProfile_Result.cs">
+      <DependentUpon>PinitModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\UserInfo.cs">
+      <DependentUpon>PinitModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\UserLike.cs">
+      <DependentUpon>PinitModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -178,6 +270,23 @@
     <Content Include="Content\Site.css" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <EntityDeploy Include="Data\PinitModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>PinitModel.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Data\PinitModel.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>PinitModel.edmx</DependentUpon>
+      <LastGenOutput>PinitModel.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Data\PinitModel.edmx.diagram">
+      <DependentUpon>PinitModel.edmx</DependentUpon>
+    </Content>
+    <Content Include="Data\PinitModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>PinitModel.edmx</DependentUpon>
+      <LastGenOutput>PinitModel.cs</LastGenOutput>
+    </Content>
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -225,6 +334,9 @@
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="packages.config" />
     <None Include="Project_Readme.html" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
