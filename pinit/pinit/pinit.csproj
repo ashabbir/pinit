@@ -170,6 +170,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\BoardsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Data\Board.cs">
       <DependentUpon>PinitModel.tt</DependentUpon>
@@ -278,6 +279,8 @@
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\comments.jpg" />
+    <Content Include="Content\nocomments.jpg" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -338,6 +341,11 @@
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Account\_UpdateProfilePartial.cshtml" />
     <Content Include="Views\Account\UpdateProfile.cshtml" />
+    <Content Include="Views\Boards\Create.cshtml" />
+    <Content Include="Views\Boards\Delete.cshtml" />
+    <Content Include="Views\Boards\Details.cshtml" />
+    <Content Include="Views\Boards\Edit.cshtml" />
+    <Content Include="Views\Boards\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -1,0 +1,51 @@
+﻿@model pinit.Data.Board
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Board</h4>
+	<hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.BoardName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.BoardName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DateCreated)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DateCreated, new { @class = "datePicker" })
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PrivateComments)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PrivateComments)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.BoardOwner)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.BoardOwner)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.BoardId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

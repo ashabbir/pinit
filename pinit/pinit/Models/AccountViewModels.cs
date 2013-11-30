@@ -114,6 +114,11 @@ namespace pinit.Models
         {
             msg = "account was not created";
             var toreturn = false;
+            if (!Email.ValidateEmail())
+            {
+                msg = "Email address not correct";
+                return false;
+            }
             using (var db = new PinitEntities())
             {
                 var result = db.FI_SignUp(UserName, Password, FirstName, LastName, Email);
