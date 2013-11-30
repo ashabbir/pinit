@@ -1,6 +1,6 @@
 ﻿@using pinit.Models;
 @{
-    ViewBag.Title = "Manage Account";
+    ViewBag.Title = "Profile update";
 }
 <h2>@ViewBag.Title.</h2>
 
@@ -9,8 +9,8 @@
         <div class="panel-body">
             <div>
                 <p class="text-success">@ViewBag.StatusMessage</p>
-                @Html.Partial("_ChangePasswordPartial")
-           </div>
+                @Html.Partial("_UpdateProfilePartial")
+            </div>
         </div>
     </div>
 </div>

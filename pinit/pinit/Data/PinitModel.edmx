@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="PinitModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="PinitModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Board">
           <Key>
             <PropertyRef Name="BoardId" />
@@ -373,7 +373,6 @@ warning 6002: The table/view 'Pinit.dbo.UserLike' does not have a primary key de
         </Function>
         <Function Name="UP_UpdateProfile" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="username" Type="varchar" Mode="In" />
-          <Parameter Name="newPassword" Type="varchar" Mode="In" />
           <Parameter Name="newFirstName" Type="varchar" Mode="In" />
           <Parameter Name="newLastName" Type="varchar" Mode="In" />
           <Parameter Name="newEmail" Type="varchar" Mode="In" />
@@ -467,8 +466,7 @@ warning 6002: The table/view 'Pinit.dbo.UserLike' does not have a primary key de
             <End Role="UserLike" EntitySet="UserLike" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="PinitModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -860,17 +858,17 @@ warning 6002: The table/view 'Pinit.dbo.UserLike' does not have a primary key de
             <Parameter Name="commenttext" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="UP_Delete_Pin" ReturnType="Collection(PinitModel.UP_Delete_Pin_Result)">
-            <Parameter Name="pinid" Mode="In" Type="Int32" />
+          <Parameter Name="pinid" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="UP_Display_Stream" ReturnType="Collection(PinitModel.UP_Display_Stream_Result)">
-            <Parameter Name="streamid" Mode="In" Type="Int32" />
+          <Parameter Name="streamid" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="UP_Follow" ReturnType="Collection(PinitModel.UP_Follow_Result)">
             <Parameter Name="boardid" Mode="In" Type="Int32" />
             <Parameter Name="streamid" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="UP_KeyWordSearchOnTags" ReturnType="Collection(Int32)">
-            <Parameter Name="KeyWork" Mode="In" Type="String" />
+          <Parameter Name="KeyWork" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="UP_Like" ReturnType="Collection(PinitModel.UP_Like_Result)">
             <Parameter Name="pinid" Mode="In" Type="Int32" />
@@ -910,7 +908,6 @@ warning 6002: The table/view 'Pinit.dbo.UserLike' does not have a primary key de
           </FunctionImport>
           <FunctionImport Name="UP_UpdateProfile" ReturnType="Collection(PinitModel.UP_UpdateProfile_Result)">
             <Parameter Name="username" Mode="In" Type="String" />
-            <Parameter Name="newPassword" Mode="In" Type="String" />
             <Parameter Name="newFirstName" Mode="In" Type="String" />
             <Parameter Name="newLastName" Mode="In" Type="String" />
             <Parameter Name="newEmail" Mode="In" Type="String" />
@@ -921,6 +918,12 @@ warning 6002: The table/view 'Pinit.dbo.UserLike' does not have a primary key de
             <Parameter Name="FirstName" Mode="In" Type="String" />
             <Parameter Name="LastName" Mode="In" Type="String" />
             <Parameter Name="Email" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="FI_UpdateProfile" ReturnType="Collection(PinitModel.FI_UpdateProfile_Result)">
+            <Parameter Name="username" Mode="In" Type="String" />
+            <Parameter Name="newFirstName" Mode="In" Type="String" />
+            <Parameter Name="newLastName" Mode="In" Type="String" />
+            <Parameter Name="newEmail" Mode="In" Type="String" />
           </FunctionImport>
         </EntityContainer>
         <ComplexType Name="UP_AcceptOrRejectFriendShipRequest_Result">
@@ -976,6 +979,10 @@ warning 6002: The table/view 'Pinit.dbo.UserLike' does not have a primary key de
           <Property Type="String" Name="msg" Nullable="false" MaxLength="18" />
         </ComplexType>
         <ComplexType Name="UP_UpdateProfile_Result">
+          <Property Type="Boolean" Name="Success" Nullable="true" />
+          <Property Type="String" Name="msg" Nullable="false" MaxLength="1" />
+        </ComplexType>
+        <ComplexType Name="FI_UpdateProfile_Result">
           <Property Type="Boolean" Name="Success" Nullable="true" />
           <Property Type="String" Name="msg" Nullable="false" MaxLength="1" />
         </ComplexType>
@@ -1218,6 +1225,14 @@ warning 6002: The table/view 'Pinit.dbo.UserLike' does not have a primary key de
           <FunctionImportMapping FunctionImportName="FI_SignUp" FunctionName="PinitModel.Store.UP_SignUp">
             <ResultMapping>
               <ComplexTypeMapping TypeName="PinitModel.UP_SignUp_Result">
+                <ScalarProperty Name="Success" ColumnName="Success" />
+                <ScalarProperty Name="msg" ColumnName="msg" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="FI_UpdateProfile" FunctionName="PinitModel.Store.UP_UpdateProfile">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="PinitModel.FI_UpdateProfile_Result">
                 <ScalarProperty Name="Success" ColumnName="Success" />
                 <ScalarProperty Name="msg" ColumnName="msg" />
               </ComplexTypeMapping>

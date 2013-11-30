@@ -7,7 +7,7 @@
       <Diagram DiagramId="0750c237ef91457b90dfdca1169df1da" Name="Diagram1">
         <EntityTypeShape EntityType="PinitModel.Board" Width="1.5" PointX="3" PointY="6.25" IsExpanded="true" />
         <EntityTypeShape EntityType="PinitModel.BoardFollow" Width="1.5" PointX="5.25" PointY="8" IsExpanded="true" />
-        <EntityTypeShape EntityType="PinitModel.Comment" Width="1.5" PointX="7.5" PointY="6.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="PinitModel.Comment" Width="1.5" PointX="8.25" PointY="5.875" IsExpanded="true" />
         <EntityTypeShape EntityType="PinitModel.FollowStream" Width="1.5" PointX="3" PointY="9.625" IsExpanded="true" />
         <EntityTypeShape EntityType="PinitModel.Friend" Width="1.5" PointX="3" PointY="12.5" IsExpanded="true" />
         <EntityTypeShape EntityType="PinitModel.Picture" Width="1.5" PointX="3" PointY="3.625" IsExpanded="true" />

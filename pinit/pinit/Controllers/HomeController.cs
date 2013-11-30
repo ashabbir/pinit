@@ -6,26 +6,26 @@ using System.Web.Mvc;
 
 namespace pinit.Controllers
 {
+     [Authorize]
     public class HomeController : Controller
     {
-        [Authorize]
         public ActionResult Index()
         {
             return View();
         }
 
-         [Authorize]
+       
         public ActionResult About()
         {
-            ViewBag.Message = "Your application description page.";
+            ViewBag.Message = "Pinterest clone for NYU Poly CS6083";
 
             return View();
         }
 
-         [Authorize]
+      
         public ActionResult Contact()
         {
-            ViewBag.Message = "Your contact page.";
+            ViewBag.Message = "Contact info";
 
             return View();
         }

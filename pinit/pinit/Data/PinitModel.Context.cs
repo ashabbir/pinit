@@ -233,15 +233,11 @@ namespace pinit.Data
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<UP_SignUp_Result>("UP_SignUp", usernameParameter, passwordParameter, firstNameParameter, lastNameParameter, emailParameter);
         }
     
-        public virtual ObjectResult<UP_UpdateProfile_Result> UP_UpdateProfile(string username, string newPassword, string newFirstName, string newLastName, string newEmail)
+        public virtual ObjectResult<UP_UpdateProfile_Result> UP_UpdateProfile(string username, string newFirstName, string newLastName, string newEmail)
         {
             var usernameParameter = username != null ?
                 new ObjectParameter("username", username) :
                 new ObjectParameter("username", typeof(string));
-    
-            var newPasswordParameter = newPassword != null ?
-                new ObjectParameter("newPassword", newPassword) :
-                new ObjectParameter("newPassword", typeof(string));
     
             var newFirstNameParameter = newFirstName != null ?
                 new ObjectParameter("newFirstName", newFirstName) :
@@ -255,7 +251,7 @@ namespace pinit.Data
                 new ObjectParameter("newEmail", newEmail) :
                 new ObjectParameter("newEmail", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<UP_UpdateProfile_Result>("UP_UpdateProfile", usernameParameter, newPasswordParameter, newFirstNameParameter, newLastNameParameter, newEmailParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<UP_UpdateProfile_Result>("UP_UpdateProfile", usernameParameter, newFirstNameParameter, newLastNameParameter, newEmailParameter);
         }
     
         public virtual ObjectResult<UP_SignUp_Result> FI_SignUp(string username, string password, string firstName, string lastName, string email)
@@ -281,6 +277,27 @@ namespace pinit.Data
                 new ObjectParameter("Email", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<UP_SignUp_Result>("FI_SignUp", usernameParameter, passwordParameter, firstNameParameter, lastNameParameter, emailParameter);
+        }
+    
+        public virtual ObjectResult<FI_UpdateProfile_Result> FI_UpdateProfile(string username, string newFirstName, string newLastName, string newEmail)
+        {
+            var usernameParameter = username != null ?
+                new ObjectParameter("username", username) :
+                new ObjectParameter("username", typeof(string));
+    
+            var newFirstNameParameter = newFirstName != null ?
+                new ObjectParameter("newFirstName", newFirstName) :
+                new ObjectParameter("newFirstName", typeof(string));
+    
+            var newLastNameParameter = newLastName != null ?
+                new ObjectParameter("newLastName", newLastName) :
+                new ObjectParameter("newLastName", typeof(string));
+    
+            var newEmailParameter = newEmail != null ?
+                new ObjectParameter("newEmail", newEmail) :
+                new ObjectParameter("newEmail", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<FI_UpdateProfile_Result>("FI_UpdateProfile", usernameParameter, newFirstNameParameter, newLastNameParameter, newEmailParameter);
         }
     }
 }
