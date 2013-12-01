@@ -1,59 +1,26 @@
 ﻿@model IEnumerable<pinit.Data.Board>
 
+
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Boards";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Index</h2>
-
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.BoardName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.DateCreated)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.PrivateComments)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.BoardOwner)
-        </th>
-        <th></th>
-    </tr>
-
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.BoardName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.DateCreated)
-        </td>
-        <td>
-            @if(item.PrivateComments != true)
-            {  
-               <img src="~/Content/comments.jpg" alt="Comments allowed" /> 
-            } 
-            else 
-            { 
-                <img src="~/Content/nocomments.jpg" alt="No comments"/> 
-            }
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.BoardOwner)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.BoardId }) |
-            @Html.ActionLink("Details", "Details", new { id=item.BoardId }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.BoardId })
-        </td>
-    </tr>
-}
-
-</table>
+<h2>Boards</h2>
+<div class="container theme-showcase">
+    <div class="center-block">
+        <div class="panel panel-default">
+            <div class="panel-body">
+             
+                <p>
+                    @Html.ActionLink("Create New", "Create")
+                </p>
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-body">
+                @Html.Partial("_BoardsPartial")
+            </div><!-- /.panel-body -->
+        </div><!-- panel panel-default-->
+    </div><!--center -->
+</div> <!-- /container -->

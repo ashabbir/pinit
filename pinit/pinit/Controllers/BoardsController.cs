@@ -11,6 +11,7 @@ using Microsoft.AspNet.Identity;
 
 namespace pinit.Controllers
 {
+    [Authorize]
     public class BoardsController : Controller
     {
         private PinitEntities db = new PinitEntities();
@@ -19,7 +20,7 @@ namespace pinit.Controllers
         public ActionResult Index()
         {
             var user = User.Identity.GetUserName();
-            var boards = db.Boards.Include(b => b.UserInfo).Where(b => b.BoardOwner == user );
+            var boards = db.Boards.Include(b => b.UserInfo).Where(b => b.BoardOwner == user);
             return View(boards.ToList());
         }
 
@@ -50,9 +51,9 @@ namespace pinit.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include="BoardId,BoardName,BoardOwner,DateCreated,PrivateComments")] Board board)
+        public ActionResult Create([Bind(Include = "BoardId,BoardName,BoardOwner,DateCreated,PrivateComments")] Board board)
         {
-            if (string.IsNullOrWhiteSpace(board.BoardName)) 
+            if (string.IsNullOrWhiteSpace(board.BoardName))
             {
                 ModelState.AddModelError("", "Board name is required");
             }
@@ -62,7 +63,7 @@ namespace pinit.Controllers
             {
                 db.Boards.Add(board);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Details", new { id = board.BoardId });
             }
 
             ViewBag.BoardOwner = new SelectList(db.UserInfoes, "UserName", "FirstName", board.BoardOwner);
@@ -90,13 +91,13 @@ namespace pinit.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include="BoardId,BoardName,BoardOwner,DateCreated,PrivateComments")] Board board)
+        public ActionResult Edit([Bind(Include = "BoardId,BoardName,BoardOwner,DateCreated,PrivateComments")] Board board)
         {
             if (ModelState.IsValid)
             {
                 db.Entry(board).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Details", new { id = board.BoardId });
             }
             ViewBag.BoardOwner = new SelectList(db.UserInfoes, "UserName", "FirstName", board.BoardOwner);
             return View(board);

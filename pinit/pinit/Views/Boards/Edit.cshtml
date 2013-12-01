@@ -7,61 +7,20 @@
 
 <h2>Edit</h2>
 
-
-@using (Html.BeginForm())
-{
-    @Html.AntiForgeryToken()
-    
-    <div class="form-horizontal">
-        <h4>Board</h4>
-        <hr />
-        @Html.ValidationSummary(true)
-        @Html.HiddenFor(model => model.BoardId)
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.BoardName, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.BoardName)
-                @Html.ValidationMessageFor(model => model.BoardName)
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.BoardOwner, "BoardOwner", new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("BoardOwner", String.Empty)
-                @Html.ValidationMessageFor(model => model.BoardOwner)
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.DateCreated, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.DateCreated)
-                @Html.ValidationMessageFor(model => model.DateCreated)
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.PrivateComments, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.PrivateComments)
-                @Html.ValidationMessageFor(model => model.PrivateComments)
-            </div>
-        </div>
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-default" />
+<div class="container theme-showcase">
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <div>
+                <p class="text-success">@ViewBag.StatusMessage</p>
+                @Html.Partial("_UpdateBoardPartial")
             </div>
         </div>
     </div>
-}
-
-<div>
-    @Html.ActionLink("Back to List", "Index")
 </div>
+
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
 }
+
+

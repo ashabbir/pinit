@@ -1,17 +1,42 @@
 ﻿@{
     ViewBag.Title = "Contact";
 }
-<h2>@ViewBag.Title.</h2>
-@*<h3>@ViewBag.Message</h3>*@
 
-<address>
-    some where in NY<br />
-    Staten Island, NY 10314<br />
-    <abbr title="Phone">P:</abbr>
-    347.111.xxxx
-</address>
-
-<address>
-    <strong>Support:</strong>   <a href="mailto:as7231@students.poly.edu">as7231@students.poly.edu</a><br />
-    <strong>Marketing:</strong>   <a href="mailto:as7231@students.poly.edu">as7231@students.poly.edu</a><br />
-</address>
+<div class="row">
+    <div class="col-lg-10">
+        <h2 id="nav-tabs">Contact</h2>
+        <div class="bs-example">
+            <ul class="nav nav-tabs" style="margin-bottom: 15px;">
+                <li class="active"><a href="#Address" data-toggle="tab">Address</a></li>
+                <li class=""><a href="#Support" data-toggle="tab">Support</a></li>
+                <li class=""><a href="#Marketing" data-toggle="tab">Marketing</a></li>
+            </ul>
+            <div id="myTabContent" class="tab-content">
+                <div class="tab-pane fade active in" id="Address">
+                    <p>
+                        <address>
+                            Some where in NY<br />
+                            Staten Island, NY 10314<br />
+                            <abbr title="Phone">P:</abbr>
+                            347.111.xxxx
+                        </address>
+                    </p>
+                </div>
+                <div class="tab-pane fade" id="Support">
+                    <p> For support please send an email to Ahmed Shabbir. We would like to hear from you.
+                        <address>
+                            <strong>Support:</strong>   <a href="mailto:as7231@students.poly.edu">as7231@students.poly.edu</a><br />
+                        </address>
+                    </p>
+                </div>
+                <div class="tab-pane fade" id="Marketing">
+                    <p> For marketing please send an email to Jason Lee. We would like to work with you.
+                        <address>
+                            <strong>Marketing:</strong>   <a href="mailto:as7231@students.poly.edu">as7231@students.poly.edu</a><br />
+                        </address>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

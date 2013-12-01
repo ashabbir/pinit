@@ -5,47 +5,70 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Details</h2>
 
-<div>
-    <h4>Board</h4>
-	<hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.BoardName)
-        </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.BoardName)
-        </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.DateCreated)
-        </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.DateCreated, new { @class = "datePicker" })
-        </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.PrivateComments)
-        </dt>
+<div class="container theme-showcase">
+    <div class="center-block">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h3 class="panel-title">@Html.DisplayTextFor(model => model.BoardName) </h3>
+                
+            </div>
+            <div class="panel-body">
+                <form>
+                    
+                            <ul class="list-inline">
+                                <li>  <input type="file" name="upload" value="" id="upload" class="form-control"></li>  
+                                <li>  <input class="btn btn-sm btn-primary" type="submit"  value="upload file"/></li>  
+                            </ul>
+                       
+                </form>
 
-        <dd>
-            @Html.DisplayFor(model => model.PrivateComments)
-        </dd>
+                <hr>
+                <ul class="list-inline">
 
-        <dt>
-            @Html.DisplayNameFor(model => model.BoardOwner)
-        </dt>
+                    <li>
+                        <p>	@Html.ActionBoard("Details", new { id = 1 }, "~/Content/pin.png", "somepin")  </p>
+                    </li>
+                    <li>
+                        <p>	@Html.ActionBoard("Details", new { id = 1 }, "~/Content/pin.png", "somepin")  </p>
+                    </li>
+                    <li>
+                        <p>	@Html.ActionBoard("Details", new { id = 1 }, "~/Content/pin.png", "somepin")  </p>
+                    </li>
+                    <li>
+                        <p>	@Html.ActionBoard("Details", new { id = 1 }, "~/Content/pin.png", "somepin")  </p>
+                    </li>
+                    <li>
+                        <p>	@Html.ActionBoard("Details", new { id = 1 }, "~/Content/pin.png", "somepin")  </p>
+                    </li>
+                    <li>
+                        <p>	@Html.ActionBoard("Details", new { id = 1 }, "~/Content/pin.png", "somepin")  </p>
+                    </li>
 
-        <dd>
-            @Html.DisplayFor(model => model.BoardOwner)
-        </dd>
+                </ul>
+            </div><!-- /.panel-body -->
+            <div class="panel-footer">
+                <p class="form-inline">
+                    created by @Html.DisplayTextFor(model => model.BoardOwner) on @Html.DisplayTextFor(model => model.DateCreated)
+                    @if (Model.PrivateComments != true)
+                    {
+                        <img src="~/Content/comments.jpg" alt="Comments allowed" />
+                    }
+                    else
+                    {
+                        <img src="~/Content/nocomments.jpg" alt="No comments" />
+                    }
+                    @Html.ActionLink("Edit", "Edit", new { id = Model.BoardId }) |
+                    @Html.ActionLink("Back to List", "Index")
+                </p>
+            </div>
 
-    </dl>
-</div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.BoardId }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
+
+        </div><!-- panel panel-default-->
+
+    </div><!--center -->
+</div> <!-- /container -->

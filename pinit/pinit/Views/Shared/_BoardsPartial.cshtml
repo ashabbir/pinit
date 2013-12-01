@@ -1,0 +1,16 @@
+﻿@model IEnumerable<pinit.Data.Board>
+
+<ul class="list-inline">
+    @foreach (var item in Model)
+    {
+        <li>
+            <p>
+                @Html.ActionBoard("Details", "boards" ,new { id = item.BoardId }, "~/Content/board.jpg", item.BoardName)
+                @item.BoardName
+            </p>
+        </li>
+    }
+
+
+</ul>
+

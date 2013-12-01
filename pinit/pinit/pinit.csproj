@@ -272,15 +272,18 @@
     <Compile Include="Helpers\HtmlHelperExtention.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
+    <Compile Include="Models\OverviewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\board.jpg" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\comments.jpg" />
     <Content Include="Content\nocomments.jpg" />
+    <Content Include="Content\pin.png" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -346,6 +349,9 @@
     <Content Include="Views\Boards\Details.cshtml" />
     <Content Include="Views\Boards\Edit.cshtml" />
     <Content Include="Views\Boards\Index.cshtml" />
+    <Content Include="Views\Boards\_UpdateBoardPartial.cshtml" />
+    <Content Include="Views\Boards\_CreateBoardPartial.cshtml" />
+    <Content Include="Views\Shared\_BoardsPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

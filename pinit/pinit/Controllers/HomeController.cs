@@ -3,15 +3,21 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Microsoft.AspNet.Identity;
+using pinit.Models;
 
 namespace pinit.Controllers
 {
      [Authorize]
     public class HomeController : Controller
     {
+
         public ActionResult Index()
         {
-            return View();
+            var username = User.Identity.GetUserName();
+            var model = new OverviewModel(username);
+            
+            return View(model);
         }
 
        

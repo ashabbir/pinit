@@ -14,6 +14,14 @@
     <dl class="dl-horizontal">
         <dt>
             @Html.DisplayNameFor(model => model.BoardName)
+            @if (Model.PrivateComments != true)
+            {
+                <img src="~/Content/comments.jpg" alt="Comments allowed" />
+            }
+            else
+            {
+                <img src="~/Content/nocomments.jpg" alt="No comments" />
+            }
         </dt>
 
         <dd>

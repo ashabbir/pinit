@@ -32,7 +32,19 @@ namespace pinit.Controllers
         [AllowAnonymous]
         public ActionResult Login(string returnUrl)
         {
-            System.Web.Security.FormsAuthentication.SignOut();
+            if (User.Identity.IsAuthenticated)
+            {
+                System.Web.Security.FormsAuthentication.SignOut();
+                return RedirectToLocal("Login");
+            }
+            if (string.IsNullOrWhiteSpace(returnUrl))
+            {
+                returnUrl = "";
+            }
+            if (returnUrl.Trim().ToUpper().Contains("LOGOFF"))
+            {
+                returnUrl = "";
+            }
             ViewBag.ReturnUrl = returnUrl;
             return View();
         }
@@ -85,7 +97,7 @@ namespace pinit.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public  ActionResult Register(RegisterViewModel model)
+        public ActionResult Register(RegisterViewModel model)
         {
             if (ModelState.IsValid)
             {
@@ -108,10 +120,10 @@ namespace pinit.Controllers
             return View(model);
         }
 
-        
+
         //
         // GET: /Account/Manage
-         [Authorize]
+        [Authorize]
         public ActionResult Manage(ManageMessageId? message)
         {
             ViewBag.StatusMessage =
@@ -133,36 +145,36 @@ namespace pinit.Controllers
         public ActionResult Manage(ManageUserViewModel model)
         {
             var msg = "";
-           
+
             ViewBag.HasLocalPassword = true;
             ViewBag.ReturnUrl = Url.Action("Manage");
-          
-                if (ModelState.IsValid)
+
+            if (ModelState.IsValid)
+            {
+                var res = model.CustomChangePassword(User.Identity.GetUserName(), model.NewPassword, model.OldPassword);
+                if (res)
                 {
-                    var res = model.CustomChangePassword(User.Identity.GetUserName(), model.NewPassword, model.OldPassword);
-                    if (res)
-                    {
-                        return RedirectToAction("Manage", new { Message = ManageMessageId.ChangePasswordSuccess });
-                    }
-                    else
-                    {
-                        AddErrors("Password could not be changed");
-                    }
+                    return RedirectToAction("Manage", new { Message = ManageMessageId.ChangePasswordSuccess });
                 }
-          
+                else
+                {
+                    AddErrors("Password could not be changed");
+                }
+            }
+
             // If we got this far, something failed, redisplay form
             return View(model);
         }
 
-      
-       
+
+
         //
         // POST: /Account/LogOff
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult LogOff()
         {
-          
+
             System.Web.Security.FormsAuthentication.SignOut();
             return RedirectToAction("Login");
         }
@@ -171,7 +183,7 @@ namespace pinit.Controllers
 
         //
         // GET: /Account/UpdateProfile
-         [Authorize]
+        [Authorize]
         public ActionResult UpdateProfile(ManageMessageId? message)
         {
             ViewBag.StatusMessage =
@@ -179,12 +191,12 @@ namespace pinit.Controllers
                 : message == ManageMessageId.ProfileChangeSuccess ? "Profile was updated successfully."
                 : message == ManageMessageId.Error ? "An error has occurred."
                 : "";
-         
+
             ViewBag.ReturnUrl = Url.Action("UpdateProfile");
 
             UpdateUserinfoViewModel model = new UpdateUserinfoViewModel();
             model.UserName = User.Identity.GetUserName();
-            if (!model.FillInfo()) 
+            if (!model.FillInfo())
             {
                 LogOff();
             }
@@ -249,14 +261,14 @@ namespace pinit.Controllers
             AuthenticationManager.SignOut(DefaultAuthenticationTypes.ExternalCookie);
             var identity = await UserManager.CreateIdentityAsync(user, DefaultAuthenticationTypes.ApplicationCookie);
             AuthenticationManager.SignIn(new AuthenticationProperties() { IsPersistent = isPersistent }, identity);
-            
+
         }
 
         private void AddErrors(string result)
         {
 
             ModelState.AddModelError("", result);
-          
+
         }
 
         private void AddErrors(IdentityResult result)
@@ -277,7 +289,7 @@ namespace pinit.Controllers
 
         private bool HasPassword()
         {
-           
+
             return true;
         }
 
@@ -305,7 +317,8 @@ namespace pinit.Controllers
 
         private class ChallengeResult : HttpUnauthorizedResult
         {
-            public ChallengeResult(string provider, string redirectUri) : this(provider, redirectUri, null)
+            public ChallengeResult(string provider, string redirectUri)
+                : this(provider, redirectUri, null)
             {
             }
 
