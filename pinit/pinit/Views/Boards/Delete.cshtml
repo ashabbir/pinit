@@ -5,61 +5,48 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Delete</h2>
+<div class="container theme-showcase">
+    <div class="center-block">
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <h3>Are you sure you want to delete this?</h3>
+                <hr />
+                <div class="form-group">
+                    <div class="col-md-offset-4 col-md-4">
+                        @Html.DisplayFor(model => model.BoardName)
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-offset-4 col-md-4">
+                        @Html.DisplayFor(model => model.DateCreated)
+                    
+                        @if (Model.PrivateComments != true)
+                        {
+                            <img src="~/Content/comments.jpg" alt="Comments allowed" />
+                        }
+                        else
+                        {
+                            <img src="~/Content/nocomments.jpg" alt="No comments" />
+                        }
+                    </div>
+                </div>
 
-<h3>Are you sure you want to delete this?</h3>
-<div>
-    <h4>Board</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.BoardName)
-            @if (Model.PrivateComments != true)
-            {
-                <img src="~/Content/comments.jpg" alt="Comments allowed" />
-            }
-            else
-            {
-                <img src="~/Content/nocomments.jpg" alt="No comments" />
-            }
-        </dt>
+                @using (Html.BeginForm())
+                {
+                    @Html.ErrorAlert(true)
+                    @Html.AntiForgeryToken()
 
-        <dd>
-            @Html.DisplayFor(model => model.BoardName)
-        </dd>
+                    <div class="col-md-offset-4 col-md-4">
+                        <input type="submit" value="Delete" class="btn btn-sm btn-primary btn-block" />
 
-        <dt>
-            @Html.DisplayNameFor(model => model.DateCreated)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.DateCreated)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.PrivateComments)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.PrivateComments)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.UserInfo.FirstName)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.UserInfo.FirstName)
-        </dd>
-
-    </dl>
-
-    @using (Html.BeginForm()) {
-        @Html.AntiForgeryToken()
-
-        <div class="form-actions no-color">
-            <input type="submit" value="Delete" class="btn btn-default" /> |
-            @Html.ActionLink("Back to List", "Index")
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-offset-4 col-md-4">
+                            @Html.ActionLink("Back to List", "Index")
+                        </div>
+                    </div>
+                }
+            </div>
         </div>
-    }
+    </div>
 </div>

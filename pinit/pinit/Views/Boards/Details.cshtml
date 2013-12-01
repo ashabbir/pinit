@@ -63,7 +63,9 @@
                         <img src="~/Content/nocomments.jpg" alt="No comments" />
                     }
                     @Html.ActionLink("Edit", "Edit", new { id = Model.BoardId }) |
-                    @Html.ActionLink("Back to List", "Index")
+                    @Html.ActionLink("Back to List", "Index") | 
+                    @Html.ActionLink("Delete", "Delete", new { id = Model.BoardId })
+                    
                 </p>
             </div>
 
