@@ -311,6 +311,7 @@
       <DependentUpon>PinitModel.edmx</DependentUpon>
       <LastGenOutput>PinitModel.cs</LastGenOutput>
     </Content>
+    <None Include="Properties\PublishProfiles\peswebstage01.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
