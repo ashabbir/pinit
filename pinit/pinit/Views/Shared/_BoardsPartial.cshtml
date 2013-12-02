@@ -7,7 +7,7 @@
         {
         <li>
             <p>
-                @Html.ActionBoard("Details", "boards", new { id = item.BoardId }, "~/Content/board.jpg", item.BoardName)
+                @Html.ActionBoard("Details", "boards", new { id = item.BoardId }, (item.Pins.FirstOrDefault() != null) ? item.Pins.FirstOrDefault().Picture.ImageUrl  : "~/Content/board.jpg", item.BoardName)
                 @item.BoardName
             </p>
         </li>

@@ -1,0 +1,17 @@
+﻿@model pinit.Data.Board
+
+@using (Html.BeginForm("CreatePin", "Boards", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+    @Html.ErrorAlert(true)
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(m => m.BoardId);
+    <div class="form-group">
+        <div class="col-md-offset-4 col-md-10">
+            <ul class="list-inline">
+                @*<li>  <input type="file" name="upload" value="" id="upload" class="form-control"></li>*@
+                <li>  @Html.TextBox("txtPinUrl", null, new { @class = "form-control", @placeholder = "Paste image url here" })  </li>
+                <li>  <input class="btn btn-sm btn-primary" type="submit" value="Pin It" /></li>
+            </ul>
+        </div>
+    </div>
+}

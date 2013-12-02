@@ -18,22 +18,14 @@
 
             </div>
             <div class="panel-body">
-                @ViewBag.StatusMessage
-                @using (Html.BeginForm("CreatePin", "Boards", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
-                {
-                    @Html.ErrorAlert(true)
-                    @Html.AntiForgeryToken()
-                    @Html.HiddenFor(m => m.BoardId);
-                    <ul class="list-inline">
-                        @*<li>  <input type="file" name="upload" value="" id="upload" class="form-control"></li>*@
-                        <li>  @Html.TextBox("txtPinUrl", null, new { @class = "form-control" })  </li>
-                        <li>  <input class="btn btn-sm btn-primary" type="submit" value="Pin It" /></li>
-                    </ul>
-                }
+                        @ViewBag.StatusMessage
+                        @Html.Partial("_AddPinPartial", Model)
 
-                <hr>
-            
-            @Html.Partial("_PinsPartial", Model.Pins)   
+            </div><!-- /.panel-body -->
+            <hr />
+            <div class="panel-body">
+
+                @Html.Partial("_PinsPartial", Model.Pins)
 
 
             </div><!-- /.panel-body -->

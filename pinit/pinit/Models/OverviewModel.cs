@@ -27,8 +27,14 @@ namespace pinit.Models
             boards = new List<Data.Board>();
             using (var db = new pinit.Data.PinitEntities())
             {
-                boards = db.Boards.Where(b => b.BoardOwner == username).ToList();
-                
+                boards = db.Boards.Include("Pins").Where(b => b.BoardOwner == username).ToList();
+                foreach (var item in boards)
+                {
+                    if (item.Pins.Count() > 0) 
+                    {
+                        var p = item.Pins.FirstOrDefault().Picture;
+                    }
+                }
             }
         }
 
