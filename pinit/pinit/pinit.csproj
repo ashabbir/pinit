@@ -181,6 +181,9 @@
     <Compile Include="Data\Comment.cs">
       <DependentUpon>PinitModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Data\FI_Pin_Result.cs">
+      <DependentUpon>PinitModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Data\FI_UpdateProfile_Result.cs">
       <DependentUpon>PinitModel.tt</DependentUpon>
     </Compile>
@@ -352,9 +355,11 @@
     <Content Include="Views\Boards\_UpdateBoardPartial.cshtml" />
     <Content Include="Views\Boards\_CreateBoardPartial.cshtml" />
     <Content Include="Views\Shared\_BoardsPartial.cshtml" />
+    <Content Include="Views\Shared\_PinsPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="pinuploads\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

@@ -299,5 +299,18 @@ namespace pinit.Data
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<FI_UpdateProfile_Result>("FI_UpdateProfile", usernameParameter, newFirstNameParameter, newLastNameParameter, newEmailParameter);
         }
+    
+        public virtual ObjectResult<FI_Pin_Result> FI_Pin(string imgurl, Nullable<int> boardid)
+        {
+            var imgurlParameter = imgurl != null ?
+                new ObjectParameter("imgurl", imgurl) :
+                new ObjectParameter("imgurl", typeof(string));
+    
+            var boardidParameter = boardid.HasValue ?
+                new ObjectParameter("boardid", boardid) :
+                new ObjectParameter("boardid", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<FI_Pin_Result>("FI_Pin", imgurlParameter, boardidParameter);
+        }
     }
 }

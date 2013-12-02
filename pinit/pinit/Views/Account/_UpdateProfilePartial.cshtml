@@ -1,5 +1,4 @@
-﻿
-@using Microsoft.AspNet.Identity
+﻿@using Microsoft.AspNet.Identity
 @model pinit.Models.UpdateUserinfoViewModel
 
 
@@ -17,38 +16,42 @@
     <div class="center-block">
         <div class="panel panel-default">
             <div class="panel-body">
-     <div class="form-group">
-        <div class="col-md-offset-4 col-md-4">
-            <p>You're logged in as <strong>@User.Identity.GetUserName()</strong>.</p>
-        </div>
-    </div>
+              <div class="form-group">
+                 <div class="col-md-offset-4 col-md-4">
+                  <p>You're logged in as <strong>@User.Identity.GetUserName()</strong>.</p>
+                  </div>
+                </div>
     
     
-    <div class="form-group">
-        <div class="col-md-offset-4 col-md-4">
-            @Html.TextBoxFor(m => m.FirstName , new { @class = "form-control"  , @placeholder ="First Name"})
-            @Html.ValidationMessageFor(m => m.FirstName)
-        </div>
-    </div>
-    <div class="form-group">
-      
-        <div class="col-md-offset-4 col-md-4">
-            @Html.TextBoxFor(m => m.LastName, new { @class = "form-control", @placeholder = "Last Name" })
-            @Html.ValidationMessageFor(m => m.LastName)
-        </div>
-    </div>
-    <div class="form-group">
-       
-        <div class="col-md-offset-4 col-md-4">
-            @Html.TextBoxFor(m => m.Email, new { @class = "form-control", @placeholder = "Email" })
-            @Html.ValidationMessageFor(m => m.Email)
-        </div>
-    </div>
+                <div class="form-group">
+                    <div class="col-md-offset-4 col-md-4">
+                        @Html.TextBoxFor(m => m.FirstName , new { @class = "form-control"  , @placeholder ="First Name"})
+                        @Html.ValidationMessageFor(m => m.FirstName)
+                    </div>
+                </div>
+                <div class="form-group">
+                  
+                    <div class="col-md-offset-4 col-md-4">
+                        @Html.TextBoxFor(m => m.LastName, new { @class = "form-control", @placeholder = "Last Name" })
+                        @Html.ValidationMessageFor(m => m.LastName)
+                    </div>
+                </div>
+                <div class="form-group">
+                   
+                    <div class="col-md-offset-4 col-md-4">
+                        @Html.TextBoxFor(m => m.Email, new { @class = "form-control", @placeholder = "Email" })
+                        @Html.ValidationMessageFor(m => m.Email)
+                    </div>
+                </div>
 
-    <div class="form-group">
-        <div class="col-md-offset-4 col-md-4">
-            <input type="submit" value="Update Profile" class="btn btn-lg btn-primary btn-block" />
+                <div class="form-group">
+                    <div class="col-md-offset-4 col-md-4">
+                        <input type="submit" value="Update Profile" class="btn btn-lg btn-primary btn-block" />
+                    </div>
+                </div>
+
+                </div>
+        </div>
         </div>
     </div>
 }
-                </div></div></div></div>

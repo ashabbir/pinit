@@ -15,41 +15,27 @@
         <div class="panel panel-primary">
             <div class="panel-heading">
                 <h3 class="panel-title">@Html.DisplayTextFor(model => model.BoardName) </h3>
-                
+
             </div>
             <div class="panel-body">
-                <form>
-                    
-                            <ul class="list-inline">
-                                <li>  <input type="file" name="upload" value="" id="upload" class="form-control"></li>  
-                                <li>  <input class="btn btn-sm btn-primary" type="submit"  value="upload file"/></li>  
-                            </ul>
-                       
-                </form>
+                @ViewBag.StatusMessage
+                @using (Html.BeginForm("CreatePin", "Boards", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                {
+                    @Html.ErrorAlert(true)
+                    @Html.AntiForgeryToken()
+                    @Html.HiddenFor(m => m.BoardId);
+                    <ul class="list-inline">
+                        @*<li>  <input type="file" name="upload" value="" id="upload" class="form-control"></li>*@
+                        <li>  @Html.TextBox("txtPinUrl", null, new { @class = "form-control" })  </li>
+                        <li>  <input class="btn btn-sm btn-primary" type="submit" value="Pin It" /></li>
+                    </ul>
+                }
 
                 <hr>
-                <ul class="list-inline">
+            
+            @Html.Partial("_PinsPartial", Model.Pins)   
 
-                    <li>
-                        <p>	@Html.ActionBoard("Details", new { id = 1 }, "~/Content/pin.png", "somepin")  </p>
-                    </li>
-                    <li>
-                        <p>	@Html.ActionBoard("Details", new { id = 1 }, "~/Content/pin.png", "somepin")  </p>
-                    </li>
-                    <li>
-                        <p>	@Html.ActionBoard("Details", new { id = 1 }, "~/Content/pin.png", "somepin")  </p>
-                    </li>
-                    <li>
-                        <p>	@Html.ActionBoard("Details", new { id = 1 }, "~/Content/pin.png", "somepin")  </p>
-                    </li>
-                    <li>
-                        <p>	@Html.ActionBoard("Details", new { id = 1 }, "~/Content/pin.png", "somepin")  </p>
-                    </li>
-                    <li>
-                        <p>	@Html.ActionBoard("Details", new { id = 1 }, "~/Content/pin.png", "somepin")  </p>
-                    </li>
 
-                </ul>
             </div><!-- /.panel-body -->
             <div class="panel-footer">
                 <p class="form-inline">
@@ -63,9 +49,9 @@
                         <img src="~/Content/nocomments.jpg" alt="No comments" />
                     }
                     @Html.ActionLink("Edit", "Edit", new { id = Model.BoardId }) |
-                    @Html.ActionLink("Back to List", "Index") | 
+                    @Html.ActionLink("Back to List", "Index") |
                     @Html.ActionLink("Delete", "Delete", new { id = Model.BoardId })
-                    
+
                 </p>
             </div>
 

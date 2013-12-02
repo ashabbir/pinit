@@ -925,6 +925,10 @@ warning 6002: The table/view 'Pinit.dbo.UserLike' does not have a primary key de
             <Parameter Name="newLastName" Mode="In" Type="String" />
             <Parameter Name="newEmail" Mode="In" Type="String" />
           </FunctionImport>
+          <FunctionImport Name="FI_Pin" ReturnType="Collection(PinitModel.FI_Pin_Result)">
+            <Parameter Name="imgurl" Mode="In" Type="String" />
+            <Parameter Name="boardid" Mode="In" Type="Int32" />
+          </FunctionImport>
         </EntityContainer>
         <ComplexType Name="UP_AcceptOrRejectFriendShipRequest_Result">
           <Property Type="Boolean" Name="Success" Nullable="true" />
@@ -983,6 +987,10 @@ warning 6002: The table/view 'Pinit.dbo.UserLike' does not have a primary key de
           <Property Type="String" Name="msg" Nullable="false" MaxLength="1" />
         </ComplexType>
         <ComplexType Name="FI_UpdateProfile_Result">
+          <Property Type="Boolean" Name="Success" Nullable="true" />
+          <Property Type="String" Name="msg" Nullable="false" MaxLength="1" />
+        </ComplexType>
+        <ComplexType Name="FI_Pin_Result">
           <Property Type="Boolean" Name="Success" Nullable="true" />
           <Property Type="String" Name="msg" Nullable="false" MaxLength="1" />
         </ComplexType>
@@ -1233,6 +1241,14 @@ warning 6002: The table/view 'Pinit.dbo.UserLike' does not have a primary key de
           <FunctionImportMapping FunctionImportName="FI_UpdateProfile" FunctionName="PinitModel.Store.UP_UpdateProfile">
             <ResultMapping>
               <ComplexTypeMapping TypeName="PinitModel.FI_UpdateProfile_Result">
+                <ScalarProperty Name="Success" ColumnName="Success" />
+                <ScalarProperty Name="msg" ColumnName="msg" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="FI_Pin" FunctionName="PinitModel.Store.UP_Pin">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="PinitModel.FI_Pin_Result">
                 <ScalarProperty Name="Success" ColumnName="Success" />
                 <ScalarProperty Name="msg" ColumnName="msg" />
               </ComplexTypeMapping>
