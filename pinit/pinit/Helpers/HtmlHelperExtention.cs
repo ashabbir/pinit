@@ -12,6 +12,24 @@ namespace System.Web.Mvc.Html
     public static class HtmlHelperExtention
     {
 
+
+        public static MvcHtmlString PinTag(this HtmlHelper html, object routeValues, string imagePath, string alt)
+        {
+            var url = new UrlHelper(html.ViewContext.RequestContext);
+
+            //@class = "form-control", @style = "width: 140px; height: 140px;"
+            // build the <img> tag
+            var imgBuilder = new TagBuilder("img");
+            imgBuilder.MergeAttribute("src", url.Content(imagePath));
+            imgBuilder.MergeAttribute("alt", alt);
+            imgBuilder.AddCssClass("thumbnail");
+            imgBuilder.MergeAttribute("style", "width: 140px; height: 140px;");
+            string imgHtml = imgBuilder.ToString(TagRenderMode.SelfClosing);
+            return MvcHtmlString.Create(imagePath);
+        }
+
+
+
         public static MvcHtmlString ActionBoard(this HtmlHelper html, string action, object routeValues, string imagePath, string alt)
         {
             var url = new UrlHelper(html.ViewContext.RequestContext);
@@ -33,6 +51,9 @@ namespace System.Web.Mvc.Html
 
             return MvcHtmlString.Create(anchorHtml);
         }
+
+
+
         public static MvcHtmlString ActionBoard(this HtmlHelper html, string action, string controller ,object routeValues, string imagePath, string alt)
         {
             var url = new UrlHelper(html.ViewContext.RequestContext);

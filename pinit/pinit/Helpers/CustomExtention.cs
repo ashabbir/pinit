@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Web;
+using System.Configuration;
 
 namespace pinit.Helpers
 {
@@ -26,6 +27,9 @@ namespace pinit.Helpers
 
         public static bool DownloadImage(this string imageUrl, out string virualLocation) 
         {
+
+            //VirualLocatoin
+            virualLocation  = ConfigurationManager.AppSettings.Get("VirualLocatoin");
             var toreturn = false;
             try
             {
@@ -60,7 +64,7 @@ namespace pinit.Helpers
                     fs.Close();
                     bw.Close();
                 }
-                virualLocation = @"/pinuploads/" + fileName;
+                virualLocation = virualLocation+ fileName;
                 //     /pinuploads/[filename]
 
                 return toreturn;
