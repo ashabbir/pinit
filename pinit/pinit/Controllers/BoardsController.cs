@@ -114,6 +114,13 @@ namespace pinit.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "BoardId,BoardName,BoardOwner,DateCreated,PrivateComments")] Board board)
         {
+
+
+            if (string.IsNullOrWhiteSpace(board.BoardName)) 
+            {
+                ModelState.AddModelError("", "Board Name Required");
+            }
+
             if (ModelState.IsValid)
             {
                 db.Entry(board).State = EntityState.Modified;
