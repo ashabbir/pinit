@@ -43,6 +43,10 @@ namespace pinit.Controllers
             {
                 ModelState.AddModelError("", "pin Url Issue");
             }
+            else if (pinstatusid == PinStatusId.PinPresent) 
+            {
+                ModelState.AddModelError("", "you have a pin dude, i dont wana cascade so delete the pin would ya");
+            }
            
             if (id == null)
             {
@@ -149,7 +153,14 @@ namespace pinit.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Board board = db.Boards.Find(id);
+            Board board = db.Boards.Include("Pins").FirstOrDefault( b => b.BoardId == id);
+            
+            //this here will redirect ot detail saying dude u have a pin cant delete board
+            if(board.Pins.count() > 0) 
+            {
+                return RedirectToAction("Details", new { id = board.BoardId, pinstatusid = PinStatusId.PinPresent });
+            }
+            
             db.Boards.Remove(board);
             db.SaveChanges();
             return RedirectToAction("Index");
@@ -211,6 +222,7 @@ namespace pinit.Controllers
         {
             PinAdded,
             PinDeleted,
+            PinPresent,
             PinUrlIssue,
             Error
         }
