@@ -23,4 +23,12 @@ user should be able to deny or accept a request that was made by some one for fr
 user should be able to retract a friendship request
 
 ### Comment framework
+* user can add comments to pictures that he can see only. his pics / his friends pics
+
+### Repin
+* user should be able to repin
+
+### tag framework
+* user can add tags to a board 
+* user can search for tags returns his boards and other boards that he is following or his friends boards
 
