@@ -1,0 +1,42 @@
+﻿@model pinit.Data.Pin
+
+@{
+    ViewBag.Title = "Details";
+}
+
+
+
+<div class="container theme-showcase">
+    <div class="center-block">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h3 class="panel-title"></h3>
+
+            </div>
+            <div class="panel-body">
+
+                @Html.PinTag(Model.Picture.ImageUrl, "pin")
+
+
+
+
+
+
+
+
+            </div><!-- /.panel-body -->
+            <div class="panel-footer">
+                <p class="form-inline">
+                <p>
+                    @Html.ActionLink("Delete", "Delete", new { id = Model.PinId }) |
+                    @Html.ActionLink("Back", "Details", "Boards", new { id = Model.BoardId }, null)
+
+                </p>
+                </p>
+            </div>
+
+
+        </div><!-- panel panel-default-->
+
+    </div><!--center -->
+</div> <!-- /container -->
