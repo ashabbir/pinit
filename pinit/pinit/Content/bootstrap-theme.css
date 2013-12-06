@@ -5506,13 +5506,15 @@ textarea.input-group-sm > .input-group-btn > .btn {
   font-size: 12px;
   font-weight: bold;
   line-height: 1;
-  color: #ffffff;
+  color: #5a075b;
   text-align: center;
   white-space: nowrap;
   vertical-align: baseline;
-  background-color: #7a8288;
+  background-color: rgba(233, 247, 244, 0.08);
   border-radius: 10px;
 }
+
+
 
 .badge:empty {
   display: none;

@@ -5504,21 +5504,6 @@ textarea.input-group-sm > .input-group-btn > .btn {
   background-color: #d62c1a;
 }
 
-.badge {
-  display: inline-block;
-  min-width: 10px;
-  padding: 3px 7px;
-  font-size: 13px;
-  font-weight: bold;
-  line-height: 1;
-  color: #ffffff;
-  text-align: center;
-  white-space: nowrap;
-  vertical-align: baseline;
-  background-color: #95a5a6;
-  border-radius: 10px;
-}
-
 .badge:empty {
   display: none;
 }

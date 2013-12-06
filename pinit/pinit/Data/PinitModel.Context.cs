@@ -312,5 +312,22 @@ namespace pinit.Data
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<FI_Pin_Result>("FI_Pin", imgurlParameter, boardidParameter);
         }
+    
+        public virtual ObjectResult<FI_AcceptRejectRequest_Result> FI_AcceptRejectRequest(string fromUser, string toUser, Nullable<bool> accepted)
+        {
+            var fromUserParameter = fromUser != null ?
+                new ObjectParameter("FromUser", fromUser) :
+                new ObjectParameter("FromUser", typeof(string));
+    
+            var toUserParameter = toUser != null ?
+                new ObjectParameter("ToUser", toUser) :
+                new ObjectParameter("ToUser", typeof(string));
+    
+            var acceptedParameter = accepted.HasValue ?
+                new ObjectParameter("accepted", accepted) :
+                new ObjectParameter("accepted", typeof(bool));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<FI_AcceptRejectRequest_Result>("FI_AcceptRejectRequest", fromUserParameter, toUserParameter, acceptedParameter);
+        }
     }
 }

@@ -929,6 +929,11 @@ warning 6002: The table/view 'Pinit.dbo.UserLike' does not have a primary key de
             <Parameter Name="imgurl" Mode="In" Type="String" />
             <Parameter Name="boardid" Mode="In" Type="Int32" />
           </FunctionImport>
+          <FunctionImport Name="FI_AcceptRejectRequest" ReturnType="Collection(PinitModel.FI_AcceptRejectRequest_Result)">
+            <Parameter Name="FromUser" Mode="In" Type="String" />
+            <Parameter Name="ToUser" Mode="In" Type="String" />
+            <Parameter Name="accepted" Mode="In" Type="Boolean" />
+          </FunctionImport>
         </EntityContainer>
         <ComplexType Name="UP_AcceptOrRejectFriendShipRequest_Result">
           <Property Type="Boolean" Name="Success" Nullable="true" />
@@ -993,6 +998,10 @@ warning 6002: The table/view 'Pinit.dbo.UserLike' does not have a primary key de
         <ComplexType Name="FI_Pin_Result">
           <Property Type="Boolean" Name="Success" Nullable="true" />
           <Property Type="String" Name="msg" Nullable="false" MaxLength="1" />
+        </ComplexType>
+        <ComplexType Name="FI_AcceptRejectRequest_Result">
+          <Property Type="Boolean" Name="Success" Nullable="true" />
+          <Property Type="String" Name="msg" Nullable="false" MaxLength="22" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -1249,6 +1258,14 @@ warning 6002: The table/view 'Pinit.dbo.UserLike' does not have a primary key de
           <FunctionImportMapping FunctionImportName="FI_Pin" FunctionName="PinitModel.Store.UP_Pin">
             <ResultMapping>
               <ComplexTypeMapping TypeName="PinitModel.FI_Pin_Result">
+                <ScalarProperty Name="Success" ColumnName="Success" />
+                <ScalarProperty Name="msg" ColumnName="msg" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="FI_AcceptRejectRequest" FunctionName="PinitModel.Store.UP_AcceptOrRejectFriendShipRequest">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="PinitModel.FI_AcceptRejectRequest_Result">
                 <ScalarProperty Name="Success" ColumnName="Success" />
                 <ScalarProperty Name="msg" ColumnName="msg" />
               </ComplexTypeMapping>
