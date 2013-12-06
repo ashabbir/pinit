@@ -156,7 +156,7 @@ namespace pinit.Controllers
             Board board = db.Boards.Include("Pins").FirstOrDefault( b => b.BoardId == id);
             
             //this here will redirect ot detail saying dude u have a pin cant delete board
-            if(board.Pins.count() > 0) 
+            if(board.Pins.Count() > 0) 
             {
                 return RedirectToAction("Details", new { id = board.BoardId, pinstatusid = PinStatusId.PinPresent });
             }

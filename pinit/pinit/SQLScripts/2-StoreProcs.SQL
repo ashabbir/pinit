@@ -552,5 +552,87 @@ Select CAST(1 as Bit) as Success, '' as msg
 return
 Go
 
+USE [Pinit]
+GO
+
+/****** Object:  StoredProcedure [dbo].[UP_UpdateProfile]    Script Date: 11/28/2013 11:16:33 PM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+
+
+ALTER PROC [dbo].[UP_UpdateProfile] (
+	@username varchar(100),
+	@newFirstName varchar(100), 
+	@newLastName varchar(100), 
+	@newEmail varchar(255)) 
+AS
+BEGIN TRANSACTION
+	BEGIN TRY
+		Update UserInfo
+		Set LastName = @newLastName , FirstName = @newFirstName , email = @newEmail
+		where username = @username
+		COMMIT TRANSACTION
+		Select CAST(1 as Bit) as Success, '' as msg
+	END TRY
+	BEGIN CATCH
+	    ROLLBACK TRANSACTION
+	    DECLARE @Msg NVARCHAR(MAX)  
+        SELECT @Msg='User profile could not be updated '+ ERROR_MESSAGE() 
+	    Select CAST(0 as Bit) as Success, @Msg as msg
+	END CATCH
+
+
+GO
+
+
+USE [Pinit]
+GO
+
+/****** Object:  StoredProcedure [dbo].[UP_SignUp]    Script Date: 11/28/2013 11:27:50 PM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+
+
+ALTER PROC [dbo].[UP_SignUp] (
+	@username varchar(100),
+	@password varchar(100),
+	@FirstName varchar(100),
+	@LastName varchar(100),
+	@Email varchar(255) ) 
+AS
+
+	IF EXISTS (Select * from UserInfo Where UserName = @UserName )
+	BEGIN
+		Select CAST(0 as Bit) as Success, 'User Already Exist' as msg
+		Return 
+	END
+	
+	BEGIN TRANSACTION
+		BEGIN TRY
+		Insert into Userinfo (UserName , FirstName , Email , LastName ,[Password] ) 
+		values (@username , @FirstName , @email , @LastName , @password)
+		COMMIT TRANSACTION
+		Select CAST(1 as Bit) as Success, '' as msg
+	END TRY
+	BEGIN CATCH
+	    ROLLBACK TRANSACTION
+	    DECLARE @Msg NVARCHAR(MAX)  
+        SELECT @Msg='User Could not be created '+ ERROR_MESSAGE() 
+	    Select CAST(0 as Bit) as Success, @Msg as msg
+	END CATCH
+
+
+GO
+
+
+
 
 use master
