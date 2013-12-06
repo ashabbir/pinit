@@ -7,7 +7,7 @@
         {
         <li>
             <p>
-                @Html.ActionBoard("Details", "boards", new { id = item.PinId }, item.Picture.ImageUrl , "pin")
+                @Html.PinTag("Details", "Pin", new { id = item.PinId }, item.Picture.ImageUrl, "pin")
             </p>
         </li>
         }

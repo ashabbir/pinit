@@ -4,39 +4,39 @@
     ViewBag.Title = "Details";
 }
 
-<h2>Details</h2>
 
-<div>
-    <h4>Pin</h4>
-	<hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.DateCreated)
-        </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.DateCreated)
-        </dd>
+<div class="container theme-showcase">
+    <div class="center-block">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h3 class="panel-title"></h3>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Board.BoardName)
-        </dt>
+            </div>
+            <div class="panel-body">
 
-        <dd>
-            @Html.DisplayFor(model => model.Board.BoardName)
-        </dd>
+                @Html.PinTag(Model.Picture.ImageUrl, "pin")
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Picture.ImageUrl)
-        </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Picture.ImageUrl)
-        </dd>
 
-    </dl>
-</div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.PinId }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
+
+
+
+
+
+            </div><!-- /.panel-body -->
+            <div class="panel-footer">
+                <p class="form-inline">
+                <p>
+                    @Html.ActionLink("Delete", "Delete", new { id = Model.PinId }) |
+                    @Html.ActionLink("Back", "Details", "Boards", new { id = Model.BoardId }, null)
+
+                </p>
+                </p>
+            </div>
+
+
+        </div><!-- panel panel-default-->
+
+    </div><!--center -->
+</div> <!-- /container -->

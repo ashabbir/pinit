@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using pinit.Data;
 
+
 namespace pinit.Controllers
 {
     public class PinController : Controller
@@ -81,9 +82,11 @@ namespace pinit.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             Pin pin = db.Pins.Find(id);
+            var boardId = pin.BoardId;
+           
             db.Pins.Remove(pin);
             db.SaveChanges();
-            return RedirectToAction("Index");
+            return RedirectToAction("Details", "Boards", new { id = boardId  });
         }
 
         protected override void Dispose(bool disposing)
