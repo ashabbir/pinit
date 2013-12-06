@@ -37,7 +37,8 @@ namespace pinit.Controllers
 
             if (pinstatusid == PinStatusId.Error )
             {
-                ModelState.AddModelError("" , "pin process just encountered an error");
+                string error = "pin process just encountered an error";
+                ModelState.AddModelError("" , error);
             } 
             else if (pinstatusid == PinStatusId.PinUrlIssue) 
             {
@@ -174,11 +175,10 @@ namespace pinit.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult CreatePin(string txtPinUrl, int BoardId)
         {
-
+            string error = "Pin was not created";
             var success = false;
             if (string.IsNullOrWhiteSpace(txtPinUrl)) 
             {
-              
                 return RedirectToAction("Details", new { id = BoardId, pinstatusid = PinStatusId.PinUrlIssue });
             }
             //step 1 get the image save it in directory
@@ -192,6 +192,10 @@ namespace pinit.Controllers
                     if (result.Count() > 0)
                     {
                         success = result.FirstOrDefault().Success ?? false;
+                        if (!success) 
+                        {
+                            error = result.FirstOrDefault().msg;
+                        }
                     }
                 }
             }
@@ -203,7 +207,7 @@ namespace pinit.Controllers
             }
             else
             {
-                ModelState.AddModelError("", "Pin was not added try again");
+                ViewBag.Error = error;
                 return RedirectToAction("Details", new { id = BoardId  , pinstatusid = PinStatusId.Error});
             }
         }

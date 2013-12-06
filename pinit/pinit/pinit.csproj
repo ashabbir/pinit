@@ -172,6 +172,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\BoardsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\PinController.cs" />
     <Compile Include="Data\Board.cs">
       <DependentUpon>PinitModel.tt</DependentUpon>
     </Compile>
@@ -361,6 +362,9 @@
     <Content Include="Views\Shared\_BoardsPartial.cshtml" />
     <Content Include="Views\Shared\_PinsPartial.cshtml" />
     <Content Include="Views\Shared\_AddPinPartial.cshtml" />
+    <Content Include="Views\Pin\Create.cshtml" />
+    <Content Include="Views\Pin\Delete.cshtml" />
+    <Content Include="Views\Pin\Details.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
