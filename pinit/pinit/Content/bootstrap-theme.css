@@ -265,7 +265,7 @@ table {
   }
   .table td,
   .table th {
-    background-color: #fff !important;
+    background-color: rgba(0, 0, 0, 0.075) !important;
   }
   .btn > .caret,
   .dropup > .btn > .caret {
@@ -7711,9 +7711,6 @@ h6 {
   border-color: #1c1e22;
 }
 
-.table-responsive > .table {
-  background-color: #2e3338;
-}
 
 .has-warning .help-block,
 .has-warning .control-label {

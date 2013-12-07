@@ -22,7 +22,6 @@ namespace pinit.Controllers
             }
 
             var model  = new FriendShip();
-            
             var user = User.Identity.GetUserName();
             model.FillMe(user);
             return View(model);

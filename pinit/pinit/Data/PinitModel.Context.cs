@@ -329,5 +329,45 @@ namespace pinit.Data
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<FI_AcceptRejectRequest_Result>("FI_AcceptRejectRequest", fromUserParameter, toUserParameter, acceptedParameter);
         }
+    
+        public virtual ObjectResult<UP_PossibleFriends_Result> UP_PossibleFriends(string username)
+        {
+            var usernameParameter = username != null ?
+                new ObjectParameter("username", username) :
+                new ObjectParameter("username", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<UP_PossibleFriends_Result>("UP_PossibleFriends", usernameParameter);
+        }
+    
+        public virtual ObjectResult<FP_PossibleFriends_Result> FP_PossibleFriends(string username)
+        {
+            var usernameParameter = username != null ?
+                new ObjectParameter("username", username) :
+                new ObjectParameter("username", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<FP_PossibleFriends_Result>("FP_PossibleFriends", usernameParameter);
+        }
+    
+        public virtual ObjectResult<FI_PossibleFriend_Result> FI_PossibleFriend(string username)
+        {
+            var usernameParameter = username != null ?
+                new ObjectParameter("username", username) :
+                new ObjectParameter("username", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<FI_PossibleFriend_Result>("FI_PossibleFriend", usernameParameter);
+        }
+    
+        public virtual ObjectResult<FI_SendFriendShipRequest_Result> FI_SendFriendShipRequest(string fromUser, string toUser)
+        {
+            var fromUserParameter = fromUser != null ?
+                new ObjectParameter("FromUser", fromUser) :
+                new ObjectParameter("FromUser", typeof(string));
+    
+            var toUserParameter = toUser != null ?
+                new ObjectParameter("ToUser", toUser) :
+                new ObjectParameter("ToUser", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<FI_SendFriendShipRequest_Result>("FI_SendFriendShipRequest", fromUserParameter, toUserParameter);
+        }
     }
 }

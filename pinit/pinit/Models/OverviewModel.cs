@@ -8,6 +8,7 @@ namespace pinit.Models
     public class OverviewModel
     {
         public List<pinit.Data.Board> boards { get; set; }
+        public List<pinit.Models.UserFriend> PendingFriendRequests { get; set; }
         public string username { get; set; }
 
 
@@ -15,6 +16,7 @@ namespace pinit.Models
         {
             SetUserName(_username);
             LoadBoards();
+            LoadPendingFriendRequest();
         }
 
 
@@ -22,6 +24,8 @@ namespace pinit.Models
         {
             username = _username;
         }
+
+
         public void LoadBoards() 
         {
             boards = new List<Data.Board>();
@@ -36,6 +40,23 @@ namespace pinit.Models
                     }
                 }
             }
+        }
+
+
+        public void LoadPendingFriendRequest()
+        {
+            PendingFriendRequests = new List<UserFriend>();
+            using (var db = new pinit.Data.PinitEntities()) {
+                var _pendingfriends = db.Friends.Where(x => x.RequestStatus == "requested" && x.TargetUser == username).ToList();
+                foreach (var item in _pendingfriends)
+                {
+                    var user = new UserFriend(item.SourceUser);
+                    user.FriendShipStatus = item;
+                    PendingFriendRequests.Add(user);
+                }
+            
+            }
+            
         }
 
     }

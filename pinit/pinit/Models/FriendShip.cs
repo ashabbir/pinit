@@ -100,7 +100,7 @@ namespace pinit.Models
                 var _pendingrequest = db.Friends.Where(x => x.RequestStatus == "requested" && x.SourceUser == myUserName).ToList();
                 foreach (var item in _pendingrequest)
                 {
-                    var user = new UserFriend(item.SourceUser);
+                    var user = new UserFriend(item.TargetUser);
                     user.FriendShipStatus = item;
                     PendingRequests.Add(user);
                 }

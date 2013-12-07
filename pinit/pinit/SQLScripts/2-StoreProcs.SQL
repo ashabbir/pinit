@@ -633,6 +633,32 @@ AS
 GO
 
 
+-- ================================================
+-- Author:		Ahmed
+-- Create date: 11/12/2013
+-- Description:	this will find a list of all people that can be my friend
+-- =============================================
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[UP_PossibleFriends]') AND type in (N'P', N'PC'))
+DROP PROCEDURE [dbo].[UP_PossibleFriends]
+GO
+
+
+Create PROC [dbo].[UP_PossibleFriends] (
+	@username varchar(100)
+	) 
+AS
+
+
+select username , email , firstname , lastname 
+ from userinfo where username <> @username and username not in (
+select sourceuser as username from friend where TargetUser = @username
+union
+select targetuser as username from friend where SourceUser = @username
+)
+
+GO
+
+
 
 
 use master

@@ -6,69 +6,69 @@
 
 
 
-<h2>Friend ships</h2>
+<h2>Friends</h2>
 <div class="container theme-showcase">
     @Html.ErrorAlert(true)
     <div class="center-block">
         <div class="panel panel-info">
-            <div class="panel-heading">
-                <h3 class="panel-title">Pending</h3>
-            </div>
-            <div class="panel-body">
-                <ul class="list-group">
-                    @foreach (var item in Model.PendingFriends)
-                    {
-                        <li class="list-group-item">
-                          <span class="badge">@Html.ActionLink("Accept", "AcceptRequest", new { id = item.PersonalInfo.UserName })</span>
-                          <span class="badge">@Html.ActionLink("Reject", "RejectRequest", new { id = item.PersonalInfo.UserName })</span>
-                          @Html.Label(item.PersonalInfo.FirstName)  @Html.Label(item.PersonalInfo.LastName)
-                        </li>
-                    }
-                </ul>
-            </div>
-            <div class="panel-footer">
-                <em class="text-info">These are the friend ship request people have made for you. You need to act on them</em>
-            </div>
-        </div>
+           
+                <div class="panel-body">
+                    <p>
+                        @Html.ActionLink("Add Friend", "Index", "UserInfo", null, null)
+                    </p>
+                </div><!-- /.panel-body -->
+                
+            </div><!-- panel panel-default-->
+        
 
+            
+                @Html.Partial("_PendingFriendRequestPartial",  Model.PendingFriends )
+         
+            
+            @if (Model.ActiveFriends.Count() > 0)
+            {
+                <div class="panel panel-success">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Friends</h3>
+                    </div>
+                    <div class="panel-body">
+                        <ul class="list-group">
+                            @foreach (var item in Model.ActiveFriends)
+                            {
+                                <li class="list-group-item"> <span class="badge">Boards TODO</span> @Html.Label(item.PersonalInfo.FirstName)  @Html.Label(item.PersonalInfo.LastName)</li>
+                            }
+                        </ul>
+                    </div>
+                    <div class="panel-footer">
+                        <em class="text-info">You Current friends</em>
+                    </div>
+                </div>
 
-        <div class="panel panel-success">
-            <div class="panel-heading">
-                <h3 class="panel-title">Friends</h3>
-            </div>
-            <div class="panel-body">
-                <ul class="list-group">
-                    @foreach (var item in Model.ActiveFriends)
-                    {
-                        <li class="list-group-item"> <span class="badge">action</span> @Html.Label(item.PersonalInfo.FirstName)  @Html.Label(item.PersonalInfo.LastName)</li>
-                    }
-                </ul>
-            </div>
-            <div class="panel-footer">
-                <em class="text-info">You Current friends</em>
-            </div>
-        </div>
+            }
+            
 
-
-        <div class="panel panel-warning">
-            <div class="panel-heading">
-                <h3 class="panel-title">Request status</h3>
-            </div>
-            <div class="panel-body">
-                <ul class="list-group">
-                    @foreach (var item in Model.PendingRequests)
-                    {
-                        <li class="list-group-item">@Html.Label(item.PersonalInfo.FirstName)  @Html.Label(item.PersonalInfo.LastName)</li>
-                    }
-                </ul>
-            </div><!-- /.panel-body -->
-            <div class="panel-footer">
-                <em class="text-info">These are the request you sent out and people have not accepted or rejected them</em>
-            </div>
-        </div><!-- panel panel-default-->
-    </div><!--center -->
-</div> <!-- /container -->
-@*<p>
-        @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
-        @Html.ActionLink("Back to List", "Index")
-    </p>*@
+            @if (Model.PendingRequests.Count() > 0)
+            {
+                <div class="panel panel-warning">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Pending Request</h3>
+                    </div>
+                    <div class="panel-body">
+                        <ul class="list-group">
+                            @foreach (var item in Model.PendingRequests)
+                            {
+                                <li class="list-group-item">@Html.Label(item.PersonalInfo.FirstName)  @Html.Label(item.PersonalInfo.LastName)</li>
+                            }
+                        </ul>
+                    </div><!-- /.panel-body -->
+                    <div class="panel-footer">
+                        <em class="text-info">These are the request you sent out and people have not accepted or rejected them</em>
+                    </div>
+                </div><!-- panel panel-default-->
+            }
+        </div><!--center -->
+    </div> <!-- /container -->
+    @*<p>
+            @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
+            @Html.ActionLink("Back to List", "Index")
+        </p>*@

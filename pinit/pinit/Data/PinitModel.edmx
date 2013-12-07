@@ -356,6 +356,9 @@ warning 6002: The table/view 'Pinit.dbo.UserLike' does not have a primary key de
           <Parameter Name="imgurl" Type="varchar" Mode="In" />
           <Parameter Name="boardid" Type="int" Mode="In" />
         </Function>
+        <Function Name="UP_PossibleFriends" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="username" Type="varchar" Mode="In" />
+        </Function>
         <Function Name="UP_Repin" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="pinid" Type="int" Mode="In" />
           <Parameter Name="boardid" Type="int" Mode="In" />
@@ -934,6 +937,19 @@ warning 6002: The table/view 'Pinit.dbo.UserLike' does not have a primary key de
             <Parameter Name="ToUser" Mode="In" Type="String" />
             <Parameter Name="accepted" Mode="In" Type="Boolean" />
           </FunctionImport>
+          <FunctionImport Name="UP_PossibleFriends" ReturnType="Collection(PinitModel.UP_PossibleFriends_Result)">
+            <Parameter Name="username" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="FP_PossibleFriends" ReturnType="Collection(PinitModel.FP_PossibleFriends_Result)">
+            <Parameter Name="username" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="FI_PossibleFriend" ReturnType="Collection(PinitModel.FI_PossibleFriend_Result)">
+            <Parameter Name="username" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="FI_SendFriendShipRequest" ReturnType="Collection(PinitModel.FI_SendFriendShipRequest_Result)">
+            <Parameter Name="FromUser" Mode="In" Type="String" />
+            <Parameter Name="ToUser" Mode="In" Type="String" />
+          </FunctionImport>
         </EntityContainer>
         <ComplexType Name="UP_AcceptOrRejectFriendShipRequest_Result">
           <Property Type="Boolean" Name="Success" Nullable="true" />
@@ -1002,6 +1018,28 @@ warning 6002: The table/view 'Pinit.dbo.UserLike' does not have a primary key de
         <ComplexType Name="FI_AcceptRejectRequest_Result">
           <Property Type="Boolean" Name="Success" Nullable="true" />
           <Property Type="String" Name="msg" Nullable="false" MaxLength="22" />
+        </ComplexType>
+        <ComplexType Name="UP_PossibleFriends_Result">
+          <Property Type="String" Name="username" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="email" Nullable="false" MaxLength="255" />
+          <Property Type="String" Name="firstname" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="lastname" Nullable="false" MaxLength="100" />
+        </ComplexType>
+        <ComplexType Name="FP_PossibleFriends_Result">
+          <Property Type="String" Name="username" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="email" Nullable="false" MaxLength="255" />
+          <Property Type="String" Name="firstname" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="lastname" Nullable="false" MaxLength="100" />
+        </ComplexType>
+        <ComplexType Name="FI_PossibleFriend_Result">
+          <Property Type="String" Name="username" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="email" Nullable="false" MaxLength="255" />
+          <Property Type="String" Name="firstname" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="lastname" Nullable="false" MaxLength="100" />
+        </ComplexType>
+        <ComplexType Name="FI_SendFriendShipRequest_Result">
+          <Property Type="Boolean" Name="Success" Nullable="true" />
+          <Property Type="String" Name="msg" Nullable="false" MaxLength="1" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -1266,6 +1304,44 @@ warning 6002: The table/view 'Pinit.dbo.UserLike' does not have a primary key de
           <FunctionImportMapping FunctionImportName="FI_AcceptRejectRequest" FunctionName="PinitModel.Store.UP_AcceptOrRejectFriendShipRequest">
             <ResultMapping>
               <ComplexTypeMapping TypeName="PinitModel.FI_AcceptRejectRequest_Result">
+                <ScalarProperty Name="Success" ColumnName="Success" />
+                <ScalarProperty Name="msg" ColumnName="msg" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="UP_PossibleFriends" FunctionName="PinitModel.Store.UP_PossibleFriends">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="PinitModel.UP_PossibleFriends_Result">
+                <ScalarProperty Name="username" ColumnName="username" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="firstname" ColumnName="firstname" />
+                <ScalarProperty Name="lastname" ColumnName="lastname" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="FP_PossibleFriends" FunctionName="PinitModel.Store.UP_PossibleFriends">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="PinitModel.FP_PossibleFriends_Result">
+                <ScalarProperty Name="username" ColumnName="username" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="firstname" ColumnName="firstname" />
+                <ScalarProperty Name="lastname" ColumnName="lastname" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="FI_PossibleFriend" FunctionName="PinitModel.Store.UP_PossibleFriends">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="PinitModel.FI_PossibleFriend_Result">
+                <ScalarProperty Name="username" ColumnName="username" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="firstname" ColumnName="firstname" />
+                <ScalarProperty Name="lastname" ColumnName="lastname" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="FI_SendFriendShipRequest" FunctionName="PinitModel.Store.UP_SendFriendShipRequest">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="PinitModel.FI_SendFriendShipRequest_Result">
                 <ScalarProperty Name="Success" ColumnName="Success" />
                 <ScalarProperty Name="msg" ColumnName="msg" />
               </ComplexTypeMapping>
