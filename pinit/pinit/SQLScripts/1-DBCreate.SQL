@@ -112,7 +112,7 @@ PinId int not null,
 TargetPinId int not null,
 Foreign Key (PinId) references Pin(PinId),
 Foreign Key (TargetPinId) references Pin(PinId),
-Unique (PinId, TargetPinId)
+primary key(PinId, TargetPinId)
 )
 
 Create Table Comment(
@@ -130,7 +130,7 @@ Create Table UserLike(
 UserName varchar(100) not null,
 PinId int not null,
 DateLiked Datetime not null Default GetDate() ,
-Unique (UserName,PinId),
+primary key(UserName,PinId),
 Foreign Key (UserName) references userinfo (UserName),
 Foreign Key (PinId) references Pin (PinId),
 
@@ -167,6 +167,46 @@ Foreign Key (PinId) references Pin (PinId),
 --WITH CHANGE_TRACKING AUTO
 
 
+drop table repin
+go
+
+
+Create Table Repin(
+RepinId int IDENTITY(1,1) NOT NULL, -- THIS Makes It Auto Increment
+PinId int not null,
+TargetPinId int not null,
+CONSTRAINT [PK_Repin] PRIMARY KEY CLUSTERED (RepinId ASC), -- This makes it a primary key
+Foreign Key (PinId) references Pin(PinId),
+Foreign Key (TargetPinId) references Pin(PinId),
+unique (PinId, TargetPinId)
+)
+
+drop table userlike
+go
+
+Create Table UserLike(
+UserName varchar(100) not null,
+PinId int not null,
+DateLiked Datetime not null Default GetDate() ,
+primary key(UserName,PinId),
+Foreign Key (UserName) references userinfo (UserName),
+Foreign Key (PinId) references Pin (PinId),
+)
+
+
+drop table userlike
+go
+
+Create Table UserLike(
+UserLikeId int IDENTITY(1,1) NOT NULL, -- THIS Makes It Auto Increment
+UserName varchar(100) not null,
+PinId int not null,
+DateLiked Datetime not null Default GetDate() ,
+CONSTRAINT [PK_Like] PRIMARY KEY CLUSTERED (UserLikeId ASC), -- This makes it a primary key
+unique (UserName,PinId),
+Foreign Key (UserName) references userinfo (UserName),
+Foreign Key (PinId) references Pin (PinId),
+)
 
 use master
 

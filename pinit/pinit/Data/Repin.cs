@@ -12,14 +12,13 @@ namespace pinit.Data
     using System;
     using System.Collections.Generic;
     
-    public partial class UserLike
+    public partial class Repin
     {
-        public int UserLikeId { get; set; }
-        public string UserName { get; set; }
+        public int RepinId { get; set; }
         public int PinId { get; set; }
-        public System.DateTime DateLiked { get; set; }
+        public int TargetPinId { get; set; }
     
         public virtual Pin Pin { get; set; }
-        public virtual UserInfo UserInfo { get; set; }
+        public virtual Pin Pin1 { get; set; }
     }
 }

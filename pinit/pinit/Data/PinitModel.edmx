@@ -80,13 +80,11 @@
           <Property Name="TagId" Type="int" Nullable="false" />
           <Property Name="DateTaged" Type="datetime" Nullable="false" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'Pinit.dbo.Repin' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="Repin">
           <Key>
-            <PropertyRef Name="PinId" />
-            <PropertyRef Name="TargetPinId" />
+            <PropertyRef Name="RepinId" />
           </Key>
+          <Property Name="RepinId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="PinId" Type="int" Nullable="false" />
           <Property Name="TargetPinId" Type="int" Nullable="false" />
         </EntityType>
@@ -108,14 +106,11 @@ warning 6002: The table/view 'Pinit.dbo.Repin' does not have a primary key defin
           <Property Name="Password" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="DateRegistered" Type="datetime" Nullable="false" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'Pinit.dbo.UserLike' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="UserLike">
           <Key>
-            <PropertyRef Name="UserName" />
-            <PropertyRef Name="PinId" />
-            <PropertyRef Name="DateLiked" />
+            <PropertyRef Name="UserLikeId" />
           </Key>
+          <Property Name="UserLikeId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="UserName" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="PinId" Type="int" Nullable="false" />
           <Property Name="DateLiked" Type="datetime" Nullable="false" />
@@ -264,7 +259,7 @@ warning 6002: The table/view 'Pinit.dbo.UserLike' does not have a primary key de
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Repin__PinId__34C8D9D1">
+        <Association Name="FK__Repin__PinId__04E4BC85">
           <End Role="Pin" Type="Self.Pin" Multiplicity="1" />
           <End Role="Repin" Type="Self.Repin" Multiplicity="*" />
           <ReferentialConstraint>
@@ -276,7 +271,7 @@ warning 6002: The table/view 'Pinit.dbo.UserLike' does not have a primary key de
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Repin__TargetPin__35BCFE0A">
+        <Association Name="FK__Repin__TargetPin__05D8E0BE">
           <End Role="Pin" Type="Self.Pin" Multiplicity="1" />
           <End Role="Repin" Type="Self.Repin" Multiplicity="*" />
           <ReferentialConstraint>
@@ -288,7 +283,7 @@ warning 6002: The table/view 'Pinit.dbo.UserLike' does not have a primary key de
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__UserLike__PinId__3F466844">
+        <Association Name="FK__UserLike__PinId__10566F31">
           <End Role="Pin" Type="Self.Pin" Multiplicity="1" />
           <End Role="UserLike" Type="Self.UserLike" Multiplicity="*" />
           <ReferentialConstraint>
@@ -300,7 +295,7 @@ warning 6002: The table/view 'Pinit.dbo.UserLike' does not have a primary key de
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__UserLike__UserNa__3E52440B">
+        <Association Name="FK__UserLike__UserNa__0F624AF8">
           <End Role="UserInfo" Type="Self.UserInfo" Multiplicity="1" />
           <End Role="UserLike" Type="Self.UserLike" Multiplicity="*" />
           <ReferentialConstraint>
@@ -389,21 +384,10 @@ warning 6002: The table/view 'Pinit.dbo.UserLike' does not have a primary key de
           <EntitySet Name="Picture" EntityType="Self.Picture" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Pin" EntityType="Self.Pin" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PinTag" EntityType="Self.PinTag" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Repin" EntityType="Self.Repin" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tag" EntityType="Self.Tag" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserInfo" EntityType="Self.UserInfo" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Repin" EntityType="Self.Repin" store:Type="Tables" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [Repin].[PinId] AS [PinId], 
-    [Repin].[TargetPinId] AS [TargetPinId]
-    FROM [dbo].[Repin] AS [Repin]</DefiningQuery>
-          </EntitySet>
-          <EntitySet Name="UserLike" EntityType="Self.UserLike" store:Type="Tables" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [UserLike].[UserName] AS [UserName], 
-    [UserLike].[PinId] AS [PinId], 
-    [UserLike].[DateLiked] AS [DateLiked]
-    FROM [dbo].[UserLike] AS [UserLike]</DefiningQuery>
-          </EntitySet>
+          <EntitySet Name="UserLike" EntityType="Self.UserLike" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK__Board__BoardOwne__1ED998B2" Association="Self.FK__Board__BoardOwne__1ED998B2">
             <End Role="UserInfo" EntitySet="UserInfo" />
             <End Role="Board" EntitySet="Board" />
@@ -452,19 +436,19 @@ warning 6002: The table/view 'Pinit.dbo.UserLike' does not have a primary key de
             <End Role="Tag" EntitySet="Tag" />
             <End Role="PinTag" EntitySet="PinTag" />
           </AssociationSet>
-          <AssociationSet Name="FK__Repin__PinId__34C8D9D1" Association="Self.FK__Repin__PinId__34C8D9D1">
+          <AssociationSet Name="FK__Repin__PinId__04E4BC85" Association="Self.FK__Repin__PinId__04E4BC85">
             <End Role="Pin" EntitySet="Pin" />
             <End Role="Repin" EntitySet="Repin" />
           </AssociationSet>
-          <AssociationSet Name="FK__Repin__TargetPin__35BCFE0A" Association="Self.FK__Repin__TargetPin__35BCFE0A">
+          <AssociationSet Name="FK__Repin__TargetPin__05D8E0BE" Association="Self.FK__Repin__TargetPin__05D8E0BE">
             <End Role="Pin" EntitySet="Pin" />
             <End Role="Repin" EntitySet="Repin" />
           </AssociationSet>
-          <AssociationSet Name="FK__UserLike__PinId__3F466844" Association="Self.FK__UserLike__PinId__3F466844">
+          <AssociationSet Name="FK__UserLike__PinId__10566F31" Association="Self.FK__UserLike__PinId__10566F31">
             <End Role="Pin" EntitySet="Pin" />
             <End Role="UserLike" EntitySet="UserLike" />
           </AssociationSet>
-          <AssociationSet Name="FK__UserLike__UserNa__3E52440B" Association="Self.FK__UserLike__UserNa__3E52440B">
+          <AssociationSet Name="FK__UserLike__UserNa__0F624AF8" Association="Self.FK__UserLike__UserNa__0F624AF8">
             <End Role="UserInfo" EntitySet="UserInfo" />
             <End Role="UserLike" EntitySet="UserLike" />
           </AssociationSet>
@@ -484,7 +468,7 @@ warning 6002: The table/view 'Pinit.dbo.UserLike' does not have a primary key de
           <Property Name="PrivateComments" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="UserInfo" Relationship="Self.FK__Board__BoardOwne__1ED998B2" FromRole="Board" ToRole="UserInfo" />
           <NavigationProperty Name="BoardFollows" Relationship="Self.FK__BoardFoll__Board__239E4DCF" FromRole="Board" ToRole="BoardFollow" />
-          <NavigationProperty Name="Pins" Relationship="Self.FK__Pin__BoardId__2B3F6F97" FromRole="Board" ToRole="Pin" />
+          <NavigationProperty Name="Pins" Relationship="PinitModel.FK__Pin__BoardId__2B3F6F97" FromRole="Board" ToRole="Pin" />
         </EntityType>
         <EntityType Name="BoardFollow">
           <Key>
@@ -506,8 +490,8 @@ warning 6002: The table/view 'Pinit.dbo.UserLike' does not have a primary key de
           <Property Name="PinId" Type="Int32" Nullable="false" />
           <Property Name="CommentText" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="DateCommented" Type="DateTime" Nullable="false" Precision="3" />
-          <NavigationProperty Name="Pin" Relationship="Self.FK__Comment__PinId__3A81B327" FromRole="Comment" ToRole="Pin" />
           <NavigationProperty Name="UserInfo" Relationship="Self.FK__Comment__UserNam__398D8EEE" FromRole="Comment" ToRole="UserInfo" />
+          <NavigationProperty Name="Pin" Relationship="PinitModel.FK__Comment__PinId__3A81B327" FromRole="Comment" ToRole="Pin" />
         </EntityType>
         <EntityType Name="FollowStream">
           <Key>
@@ -540,23 +524,7 @@ warning 6002: The table/view 'Pinit.dbo.UserLike' does not have a primary key de
           <Property Name="PictureId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="ImageUrl" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="DateUploaded" Type="DateTime" Nullable="false" Precision="3" />
-          <NavigationProperty Name="Pins" Relationship="Self.FK__Pin__PictureId__2A4B4B5E" FromRole="Picture" ToRole="Pin" />
-        </EntityType>
-        <EntityType Name="Pin">
-          <Key>
-            <PropertyRef Name="PinId" />
-          </Key>
-          <Property Name="PinId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="PictureId" Type="Int32" Nullable="false" />
-          <Property Name="BoardId" Type="Int32" Nullable="false" />
-          <Property Name="DateCreated" Type="DateTime" Nullable="false" Precision="3" />
-          <NavigationProperty Name="Board" Relationship="Self.FK__Pin__BoardId__2B3F6F97" FromRole="Pin" ToRole="Board" />
-          <NavigationProperty Name="Comments" Relationship="Self.FK__Comment__PinId__3A81B327" FromRole="Pin" ToRole="Comment" />
-          <NavigationProperty Name="Picture" Relationship="Self.FK__Pin__PictureId__2A4B4B5E" FromRole="Pin" ToRole="Picture" />
-          <NavigationProperty Name="PinTags" Relationship="Self.FK__PinTag__PinId__30F848ED" FromRole="Pin" ToRole="PinTag" />
-          <NavigationProperty Name="UserLikes" Relationship="Self.FK__UserLike__PinId__3F466844" FromRole="Pin" ToRole="UserLike" />
-          <NavigationProperty Name="Pin1" Relationship="Self.Repin" FromRole="Pin" ToRole="Pin1" />
-          <NavigationProperty Name="Pins" Relationship="Self.Repin" FromRole="Pin1" ToRole="Pin" />
+          <NavigationProperty Name="Pins" Relationship="PinitModel.FK__Pin__PictureId__2A4B4B5E" FromRole="Picture" ToRole="Pin" />
         </EntityType>
         <EntityType Name="PinTag">
           <Key>
@@ -566,8 +534,8 @@ warning 6002: The table/view 'Pinit.dbo.UserLike' does not have a primary key de
           <Property Name="PinId" Type="Int32" Nullable="false" />
           <Property Name="TagId" Type="Int32" Nullable="false" />
           <Property Name="DateTaged" Type="DateTime" Nullable="false" Precision="3" />
-          <NavigationProperty Name="Pin" Relationship="Self.FK__PinTag__PinId__30F848ED" FromRole="PinTag" ToRole="Pin" />
           <NavigationProperty Name="Tag" Relationship="Self.FK__PinTag__TagId__31EC6D26" FromRole="PinTag" ToRole="Tag" />
+          <NavigationProperty Name="Pin" Relationship="PinitModel.FK__PinTag__PinId__30F848ED" FromRole="PinTag" ToRole="Pin" />
         </EntityType>
         <EntityType Name="Tag">
           <Key>
@@ -592,19 +560,7 @@ warning 6002: The table/view 'Pinit.dbo.UserLike' does not have a primary key de
           <NavigationProperty Name="FollowStreams" Relationship="Self.FK__FollowStr__UserN__1A14E395" FromRole="UserInfo" ToRole="FollowStream" />
           <NavigationProperty Name="Friends" Relationship="Self.FK__Friend__SourceUs__15502E78" FromRole="UserInfo" ToRole="Friend" />
           <NavigationProperty Name="Friends1" Relationship="Self.FK__Friend__TargetUs__164452B1" FromRole="UserInfo" ToRole="Friend" />
-          <NavigationProperty Name="UserLikes" Relationship="Self.FK__UserLike__UserNa__3E52440B" FromRole="UserInfo" ToRole="UserLike" />
-        </EntityType>
-        <EntityType Name="UserLike">
-          <Key>
-            <PropertyRef Name="UserName" />
-            <PropertyRef Name="PinId" />
-            <PropertyRef Name="DateLiked" />
-          </Key>
-          <Property Name="UserName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="PinId" Type="Int32" Nullable="false" />
-          <Property Name="DateLiked" Type="DateTime" Nullable="false" Precision="3" />
-          <NavigationProperty Name="Pin" Relationship="Self.FK__UserLike__PinId__3F466844" FromRole="UserLike" ToRole="Pin" />
-          <NavigationProperty Name="UserInfo" Relationship="Self.FK__UserLike__UserNa__3E52440B" FromRole="UserLike" ToRole="UserInfo" />
+          <NavigationProperty Name="UserLikes" Relationship="PinitModel.FK__UserLike__UserNa__0F624AF8" FromRole="UserInfo" ToRole="UserLike" />
         </EntityType>
         <Association Name="FK__Board__BoardOwne__1ED998B2">
           <End Role="UserInfo" Type="Self.UserInfo" Multiplicity="1" />
@@ -630,18 +586,6 @@ warning 6002: The table/view 'Pinit.dbo.UserLike' does not have a primary key de
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Pin__BoardId__2B3F6F97">
-          <End Role="Board" Type="Self.Board" Multiplicity="1" />
-          <End Role="Pin" Type="Self.Pin" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Board">
-              <PropertyRef Name="BoardId" />
-            </Principal>
-            <Dependent Role="Pin">
-              <PropertyRef Name="BoardId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK__BoardFoll__Strea__22AA2996">
           <End Role="FollowStream" Type="Self.FollowStream" Multiplicity="1" />
           <End Role="BoardFollow" Type="Self.BoardFollow" Multiplicity="*" />
@@ -651,18 +595,6 @@ warning 6002: The table/view 'Pinit.dbo.UserLike' does not have a primary key de
             </Principal>
             <Dependent Role="BoardFollow">
               <PropertyRef Name="StreamId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__Comment__PinId__3A81B327">
-          <End Role="Pin" Type="Self.Pin" Multiplicity="1" />
-          <End Role="Comment" Type="Self.Comment" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Pin">
-              <PropertyRef Name="PinId" />
-            </Principal>
-            <Dependent Role="Comment">
-              <PropertyRef Name="PinId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -714,42 +646,6 @@ warning 6002: The table/view 'Pinit.dbo.UserLike' does not have a primary key de
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Pin__PictureId__2A4B4B5E">
-          <End Role="Picture" Type="Self.Picture" Multiplicity="1" />
-          <End Role="Pin" Type="Self.Pin" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Picture">
-              <PropertyRef Name="PictureId" />
-            </Principal>
-            <Dependent Role="Pin">
-              <PropertyRef Name="PictureId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__PinTag__PinId__30F848ED">
-          <End Role="Pin" Type="Self.Pin" Multiplicity="1" />
-          <End Role="PinTag" Type="Self.PinTag" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Pin">
-              <PropertyRef Name="PinId" />
-            </Principal>
-            <Dependent Role="PinTag">
-              <PropertyRef Name="PinId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__UserLike__PinId__3F466844">
-          <End Role="Pin" Type="Self.Pin" Multiplicity="1" />
-          <End Role="UserLike" Type="Self.UserLike" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Pin">
-              <PropertyRef Name="PinId" />
-            </Principal>
-            <Dependent Role="UserLike">
-              <PropertyRef Name="PinId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK__PinTag__TagId__31EC6D26">
           <End Role="Tag" Type="Self.Tag" Multiplicity="1" />
           <End Role="PinTag" Type="Self.PinTag" Multiplicity="*" />
@@ -762,22 +658,6 @@ warning 6002: The table/view 'Pinit.dbo.UserLike' does not have a primary key de
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__UserLike__UserNa__3E52440B">
-          <End Role="UserInfo" Type="Self.UserInfo" Multiplicity="1" />
-          <End Role="UserLike" Type="Self.UserLike" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="UserInfo">
-              <PropertyRef Name="UserName" />
-            </Principal>
-            <Dependent Role="UserLike">
-              <PropertyRef Name="UserName" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="Repin">
-          <End Role="Pin" Type="Self.Pin" Multiplicity="*" />
-          <End Role="Pin1" Type="Self.Pin" Multiplicity="*" />
-        </Association>
         <EntityContainer Name="PinitEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Boards" EntityType="Self.Board" />
           <EntitySet Name="BoardFollows" EntityType="Self.BoardFollow" />
@@ -785,11 +665,9 @@ warning 6002: The table/view 'Pinit.dbo.UserLike' does not have a primary key de
           <EntitySet Name="FollowStreams" EntityType="Self.FollowStream" />
           <EntitySet Name="Friends" EntityType="Self.Friend" />
           <EntitySet Name="Pictures" EntityType="Self.Picture" />
-          <EntitySet Name="Pins" EntityType="Self.Pin" />
           <EntitySet Name="PinTags" EntityType="Self.PinTag" />
           <EntitySet Name="Tags" EntityType="Self.Tag" />
           <EntitySet Name="UserInfoes" EntityType="Self.UserInfo" />
-          <EntitySet Name="UserLikes" EntityType="Self.UserLike" />
           <AssociationSet Name="FK__Board__BoardOwne__1ED998B2" Association="Self.FK__Board__BoardOwne__1ED998B2">
             <End Role="UserInfo" EntitySet="UserInfoes" />
             <End Role="Board" EntitySet="Boards" />
@@ -798,17 +676,9 @@ warning 6002: The table/view 'Pinit.dbo.UserLike' does not have a primary key de
             <End Role="Board" EntitySet="Boards" />
             <End Role="BoardFollow" EntitySet="BoardFollows" />
           </AssociationSet>
-          <AssociationSet Name="FK__Pin__BoardId__2B3F6F97" Association="Self.FK__Pin__BoardId__2B3F6F97">
-            <End Role="Board" EntitySet="Boards" />
-            <End Role="Pin" EntitySet="Pins" />
-          </AssociationSet>
           <AssociationSet Name="FK__BoardFoll__Strea__22AA2996" Association="Self.FK__BoardFoll__Strea__22AA2996">
             <End Role="FollowStream" EntitySet="FollowStreams" />
             <End Role="BoardFollow" EntitySet="BoardFollows" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Comment__PinId__3A81B327" Association="Self.FK__Comment__PinId__3A81B327">
-            <End Role="Pin" EntitySet="Pins" />
-            <End Role="Comment" EntitySet="Comments" />
           </AssociationSet>
           <AssociationSet Name="FK__Comment__UserNam__398D8EEE" Association="Self.FK__Comment__UserNam__398D8EEE">
             <End Role="UserInfo" EntitySet="UserInfoes" />
@@ -826,29 +696,9 @@ warning 6002: The table/view 'Pinit.dbo.UserLike' does not have a primary key de
             <End Role="UserInfo" EntitySet="UserInfoes" />
             <End Role="Friend" EntitySet="Friends" />
           </AssociationSet>
-          <AssociationSet Name="FK__Pin__PictureId__2A4B4B5E" Association="Self.FK__Pin__PictureId__2A4B4B5E">
-            <End Role="Picture" EntitySet="Pictures" />
-            <End Role="Pin" EntitySet="Pins" />
-          </AssociationSet>
-          <AssociationSet Name="FK__PinTag__PinId__30F848ED" Association="Self.FK__PinTag__PinId__30F848ED">
-            <End Role="Pin" EntitySet="Pins" />
-            <End Role="PinTag" EntitySet="PinTags" />
-          </AssociationSet>
-          <AssociationSet Name="FK__UserLike__PinId__3F466844" Association="Self.FK__UserLike__PinId__3F466844">
-            <End Role="Pin" EntitySet="Pins" />
-            <End Role="UserLike" EntitySet="UserLikes" />
-          </AssociationSet>
           <AssociationSet Name="FK__PinTag__TagId__31EC6D26" Association="Self.FK__PinTag__TagId__31EC6D26">
             <End Role="Tag" EntitySet="Tags" />
             <End Role="PinTag" EntitySet="PinTags" />
-          </AssociationSet>
-          <AssociationSet Name="FK__UserLike__UserNa__3E52440B" Association="Self.FK__UserLike__UserNa__3E52440B">
-            <End Role="UserInfo" EntitySet="UserInfoes" />
-            <End Role="UserLike" EntitySet="UserLikes" />
-          </AssociationSet>
-          <AssociationSet Name="Repin" Association="Self.Repin">
-            <End Role="Pin" EntitySet="Pins" />
-            <End Role="Pin1" EntitySet="Pins" />
           </AssociationSet>
           <FunctionImport Name="UP_AcceptOrRejectFriendShipRequest" ReturnType="Collection(PinitModel.UP_AcceptOrRejectFriendShipRequest_Result)">
             <Parameter Name="FromUser" Mode="In" Type="String" />
@@ -938,18 +788,53 @@ warning 6002: The table/view 'Pinit.dbo.UserLike' does not have a primary key de
             <Parameter Name="accepted" Mode="In" Type="Boolean" />
           </FunctionImport>
           <FunctionImport Name="UP_PossibleFriends" ReturnType="Collection(PinitModel.UP_PossibleFriends_Result)">
-            <Parameter Name="username" Mode="In" Type="String" />
+          <Parameter Name="username" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="FP_PossibleFriends" ReturnType="Collection(PinitModel.FP_PossibleFriends_Result)">
-            <Parameter Name="username" Mode="In" Type="String" />
+          <Parameter Name="username" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="FI_PossibleFriend" ReturnType="Collection(PinitModel.FI_PossibleFriend_Result)">
-            <Parameter Name="username" Mode="In" Type="String" />
+          <Parameter Name="username" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="FI_SendFriendShipRequest" ReturnType="Collection(PinitModel.FI_SendFriendShipRequest_Result)">
             <Parameter Name="FromUser" Mode="In" Type="String" />
             <Parameter Name="ToUser" Mode="In" Type="String" />
           </FunctionImport>
+          <EntitySet Name="Pins" EntityType="PinitModel.Pin" />
+          <EntitySet Name="Repins" EntityType="PinitModel.Repin" />
+          <AssociationSet Name="FK__Pin__BoardId__2B3F6F97" Association="PinitModel.FK__Pin__BoardId__2B3F6F97">
+            <End Role="Board" EntitySet="Boards" />
+            <End Role="Pin" EntitySet="Pins" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Comment__PinId__3A81B327" Association="PinitModel.FK__Comment__PinId__3A81B327">
+            <End Role="Pin" EntitySet="Pins" />
+            <End Role="Comment" EntitySet="Comments" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Pin__PictureId__2A4B4B5E" Association="PinitModel.FK__Pin__PictureId__2A4B4B5E">
+            <End Role="Picture" EntitySet="Pictures" />
+            <End Role="Pin" EntitySet="Pins" />
+          </AssociationSet>
+          <AssociationSet Name="FK__PinTag__PinId__30F848ED" Association="PinitModel.FK__PinTag__PinId__30F848ED">
+            <End Role="Pin" EntitySet="Pins" />
+            <End Role="PinTag" EntitySet="PinTags" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Repin__PinId__7B5B524B" Association="PinitModel.FK__Repin__PinId__7B5B524B">
+            <End Role="Pin" EntitySet="Pins" />
+            <End Role="Repin" EntitySet="Repins" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Repin__TargetPin__7C4F7684" Association="PinitModel.FK__Repin__TargetPin__7C4F7684">
+            <End Role="Pin" EntitySet="Pins" />
+            <End Role="Repin" EntitySet="Repins" />
+          </AssociationSet>
+          <EntitySet Name="UserLikes" EntityType="PinitModel.UserLike" />
+          <AssociationSet Name="FK__UserLike__PinId__10566F31" Association="PinitModel.FK__UserLike__PinId__10566F31">
+            <End Role="Pin" EntitySet="Pins" />
+            <End Role="UserLike" EntitySet="UserLikes" />
+          </AssociationSet>
+          <AssociationSet Name="FK__UserLike__UserNa__0F624AF8" Association="PinitModel.FK__UserLike__UserNa__0F624AF8">
+            <End Role="UserInfo" EntitySet="UserInfoes" />
+            <End Role="UserLike" EntitySet="UserLikes" />
+          </AssociationSet>
         </EntityContainer>
         <ComplexType Name="UP_AcceptOrRejectFriendShipRequest_Result">
           <Property Type="Boolean" Name="Success" Nullable="true" />
@@ -1041,6 +926,139 @@ warning 6002: The table/view 'Pinit.dbo.UserLike' does not have a primary key de
           <Property Type="Boolean" Name="Success" Nullable="true" />
           <Property Type="String" Name="msg" Nullable="false" MaxLength="1" />
         </ComplexType>
+        <EntityType Name="Pin">
+          <Key>
+            <PropertyRef Name="PinId" />
+          </Key>
+          <Property Name="PinId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PictureId" Type="Int32" Nullable="false" />
+          <Property Name="BoardId" Type="Int32" Nullable="false" />
+          <Property Name="DateCreated" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Board" Relationship="PinitModel.FK__Pin__BoardId__2B3F6F97" FromRole="Pin" ToRole="Board" />
+          <NavigationProperty Name="Comments" Relationship="PinitModel.FK__Comment__PinId__3A81B327" FromRole="Pin" ToRole="Comment" />
+          <NavigationProperty Name="Picture" Relationship="PinitModel.FK__Pin__PictureId__2A4B4B5E" FromRole="Pin" ToRole="Picture" />
+          <NavigationProperty Name="PinTags" Relationship="PinitModel.FK__PinTag__PinId__30F848ED" FromRole="Pin" ToRole="PinTag" />
+          <NavigationProperty Name="Repins" Relationship="PinitModel.FK__Repin__PinId__7B5B524B" FromRole="Pin" ToRole="Repin" />
+          <NavigationProperty Name="Repins1" Relationship="PinitModel.FK__Repin__TargetPin__7C4F7684" FromRole="Pin" ToRole="Repin" />
+          <NavigationProperty Name="UserLikes" Relationship="PinitModel.FK__UserLike__PinId__10566F31" FromRole="Pin" ToRole="UserLike" />
+        </EntityType>
+        <EntityType Name="Repin">
+          <Key>
+            <PropertyRef Name="RepinId" />
+          </Key>
+          <Property Name="RepinId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PinId" Type="Int32" Nullable="false" />
+          <Property Name="TargetPinId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Pin" Relationship="PinitModel.FK__Repin__PinId__7B5B524B" FromRole="Repin" ToRole="Pin" />
+          <NavigationProperty Name="Pin1" Relationship="PinitModel.FK__Repin__TargetPin__7C4F7684" FromRole="Repin" ToRole="Pin" />
+        </EntityType>
+        <Association Name="FK__Pin__BoardId__2B3F6F97">
+          <End Type="PinitModel.Board" Role="Board" Multiplicity="1" />
+          <End Type="PinitModel.Pin" Role="Pin" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Board">
+              <PropertyRef Name="BoardId" />
+            </Principal>
+            <Dependent Role="Pin">
+              <PropertyRef Name="BoardId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Comment__PinId__3A81B327">
+          <End Type="PinitModel.Pin" Role="Pin" Multiplicity="1" />
+          <End Type="PinitModel.Comment" Role="Comment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Pin">
+              <PropertyRef Name="PinId" />
+            </Principal>
+            <Dependent Role="Comment">
+              <PropertyRef Name="PinId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Pin__PictureId__2A4B4B5E">
+          <End Type="PinitModel.Picture" Role="Picture" Multiplicity="1" />
+          <End Type="PinitModel.Pin" Role="Pin" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Picture">
+              <PropertyRef Name="PictureId" />
+            </Principal>
+            <Dependent Role="Pin">
+              <PropertyRef Name="PictureId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__PinTag__PinId__30F848ED">
+          <End Type="PinitModel.Pin" Role="Pin" Multiplicity="1" />
+          <End Type="PinitModel.PinTag" Role="PinTag" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Pin">
+              <PropertyRef Name="PinId" />
+            </Principal>
+            <Dependent Role="PinTag">
+              <PropertyRef Name="PinId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Repin__PinId__7B5B524B">
+          <End Type="PinitModel.Pin" Role="Pin" Multiplicity="1" />
+          <End Type="PinitModel.Repin" Role="Repin" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Pin">
+              <PropertyRef Name="PinId" />
+            </Principal>
+            <Dependent Role="Repin">
+              <PropertyRef Name="PinId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Repin__TargetPin__7C4F7684">
+          <End Type="PinitModel.Pin" Role="Pin" Multiplicity="1" />
+          <End Type="PinitModel.Repin" Role="Repin" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Pin">
+              <PropertyRef Name="PinId" />
+            </Principal>
+            <Dependent Role="Repin">
+              <PropertyRef Name="TargetPinId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="UserLike">
+          <Key>
+            <PropertyRef Name="UserLikeId" />
+          </Key>
+          <Property Name="UserLikeId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="PinId" Type="Int32" Nullable="false" />
+          <Property Name="DateLiked" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Pin" Relationship="PinitModel.FK__UserLike__PinId__10566F31" FromRole="UserLike" ToRole="Pin" />
+          <NavigationProperty Name="UserInfo" Relationship="PinitModel.FK__UserLike__UserNa__0F624AF8" FromRole="UserLike" ToRole="UserInfo" />
+        </EntityType>
+        <Association Name="FK__UserLike__PinId__10566F31">
+          <End Type="PinitModel.Pin" Role="Pin" Multiplicity="1" />
+          <End Type="PinitModel.UserLike" Role="UserLike" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Pin">
+              <PropertyRef Name="PinId" />
+            </Principal>
+            <Dependent Role="UserLike">
+              <PropertyRef Name="PinId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__UserLike__UserNa__0F624AF8">
+          <End Type="PinitModel.UserInfo" Role="UserInfo" Multiplicity="1" />
+          <End Type="PinitModel.UserLike" Role="UserLike" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserInfo">
+              <PropertyRef Name="UserName" />
+            </Principal>
+            <Dependent Role="UserLike">
+              <PropertyRef Name="UserName" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1108,16 +1126,6 @@ warning 6002: The table/view 'Pinit.dbo.UserLike' does not have a primary key de
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Pins">
-            <EntityTypeMapping TypeName="PinitModel.Pin">
-              <MappingFragment StoreEntitySet="Pin">
-                <ScalarProperty Name="PinId" ColumnName="PinId" />
-                <ScalarProperty Name="PictureId" ColumnName="PictureId" />
-                <ScalarProperty Name="BoardId" ColumnName="BoardId" />
-                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="PinTags">
             <EntityTypeMapping TypeName="PinitModel.PinTag">
               <MappingFragment StoreEntitySet="PinTag">
@@ -1147,23 +1155,6 @@ warning 6002: The table/view 'Pinit.dbo.UserLike' does not have a primary key de
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="UserLikes">
-            <EntityTypeMapping TypeName="PinitModel.UserLike">
-              <MappingFragment StoreEntitySet="UserLike">
-                <ScalarProperty Name="UserName" ColumnName="UserName" />
-                <ScalarProperty Name="PinId" ColumnName="PinId" />
-                <ScalarProperty Name="DateLiked" ColumnName="DateLiked" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <AssociationSetMapping Name="Repin" TypeName="PinitModel.Repin" StoreEntitySet="Repin">
-            <EndProperty Name="Pin">
-              <ScalarProperty Name="PinId" ColumnName="PinId" />
-            </EndProperty>
-            <EndProperty Name="Pin1">
-              <ScalarProperty Name="PinId" ColumnName="TargetPinId" />
-            </EndProperty>
-          </AssociationSetMapping>
           <FunctionImportMapping FunctionImportName="UP_AcceptOrRejectFriendShipRequest" FunctionName="PinitModel.Store.UP_AcceptOrRejectFriendShipRequest">
             <ResultMapping>
               <ComplexTypeMapping TypeName="PinitModel.UP_AcceptOrRejectFriendShipRequest_Result">
@@ -1347,6 +1338,35 @@ warning 6002: The table/view 'Pinit.dbo.UserLike' does not have a primary key de
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <EntitySetMapping Name="Pins">
+            <EntityTypeMapping TypeName="PinitModel.Pin">
+              <MappingFragment StoreEntitySet="Pin">
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+                <ScalarProperty Name="BoardId" ColumnName="BoardId" />
+                <ScalarProperty Name="PictureId" ColumnName="PictureId" />
+                <ScalarProperty Name="PinId" ColumnName="PinId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Repins">
+            <EntityTypeMapping TypeName="PinitModel.Repin">
+              <MappingFragment StoreEntitySet="Repin">
+                <ScalarProperty Name="TargetPinId" ColumnName="TargetPinId" />
+                <ScalarProperty Name="PinId" ColumnName="PinId" />
+                <ScalarProperty Name="RepinId" ColumnName="RepinId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserLikes">
+            <EntityTypeMapping TypeName="PinitModel.UserLike">
+              <MappingFragment StoreEntitySet="UserLike">
+                <ScalarProperty Name="DateLiked" ColumnName="DateLiked" />
+                <ScalarProperty Name="PinId" ColumnName="PinId" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="UserLikeId" ColumnName="UserLikeId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

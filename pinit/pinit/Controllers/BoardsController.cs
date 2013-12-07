@@ -30,37 +30,34 @@ namespace pinit.Controllers
         {
 
             ViewBag.StatusMessage =
-                pinstatusid ==  PinStatusId.PinAdded ? "Pin was added."
-                : pinstatusid ==  PinStatusId.PinDeleted ? "Pin was deleted."
+                pinstatusid == PinStatusId.PinAdded ? "Pin was added."
+                : pinstatusid == PinStatusId.PinDeleted ? "Pin was deleted."
                  : pinstatusid == PinStatusId.PinUrlIssue ? "Pin Url Issue."
                 : "";
 
-            if (pinstatusid == PinStatusId.Error )
+            if (pinstatusid == PinStatusId.Error)
             {
                 string error = "pin process just encountered an error";
-                ModelState.AddModelError("" , error);
-            } 
-            else if (pinstatusid == PinStatusId.PinUrlIssue) 
+                ModelState.AddModelError("", error);
+            }
+            else if (pinstatusid == PinStatusId.PinUrlIssue)
             {
                 ModelState.AddModelError("", "pin Url Issue");
             }
-            else if (pinstatusid == PinStatusId.PinPresent) 
-            {
-                ModelState.AddModelError("", "you have a pin dude, i dont wana cascade so delete the pin would ya");
-            }
            
+
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             var bid = (int)id;
 
-            Board board = db.Boards.Include("Pins").FirstOrDefault( b => b.BoardId == id);
+            Board board = db.Boards.Include("Pins").FirstOrDefault(b => b.BoardId == id);
             if (board == null)
             {
                 return HttpNotFound();
             }
-            
+
 
             return View(board);
         }
@@ -119,7 +116,7 @@ namespace pinit.Controllers
         {
 
 
-            if (string.IsNullOrWhiteSpace(board.BoardName)) 
+            if (string.IsNullOrWhiteSpace(board.BoardName))
             {
                 ModelState.AddModelError("", "Board Name Required");
             }
@@ -154,14 +151,40 @@ namespace pinit.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Board board = db.Boards.Include("Pins").FirstOrDefault( b => b.BoardId == id);
-            
-            //this here will redirect ot detail saying dude u have a pin cant delete board
-            if(board.Pins.Count() > 0) 
+            Board board = db.Boards.Include("Pins").FirstOrDefault(b => b.BoardId == id);
+            var pins = board.Pins.ToList();
+
+
+            var boardfollow = db.BoardFollows.Where(f => f.BoardId == id).ToList();
+            if (boardfollow.Count() > 0) 
             {
-                return RedirectToAction("Details", new { id = board.BoardId, pinstatusid = PinStatusId.PinPresent });
+                foreach (var bf in boardfollow)
+                {
+                    var followstreams = db.FollowStreams.Where(f => f.StreamId == bf.StreamId).ToList();
+                    foreach (var fs in followstreams)
+                    {
+                        db.FollowStreams.Remove(fs);
+                    }
+                    db.BoardFollows.Remove(bf);
+                }
             }
-            
+
+
+
+            if (pins.Count() > 0)
+            {
+                foreach (var pin in pins)
+                {
+                    var repins = db.Repins.Where(r => r.TargetPinId == pin.PinId).ToList();
+                    foreach (var repin in repins)
+                    {
+                        db.Repins.Remove(repin);
+                    }
+                    
+                    db.Pins.Remove(pin);
+                }
+            }
+
             db.Boards.Remove(board);
             db.SaveChanges();
             return RedirectToAction("Index");
@@ -177,7 +200,7 @@ namespace pinit.Controllers
         {
             string error = "Pin was not created";
             var success = false;
-            if (string.IsNullOrWhiteSpace(txtPinUrl)) 
+            if (string.IsNullOrWhiteSpace(txtPinUrl))
             {
                 return RedirectToAction("Details", new { id = BoardId, pinstatusid = PinStatusId.PinUrlIssue });
             }
@@ -192,14 +215,14 @@ namespace pinit.Controllers
                     if (result.Count() > 0)
                     {
                         success = result.FirstOrDefault().Success ?? false;
-                        if (!success) 
+                        if (!success)
                         {
                             error = result.FirstOrDefault().msg;
                         }
                     }
                 }
             }
-            
+
 
             if (success)
             {
@@ -208,7 +231,7 @@ namespace pinit.Controllers
             else
             {
                 ViewBag.Error = error;
-                return RedirectToAction("Details", new { id = BoardId  , pinstatusid = PinStatusId.Error});
+                return RedirectToAction("Details", new { id = BoardId, pinstatusid = PinStatusId.Error });
             }
         }
 

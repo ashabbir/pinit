@@ -232,6 +232,9 @@
     <Compile Include="Data\PinTag.cs">
       <DependentUpon>PinitModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Data\Repin.cs">
+      <DependentUpon>PinitModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Data\Tag.cs">
       <DependentUpon>PinitModel.tt</DependentUpon>
     </Compile>

@@ -20,7 +20,7 @@ namespace pinit.Data
         public string CommentText { get; set; }
         public System.DateTime DateCommented { get; set; }
     
-        public virtual Pin Pin { get; set; }
         public virtual UserInfo UserInfo { get; set; }
+        public virtual Pin Pin { get; set; }
     }
 }

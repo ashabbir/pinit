@@ -18,9 +18,9 @@ namespace pinit.Data
         {
             this.Comments = new HashSet<Comment>();
             this.PinTags = new HashSet<PinTag>();
+            this.Repins = new HashSet<Repin>();
+            this.Repins1 = new HashSet<Repin>();
             this.UserLikes = new HashSet<UserLike>();
-            this.Pin1 = new HashSet<Pin>();
-            this.Pins = new HashSet<Pin>();
         }
     
         public int PinId { get; set; }
@@ -32,8 +32,8 @@ namespace pinit.Data
         public virtual ICollection<Comment> Comments { get; set; }
         public virtual Picture Picture { get; set; }
         public virtual ICollection<PinTag> PinTags { get; set; }
+        public virtual ICollection<Repin> Repins { get; set; }
+        public virtual ICollection<Repin> Repins1 { get; set; }
         public virtual ICollection<UserLike> UserLikes { get; set; }
-        public virtual ICollection<Pin> Pin1 { get; set; }
-        public virtual ICollection<Pin> Pins { get; set; }
     }
 }

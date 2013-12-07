@@ -144,8 +144,7 @@ namespace pinit.Controllers
         [Authorize]
         public ActionResult Manage(ManageUserViewModel model)
         {
-            var msg = "";
-
+          
             ViewBag.HasLocalPassword = true;
             ViewBag.ReturnUrl = Url.Action("Manage");
 

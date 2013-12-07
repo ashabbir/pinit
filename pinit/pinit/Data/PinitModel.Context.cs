@@ -33,10 +33,11 @@ namespace pinit.Data
         public virtual DbSet<FollowStream> FollowStreams { get; set; }
         public virtual DbSet<Friend> Friends { get; set; }
         public virtual DbSet<Picture> Pictures { get; set; }
-        public virtual DbSet<Pin> Pins { get; set; }
         public virtual DbSet<PinTag> PinTags { get; set; }
         public virtual DbSet<Tag> Tags { get; set; }
         public virtual DbSet<UserInfo> UserInfoes { get; set; }
+        public virtual DbSet<Pin> Pins { get; set; }
+        public virtual DbSet<Repin> Repins { get; set; }
         public virtual DbSet<UserLike> UserLikes { get; set; }
     
         public virtual ObjectResult<UP_AcceptOrRejectFriendShipRequest_Result> UP_AcceptOrRejectFriendShipRequest(string fromUser, string toUser, Nullable<bool> accepted)

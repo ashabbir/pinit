@@ -18,7 +18,7 @@ namespace pinit.Data
         public int TagId { get; set; }
         public System.DateTime DateTaged { get; set; }
     
-        public virtual Pin Pin { get; set; }
         public virtual Tag Tag { get; set; }
+        public virtual Pin Pin { get; set; }
     }
 }
