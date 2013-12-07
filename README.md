@@ -11,16 +11,18 @@ NYU Poly project cs 6038
 ### Boards
 * ~~user should be able to create , manage and delete baords~~
 * ~~boards should display pins~~
+* add cascading delete on boards
 
 ### Pinning 
 * ~~user should be able to take a image url and pin it to his board~~
-* user should be able to delete pins 
+* ~~user should be able to delete pins~~
+* add cascading deletes to pins
 
 ### Friendship frame work
-user should be able to search other users by email or username 
-user should be able to send a friend request to other -- after searching them
-user should be able to deny or accept a request that was made by some one for friendship
-user should be able to retract a friendship request
+* user should be able to search other users by email or username 
+* ~~user should be able to send a friend request to other ~~
+* ~~user should be able to deny or accept a request that was made by some one for friendship~~
+* user should be able to retract request that he sent out
 
 ### Comment framework
 * user can add comments to pictures that he can see only. his pics / his friends pics
