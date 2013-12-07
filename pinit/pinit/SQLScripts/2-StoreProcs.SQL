@@ -660,5 +660,45 @@ GO
 
 
 
+USE [Pinit]
+GO
+
+/****** Object:  StoredProcedure [dbo].[UP_UpdateProfile]    Script Date: 12/7/2013 4:23:31 PM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+
+
+
+ALTER PROC [dbo].[UP_UpdateProfile] (
+	@username varchar(100),
+	@newFirstName varchar(100), 
+	@newLastName varchar(100), 
+	@newEmail varchar(255)) 
+AS
+BEGIN TRANSACTION
+	BEGIN TRY
+		Update UserInfo
+		Set LastName = @newLastName , FirstName = @newFirstName , email = @newEmail
+		where username = @username
+		COMMIT TRANSACTION
+		Select CAST(1 as Bit) as Success, '' as msg
+	END TRY
+	BEGIN CATCH
+	    ROLLBACK TRANSACTION
+	    DECLARE @Msg NVARCHAR(MAX)  
+        SELECT @Msg='User profile could not be updated '+ ERROR_MESSAGE() 
+	    Select CAST(0 as Bit) as Success, @Msg as msg
+	END CATCH
+
+
+
+GO
+
+
+
 
 use master
