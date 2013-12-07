@@ -686,7 +686,7 @@ BEGIN TRANSACTION
 		where username = @username
 		COMMIT TRANSACTION
 		Select CAST(1 as Bit) as Success, '' as msg
-	END TRY
+	END
 	BEGIN CATCH
 	    ROLLBACK TRANSACTION
 	    DECLARE @Msg NVARCHAR(MAX)  

@@ -1,0 +1,25 @@
+﻿@model IEnumerable<pinit.Data.Board>
+
+
+@{
+    ViewBag.Title = "Friend Boards";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+@if(Model.Count() > 0) 
+{
+<h2>@(Model.FirstOrDefault().UserInfo.FirstName.ToUpper())'s Boards</h2>
+
+}
+<div class="container theme-showcase">
+    <div class="center-block">
+        <div class="panel panel-default">
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-body">
+                @Html.Partial("_BoardsPartial")
+            </div><!-- /.panel-body -->
+        </div><!-- panel panel-default-->
+    </div><!--center -->
+</div> <!-- /container -->

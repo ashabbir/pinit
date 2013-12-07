@@ -171,6 +171,7 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\BoardsController.cs" />
+    <Compile Include="Controllers\FriendBoardsController.cs" />
     <Compile Include="Controllers\FriendShipController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\PinController.cs" />
@@ -388,6 +389,8 @@
     <Content Include="Views\FriendShip\Index.cshtml" />
     <Content Include="Views\UserInfo\Index.cshtml" />
     <Content Include="Views\Shared\_PendingFriendRequestPartial.cshtml" />
+    <Content Include="Views\FriendBoards\Details.cshtml" />
+    <Content Include="Views\FriendBoards\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

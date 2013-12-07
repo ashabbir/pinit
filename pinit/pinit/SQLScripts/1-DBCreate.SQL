@@ -167,6 +167,7 @@ Foreign Key (PinId) references Pin (PinId),
 --WITH CHANGE_TRACKING AUTO
 
 
+
 drop table repin
 go
 
@@ -189,21 +190,6 @@ UserName varchar(100) not null,
 PinId int not null,
 DateLiked Datetime not null Default GetDate() ,
 primary key(UserName,PinId),
-Foreign Key (UserName) references userinfo (UserName),
-Foreign Key (PinId) references Pin (PinId),
-)
-
-
-drop table userlike
-go
-
-Create Table UserLike(
-UserLikeId int IDENTITY(1,1) NOT NULL, -- THIS Makes It Auto Increment
-UserName varchar(100) not null,
-PinId int not null,
-DateLiked Datetime not null Default GetDate() ,
-CONSTRAINT [PK_Like] PRIMARY KEY CLUSTERED (UserLikeId ASC), -- This makes it a primary key
-unique (UserName,PinId),
 Foreign Key (UserName) references userinfo (UserName),
 Foreign Key (PinId) references Pin (PinId),
 )

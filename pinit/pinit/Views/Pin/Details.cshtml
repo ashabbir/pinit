@@ -17,22 +17,19 @@
 
                 @Html.PinTag(Model.Picture.ImageUrl, "pin")
 
-
-
-
-
-
-
-
             </div><!-- /.panel-body -->
-            <div class="panel-footer">
-                <p class="form-inline">
-                <p>
-                    @Html.ActionLink("Delete", "Delete", new { id = Model.PinId }) |
-                    @Html.ActionLink("Back", "Details", "Boards", new { id = Model.BoardId }, null)
 
-                </p>
-                </p>
+            <div class="panel-footer">
+                @if (User.Identity.Name == Model.Board.UserInfo.UserName)
+                {
+                    <p class="form-inline">
+                    <p>
+                        @Html.ActionLink("Delete", "Delete", new { id = Model.PinId }) |
+                        @Html.ActionLink("Back", "Details", "Boards", new { id = Model.BoardId }, null)
+
+                    </p>
+                    </p>
+                }
             </div>
 
 
