@@ -20,7 +20,7 @@ NYU Poly project cs 6038
 
 ### Friendship frame work
 * user should be able to search other users by email or username 
-* ~~user should be able to send a friend request to other ~~
+* ~~user should be able to send a friend request to other~~
 * ~~user should be able to deny or accept a request that was made by some one for friendship~~
 * user should be able to retract request that he sent out
 
