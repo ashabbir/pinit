@@ -12,6 +12,15 @@ namespace System.Web.Mvc.Html
     public static class HtmlHelperExtention
     {
 
+
+        public static MvcHtmlString DisplayLikes(this HtmlHelper html, int count)
+        {
+         
+            var msg = " <div class='badge'> <hr /> <span class='text-info'> " + count  
+                + " likes</span></div>";
+            return MvcHtmlString.Create(msg);
+        }
+
         public static MvcHtmlString DisplayComment(this HtmlHelper html, string comment, string by, DateTime on) 
         {
              //<div class="well">

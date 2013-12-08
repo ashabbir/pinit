@@ -20,8 +20,10 @@ namespace pinit.Controllers
         // GET: /Pin/Details/5
         public ActionResult Details(int id, string error)
         {
+            
             var user = User.Identity.GetUserName();
             var commentable = false;
+            var likeable = false;
             //    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
 
             if (!string.IsNullOrWhiteSpace(error))
@@ -54,8 +56,20 @@ namespace pinit.Controllers
                 }
                 
             }
-            ViewBag.AllowComment = commentable;
 
+            //user can only like if he is not the owner of the pin
+            //user can only like is he has not already liked it before
+            var alreadylike = db.UserLikes.Any(l => l.UserName == user && l.PinId == id);
+            if (!alreadylike && pin.Board.BoardOwner != user)
+            {
+                likeable =true;
+            }
+
+            ViewBag.Likes = db.UserLikes.Count(l => l.PinId == id);
+           
+            ViewBag.AllowComment = commentable;
+            ViewBag.Likeable = likeable;
+          
             return View(pin);
         }
 
@@ -106,6 +120,38 @@ namespace pinit.Controllers
                 else
                 {
                     return RedirectToAction("Details", new { id = model.PinId, error = "comment was not added" });
+                }
+            }
+            catch (Exception ex)
+            {
+                return RedirectToAction("Details", new { id = model.PinId, error = ex.Message });
+            }
+
+
+        }
+
+        //POST: /pin/addcomment
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult AddLike(UserLike model)
+        {
+
+            try
+            {
+                model.DateLiked = DateTime.Now;
+
+                if (ModelState.IsValid)
+                {
+                    using (var db = new PinitEntities())
+                    {
+                        db.UserLikes.Add(model);
+                        db.SaveChanges();
+                    }
+                    return RedirectToAction("Details", new { id = model.PinId });
+                }
+                else
+                {
+                    return RedirectToAction("Details", new { id = model.PinId, error = "cant not like this right now please try again latter" });
                 }
             }
             catch (Exception ex)

@@ -391,7 +391,8 @@
     <Content Include="Views\Shared\_PendingFriendRequestPartial.cshtml" />
     <Content Include="Views\FriendBoards\Details.cshtml" />
     <Content Include="Views\FriendBoards\Index.cshtml" />
-    <Content Include="Views\Pin\_AddCommentPartial.cshtml" />
+    <Content Include="Views\Shared\_AddCommentPartial.cshtml" />
+    <Content Include="Views\Shared\_AddLikePartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
