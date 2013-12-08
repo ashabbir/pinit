@@ -12,6 +12,21 @@ namespace System.Web.Mvc.Html
     public static class HtmlHelperExtention
     {
 
+        public static MvcHtmlString DisplayComment(this HtmlHelper html, string comment, string by, DateTime on) 
+        {
+             //<div class="well">
+             //      @Html.DisplayName("asd")
+             //       <hr />
+             //       <span class="text-info">by ahmed on 12.1.2013</span>
+             //   </div>
+
+           var msg = " <div class='well'> " + comment + "<hr /> <span class='text-info'>  by " 
+               + by + " on " + on.ToShortDateString()  
+               + "</span>"
+               +  "</div>";
+            return MvcHtmlString.Create(msg);
+        }
+
 
         public static MvcHtmlString PinTag(this HtmlHelper html, string imagePath, string alt)
         {
@@ -25,8 +40,6 @@ namespace System.Web.Mvc.Html
             imgBuilder.AddCssClass("thumbnail");
             imgBuilder.MergeAttribute("style", "width: 140px; height: 140px;");
             string imgHtml = imgBuilder.ToString(TagRenderMode.SelfClosing);
-
-
 
             return MvcHtmlString.Create(imgHtml);
         }
@@ -111,7 +124,9 @@ namespace System.Web.Mvc.Html
             var msg = "";
             if (!htmlHelper.ViewData.ModelState.IsValid)
             {
-                msg = " <div class=\"alert alert-danger\"> <button class=\"close\" data-dismiss=\"alert\" aria-hidden=\"true\">&times;</button>" + htmlHelper.ValidationSummary(hasPropInfo, "Errors: ") + "</div>";
+                msg = " <div class=\"alert alert-danger\"> <button class=\"close\" data-dismiss=\"alert\" aria-hidden=\"true\">&times;</button>" 
+                    + htmlHelper.ValidationSummary(hasPropInfo, "Errors: ") 
+                    + "</div>";
             }
 
             return new MvcHtmlString(msg);
@@ -128,7 +143,8 @@ namespace System.Web.Mvc.Html
             var msg = "";
             if (!htmlHelper.ViewData.ModelState.IsValid)
             {
-                msg = " <div class=\"alert alert-danger\"> <button class=\"close\" data-dismiss=\"alert\" aria-hidden=\"true\">&times;</button>" + error.ToString() + "</div>";
+                msg = " <div class=\"alert alert-danger\"> <button class=\"close\" data-dismiss=\"alert\" aria-hidden=\"true\">&times;</button>" 
+                    + error.ToString() + "</div>";
             }
 
             return new MvcHtmlString(msg);

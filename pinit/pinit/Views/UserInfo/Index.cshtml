@@ -36,7 +36,7 @@
                                 @foreach (var item in Model)
                                 {
                                     <tr>
-                                        <td>@Html.ActionLink("Send Request", "RequestFriendShip", new { id = item.UserName })</td>
+                                        <td><span class="badge">@Html.ActionLink("Request", "RequestFriendShip", new { id = item.UserName }) </span> | <span class="badge">@Html.ActionLink("Boards", "Index", "FriendBoards", new { id = item.UserName }, null)</span></td>
                                         <td>@Html.DisplayFor(modelItem => item.FirstName) </td>
                                         <td>@Html.DisplayFor(modelItem => item.LastName)</td>
                                         <td>@Html.DisplayFor(modelItem => item.Email)</td>

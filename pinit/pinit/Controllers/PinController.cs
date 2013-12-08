@@ -7,7 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using pinit.Data;
-
+using Microsoft.AspNet.Identity;
 
 namespace pinit.Controllers
 {
@@ -15,20 +15,47 @@ namespace pinit.Controllers
     {
         private PinitEntities db = new PinitEntities();
 
-      
+
 
         // GET: /Pin/Details/5
-        public ActionResult Details(int? id)
+        public ActionResult Details(int id, string error)
         {
-            if (id == null)
+            var user = User.Identity.GetUserName();
+            var commentable = false;
+            //    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+
+            if (!string.IsNullOrWhiteSpace(error))
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                ModelState.AddModelError("", error);
             }
-            Pin pin = db.Pins.Find(id);
+
+            var pin = db.Pins.Include(p => p.Comments).Include(p => p.Board).FirstOrDefault(p => p.PinId == id);
             if (pin == null)
             {
                 return HttpNotFound();
             }
+            var comments = pin.Comments;
+
+
+            //user is only allowed to comment is its private and user is in friend list
+            if (!pin.Board.PrivateComments) //user is only allowed to comment if its public 
+            {
+                commentable = true;
+            }
+            else if (pin.Board.BoardOwner == user) //user is only allowed to comment if its his own pin
+            {
+                commentable = true;
+            }
+            else 
+            {
+                if (db.Friends.Any(f => (f.TargetUser == user && f.RequestStatus == "Accepted") || (f.SourceUser == user && f.RequestStatus == "Accepted"))) 
+                {
+                    commentable = true;
+                }
+                
+            }
+            ViewBag.AllowComment = commentable;
+
             return View(pin);
         }
 
@@ -50,6 +77,45 @@ namespace pinit.Controllers
             return View(pin);
         }
 
+
+        //POST: /pin/addcomment
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult AddComment(Comment model)
+        {
+
+            try
+            {
+                var msg = model.CommentText;
+                if (string.IsNullOrWhiteSpace(msg))
+                {
+                    throw new Exception("you need to add in comment text");
+
+                }
+                model.DateCommented = DateTime.Now;
+
+                if (ModelState.IsValid)
+                {
+                    using (var db = new PinitEntities())
+                    {
+                        db.Comments.Add(model);
+                        db.SaveChanges();
+                    }
+                    return RedirectToAction("Details", new { id = model.PinId });
+                }
+                else
+                {
+                    return RedirectToAction("Details", new { id = model.PinId, error = "comment was not added" });
+                }
+            }
+            catch (Exception ex)
+            {
+                return RedirectToAction("Details", new { id = model.PinId, error = ex.Message });
+            }
+
+
+        }
+
         // POST: /Pin/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
@@ -57,10 +123,10 @@ namespace pinit.Controllers
         {
             Pin pin = db.Pins.Find(id);
             var boardId = pin.BoardId;
-           
+
             db.Pins.Remove(pin);
             db.SaveChanges();
-            return RedirectToAction("Details", "Boards", new { id = boardId  });
+            return RedirectToAction("Details", "Boards", new { id = boardId });
         }
 
         protected override void Dispose(bool disposing)

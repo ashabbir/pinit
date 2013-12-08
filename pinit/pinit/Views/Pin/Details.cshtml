@@ -2,6 +2,9 @@
 
 @{
     ViewBag.Title = "Details";
+    var newComment = new pinit.Data.Comment() { };
+    newComment.UserName = User.Identity.Name;
+    newComment.PinId = Model.PinId;
 }
 
 
@@ -11,14 +14,31 @@
         <div class="panel panel-primary">
             <div class="panel-heading">
                 <h3 class="panel-title"></h3>
-
             </div>
             <div class="panel-body">
-
+                @Html.ErrorAlert()
                 @Html.PinTag(Model.Picture.ImageUrl, "pin")
+                <hr />
 
+
+                @if (@ViewBag.AllowComment)
+                {
+                    if (Model.Comments.Count() > 0)
+                    {
+                        foreach (var comment in Model.Comments)
+                        {
+                            @Html.DisplayComment(comment.CommentText, comment.UserName, comment.DateCommented)
+                        }
+                    }
+                    else
+                    {
+                        //  @:there are no comments
+                    }
+                    <hr />
+
+                    @Html.Partial("_AddCommentPartial", newComment)
+                }
             </div><!-- /.panel-body -->
-
             <div class="panel-footer">
                 @if (User.Identity.Name == Model.Board.UserInfo.UserName)
                 {
@@ -26,9 +46,12 @@
                     <p>
                         @Html.ActionLink("Delete", "Delete", new { id = Model.PinId }) |
                         @Html.ActionLink("Back", "Details", "Boards", new { id = Model.BoardId }, null)
-
                     </p>
                     </p>
+                }
+                else
+                {
+                    <span> u can add a like here</span>
                 }
             </div>
 

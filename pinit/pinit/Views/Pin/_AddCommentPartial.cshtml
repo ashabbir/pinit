@@ -1,0 +1,29 @@
+﻿@model pinit.Data.Comment
+
+
+@using (Html.BeginForm("AddComment", "Pin", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+    @Html.HiddenFor(m => m.UserName)
+    @Html.HiddenFor(m => m.PinId)
+    
+    <div class="form-group">
+        <div class="col-md-8">
+            @Html.TextAreaFor(model => model.CommentText, new { @class = "form-control", @placeholder = "Add Comment here" })
+            @Html.ValidationMessageFor(model => model.CommentText)
+        </div>
+    </div>
+
+
+    <div class="form-group">
+        <div class="col-md-8">
+            <input type="submit" value="Add Comment" class="btn btn-sm btn-primary btn-block" />
+        </div>
+    </div>
+}
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
