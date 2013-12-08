@@ -17,15 +17,15 @@
                 <h3 class="panel-title">@Html.DisplayTextFor(model => model.BoardName) </h3>
 
             </div>
-@if (User.Identity.Name == Model.UserInfo.UserName)
-                    {
-            <div class="panel-body">
-                @ViewBag.StatusMessage
-                @Html.Partial("_AddPinPartial", Model)
+            @if (User.Identity.Name == Model.UserInfo.UserName)
+            {
+                <div class="panel-body">
+                    @ViewBag.StatusMessage
+                    @Html.Partial("_AddPinPartial", Model)
 
-            </div><!-- /.panel-body -->
-            <hr />
-}
+                </div><!-- /.panel-body -->
+                <hr />
+            }
             <div class="panel-body">
                 @Html.Partial("_PinsPartial", Model.Pins)
             </div><!-- /.panel-body -->
@@ -40,7 +40,7 @@
                     {
                         <img src="~/Content/nocomments.jpg" alt="No comments" />
                     }
-                    @if (User.Identity.Name == Model.UserInfo.UserName) 
+                    @if (User.Identity.Name == Model.UserInfo.UserName)
                     {
                         @Html.ActionLink("Edit", "Edit", new { id = Model.BoardId }) @:|
                         @Html.ActionLink("Back to List", "Index") @:|
