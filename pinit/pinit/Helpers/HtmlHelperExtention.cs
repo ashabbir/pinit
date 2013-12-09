@@ -15,9 +15,13 @@ namespace System.Web.Mvc.Html
 
         public static MvcHtmlString DisplayLikes(this HtmlHelper html, int count)
         {
-         
-            var msg = " <div class='badge'> <hr /> <span class='text-info'> " + count  
-                + " likes</span></div>";
+            var likeword = "like";
+            if (count > 1) 
+            {
+                likeword = "likes";
+            }
+            var msg = " <p class='badge text-info'> " + count + " "
+                + likeword+ "</p>";
             return MvcHtmlString.Create(msg);
         }
 

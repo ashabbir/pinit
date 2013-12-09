@@ -11,6 +11,7 @@ using Microsoft.AspNet.Identity;
 
 namespace pinit.Controllers
 {
+    [Authorize]
     public class PinController : Controller
     {
         private PinitEntities db = new PinitEntities();
@@ -167,7 +168,22 @@ namespace pinit.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Pin pin = db.Pins.Find(id);
+            Pin pin = db.Pins.Include(p => p.UserLikes).FirstOrDefault(p => p.PinId == id);
+            var comments = db.Comments.Where(c => c.PinId == id).ToList();
+            var repins = db.Repins.Where(rp => rp.PinId == id).ToList();
+            var userlikes = db.UserLikes.Where(l => l.PinId == id).ToList();
+            foreach (var item in userlikes)
+            {
+                db.UserLikes.Remove(item);
+            }
+            foreach (var item in comments)
+            {
+                db.Comments.Remove(item);
+            }
+            foreach (var item in repins)
+            {
+                db.Repins.Remove(item);
+            }
             var boardId = pin.BoardId;
 
             db.Pins.Remove(pin);

@@ -30,27 +30,39 @@
                 @Html.Partial("_PinsPartial", Model.Pins)
             </div><!-- /.panel-body -->
             <div class="panel-footer">
-                <p class="form-inline">
-                    created by @Html.DisplayTextFor(model => model.BoardOwner) on @Html.DisplayTextFor(model => model.DateCreated)
-                    @if (Model.PrivateComments != true)
+                <ul class="list-inline">
+                   
+                   @if (User.Identity.Name == Model.UserInfo.UserName)
                     {
-                        <img src="~/Content/comments.jpg" alt="Comments allowed" />
+
+                            <li>  @Html.ActionLink("Edit", "Edit", new { id = Model.BoardId }) |</li>
+                            <li>  @Html.ActionLink("Back to List", "Index") |</li>
+                            <li> @Html.ActionLink("Delete", "Delete", new { id = Model.BoardId })</li>
+
                     }
                     else
                     {
-                        <img src="~/Content/nocomments.jpg" alt="No comments" />
+                            <li>  @Html.ActionLink("Back to List", "Index") </li>
                     }
-                    @if (User.Identity.Name == Model.UserInfo.UserName)
+
+                    <li>
+                        created by @Html.DisplayTextFor(model => model.BoardOwner) on @Html.DisplayTextFor(model => model.DateCreated)
+                    </li>
+                    @if (Model.PrivateComments != true)
                     {
-                        @Html.ActionLink("Edit", "Edit", new { id = Model.BoardId }) @:|
-                        @Html.ActionLink("Back to List", "Index") @:|
-                        @Html.ActionLink("Delete", "Delete", new { id = Model.BoardId })
+                        <li>
+                            <img src="~/Content/comments.jpg" alt="Comments allowed" />
+                        </li>
                     }
-                </p>
-            </div>
+                    else
+                    {
+                        <li> <img src="~/Content/nocomments.jpg" alt="No comments" /> </li>
+                    }
+                    </ul>
+                </div>
 
 
-        </div><!-- panel panel-default-->
+            </div><!-- panel panel-default-->
 
-    </div><!--center -->
-</div> <!-- /container -->
+        </div><!--center -->
+    </div> <!-- /container -->

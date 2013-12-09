@@ -9,6 +9,9 @@
     var newLike = new pinit.Data.UserLike();
     newLike.UserName = User.Identity.Name;
     newLike.PinId = Model.PinId;
+
+    int likes = 0;
+    likes = ViewBag.Likes;
 }
 
 
@@ -22,45 +25,50 @@
             <div class="panel-body">
                 @Html.ErrorAlert()
                 @Html.PinTag(Model.Picture.ImageUrl, "pin")
-             
-         
-            <hr />
-            @if (ViewBag.AllowComment)
-            {
-                if (Model.Comments.Count() > 0)
+
+
+                <hr />
+                @if (ViewBag.AllowComment)
                 {
-                    foreach (var comment in Model.Comments)
+                    if (Model.Comments.Count() > 0)
                     {
-                        @Html.DisplayComment(comment.CommentText, comment.UserName, comment.DateCommented)
+                        foreach (var comment in Model.Comments)
+                        {
+                            @Html.DisplayComment(comment.CommentText, comment.UserName, comment.DateCommented)
+                        }
                     }
+                    else
+                    {
+                        //  @:there are no comments
+                    }
+                    <hr />
+
+                    @Html.Partial("_AddCommentPartial", newComment)
+                }
+            </div><!-- /.panel-body -->
+            <div class="panel-footer">
+                @if (User.Identity.Name == Model.Board.UserInfo.UserName)
+                {
+                    <ul class="list-inline">
+
+                        <li>  @Html.ActionLink("Delete", "Delete", new { id = Model.PinId }) |</li>
+                        <li>  @Html.ActionLink("Back", "Details", "Boards", new { id = Model.BoardId }, null) |</li>
+                        <li> @Html.DisplayLikes(likes)</li>
+                    </ul>
                 }
                 else
                 {
-                    //  @:there are no comments
+                    <ul class="list-inline">
+
+                        <li>  @Html.ActionLink("Back", "Details", "Boards", new { id = Model.BoardId }, null) |</li>
+                        <li>  @Html.Partial("_AddLikePartial", newLike) </li>
+                    </ul>
+                  
                 }
-                <hr />
-
-                @Html.Partial("_AddCommentPartial", newComment)
-            }
-        </div><!-- /.panel-body -->
-        <div class="panel-footer">
-            @if (User.Identity.Name == Model.Board.UserInfo.UserName)
-            {
-                <p class="form-inline">
-
-                    @Html.ActionLink("Delete", "Delete", new { id = Model.PinId }) |
-                    @Html.ActionLink("Back", "Details", "Boards", new { id = Model.BoardId }, null)
-
-                </p>
-            }
-            else
-            {
-                @Html.Partial("_AddLikePartial", newLike)
-            }
-        </div>
+            </div>
 
 
-    </div><!-- panel panel-default-->
+        </div><!-- panel panel-default-->
 
-</div><!--center -->
+    </div><!--center -->
 </div> <!-- /container -->
