@@ -10,42 +10,33 @@
 <div class="container theme-showcase">
     @Html.ErrorAlert(true)
     <div class="center-block">
-        <div class="panel panel-info">
 
-            <div class="panel-body">
-                <p>
-                    @Html.ActionLink("Add Friend", "Index", "UserInfo", null, null)
-                </p>
-            </div><!-- /.panel-body -->
+        
+                    @Html.Partial("_SearchFriendPartial")
+         
 
-        </div><!-- panel panel-default-->
-        @Html.Partial("_PendingFriendRequestPartial", Model.PendingFriends)
 
-        @Html.Partial("_ActiveFriendPartial", Model.ActiveFriends)
-       
-
-        @if (Model.PendingRequests.Count() > 0)
-        {
-            <div class="panel panel-warning">
-                <div class="panel-heading">
-                    <h3 class="panel-title">Pending Request</h3>
+        <div class="row">
+            @if (Model.PendingFriends.Count() > 0)
+            {
+                <div class="col-sm-5">
+                    @Html.Partial("_PendingFriendRequestPartial", Model.PendingFriends)
                 </div>
-                <div class="panel-body">
-                    <ul class="list-group">
-                        @foreach (var item in Model.PendingRequests)
-                        {
-                            <li class="list-group-item">@Html.Label(item.PersonalInfo.FirstName)  @Html.Label(item.PersonalInfo.LastName)</li>
-                        }
-                    </ul>
-                </div><!-- /.panel-body -->
-                <div class="panel-footer">
-                    <em class="text-info">These are the request you sent out and people have not accepted or rejected them</em>
+            }
+
+            @if (Model.ActiveFriends.Count > 0)
+            {
+                <div class="col-sm-5">
+                    @Html.Partial("_ActiveFriendPartial", Model.ActiveFriends)
                 </div>
-            </div><!-- panel panel-default-->
-        }
+            }
+
+            @if (Model.PendingRequests.Count > 0)
+            {
+                <div class="col-sm-5">
+                    @Html.Partial("_PendingRequestPartial", Model.PendingRequests)
+                </div>
+            }
+        </div>
     </div><!--center -->
 </div> <!-- /container -->
-@*<p>
-        @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
-        @Html.ActionLink("Back to List", "Index")
-    </p>*@

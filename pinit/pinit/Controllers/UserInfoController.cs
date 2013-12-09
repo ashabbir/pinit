@@ -17,7 +17,7 @@ namespace pinit.Controllers
         private PinitEntities db = new PinitEntities();
      
         // GET: /UserInfo/
-        public ActionResult Index(string error)
+        public ActionResult Index(string error, string SearchFriend)
         {
 
             if (!string.IsNullOrWhiteSpace(error))
@@ -29,7 +29,23 @@ namespace pinit.Controllers
 
             var user = User.Identity.GetUserName();
             var model = new List<UserInfo>();
-            var possiblefriends = db.FI_PossibleFriend(user).Take(10);
+            List<FI_PossibleFriend_Result> possiblefriends;
+            if (string.IsNullOrWhiteSpace(SearchFriend))
+            {
+                possiblefriends = db.FI_PossibleFriend(user).Take(10).ToList();
+            }
+            else 
+            {
+                possiblefriends = db.FI_PossibleFriend(user).Where(f => 
+                    f.firstname.ToUpper().Trim().Contains(SearchFriend.ToUpper().Trim())
+                    || f.lastname.ToUpper().Trim().Contains(SearchFriend.ToUpper().Trim())
+                    || f.username.ToUpper().Trim().Contains(SearchFriend.ToUpper().Trim())
+                    || f.email.ToUpper().Trim().Contains(SearchFriend.ToUpper().Trim()) 
+                    ).ToList();
+            }
+
+
+            
             foreach (var item in possiblefriends)
             {
                 model.Add(new UserInfo() 

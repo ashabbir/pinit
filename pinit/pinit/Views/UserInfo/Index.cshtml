@@ -8,60 +8,54 @@
 <div class="container theme-showcase">
     @Html.ErrorAlert(true)
     <div class="center-block">
-        <div class="panel panel-info">
 
+        @Html.Partial("_SearchFriendPartial")
+
+    @if (Model.Count() > 0)
+    {
+        <div class="panel panel-default ">
             <div class="panel-body">
-                <p>
-                  this is where i should put a search form for friends
-                </p>
-            </div><!-- /.panel-body -->
+                <div class="bs-example table-responsive">
+                    <table class="table table-striped table-bordered table-hover">
+                        <thead>
+                            <tr>
+                                <th>Action</th>
+                                <th>First Name</th>
+                                <th>Last Name</th>
+                                <th>Email</th>
+                            </tr>
+                        </thead>
+                        <tbody>
 
-        </div><!-- panel panel-default-->
-        @if (Model.Count() > 0)
-        {
-            <div class="panel panel-default ">
-                <div class="panel-body">
-                    <div class="bs-example table-responsive">
-                        <table class="table table-striped table-bordered table-hover">
-                            <thead>
+                            @foreach (var item in Model)
+                            {
                                 <tr>
-                                    <th>Action</th>
-                                    <th>First Name</th>
-                                    <th>Last Name</th>
-                                    <th>Email</th>
+                                    <td><span class="badge">@Html.ActionLink("Request", "RequestFriendShip", new { id = item.UserName }) </span> | <span class="badge">@Html.ActionLink("Boards", "Index", "FriendBoards", new { id = item.UserName }, null)</span></td>
+                                    <td>@Html.DisplayFor(modelItem => item.FirstName) </td>
+                                    <td>@Html.DisplayFor(modelItem => item.LastName)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.Email)</td>
                                 </tr>
-                            </thead>
-                            <tbody>
 
-                                @foreach (var item in Model)
-                                {
-                                    <tr>
-                                        <td><span class="badge">@Html.ActionLink("Request", "RequestFriendShip", new { id = item.UserName }) </span> | <span class="badge">@Html.ActionLink("Boards", "Index", "FriendBoards", new { id = item.UserName }, null)</span></td>
-                                        <td>@Html.DisplayFor(modelItem => item.FirstName) </td>
-                                        <td>@Html.DisplayFor(modelItem => item.LastName)</td>
-                                        <td>@Html.DisplayFor(modelItem => item.Email)</td>
-                                    </tr>
-
-                                }
+                            }
 
 
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-                <div class="panel-footer">
-                    <em class="text-info">These are the friend ship request people have made for you. You need to act on them</em>
+                        </tbody>
+                    </table>
                 </div>
             </div>
-        }
-        else 
-        {
-            <div class="panel panel-default ">
-                <div class="panel-body">
-                   every one is ur friend or you must have sent a request to every one
-                </div>
-               
+            <div class="panel-footer">
+                <em class="text-info">These are the friend ship request people have made for you. You need to act on them</em>
             </div>
-        }
-    </div><!--center -->
+        </div>
+    }
+    else
+    {
+        <div class="panel panel-default ">
+            <div class="panel-body">
+                every one is ur friend or you must have sent a request to every one
+            </div>
+
+        </div>
+    }
+</div><!--center -->
 </div> <!-- /container -->
