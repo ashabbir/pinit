@@ -392,6 +392,7 @@
     <Content Include="Views\FriendBoards\Index.cshtml" />
     <Content Include="Views\Shared\_AddCommentPartial.cshtml" />
     <Content Include="Views\Shared\_AddLikePartial.cshtml" />
+    <Content Include="Views\Shared\_ActiveFriendPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -1,12 +1,12 @@
 ﻿@model IEnumerable<pinit.Data.Board>
-
+@using Microsoft.AspNet.Identity
 
 @{
     ViewBag.Title = "Boards";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Boards</h2>
+<h2>Boards for @User.Identity.GetUserName()</h2>
 <div class="container theme-showcase">
     <div class="center-block">
         <div class="panel panel-default">

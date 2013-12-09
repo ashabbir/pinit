@@ -14,8 +14,7 @@
     <div class="center-block">
         <div class="panel panel-primary">
             <div class="panel-heading">
-                <h3 class="panel-title">@Html.DisplayTextFor(model => model.BoardName) </h3>
-
+                <h3 class="panel-title">@Html.DisplayTextFor(model => model.BoardName) by @Html.DisplayTextFor(model => model.UserInfo.UserName)   </h3>
             </div>
             @if (User.Identity.Name == Model.UserInfo.UserName)
             {
@@ -35,14 +34,14 @@
                    @if (User.Identity.Name == Model.UserInfo.UserName)
                     {
 
-                            <li>  @Html.ActionLink("Edit", "Edit", new { id = Model.BoardId }) |</li>
-                            <li>  @Html.ActionLink("Back to List", "Index") |</li>
+                            <li>  @Html.ActionLink("Edit board", "Edit", new { id = Model.BoardId }) |</li>
+                            <li>  @Html.ActionLink("Back to boards", "Index") |</li>
                             <li> @Html.ActionLink("Delete", "Delete", new { id = Model.BoardId })</li>
 
                     }
                     else
                     {
-                            <li>  @Html.ActionLink("Back to List", "Index") </li>
+                            <li>  @Html.ActionLink("Back to friend's boards", "Index", "FriendBoards",  new { id = Model.UserInfo.UserName } , null) </li>
                     }
 
                     <li>

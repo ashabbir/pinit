@@ -9,6 +9,7 @@ namespace pinit.Models
     {
         public List<pinit.Data.Board> boards { get; set; }
         public List<pinit.Models.UserFriend> PendingFriendRequests { get; set; }
+        public List<pinit.Models.UserFriend> ActiveFriends { get; set; }
         public string username { get; set; }
 
 
@@ -17,6 +18,7 @@ namespace pinit.Models
             SetUserName(_username);
             LoadBoards();
             LoadPendingFriendRequest();
+            LoadActiveFriends();
         }
 
 
@@ -57,6 +59,35 @@ namespace pinit.Models
             
             }
             
+        }
+
+
+        public void LoadActiveFriends()
+        {
+            ActiveFriends = new List<UserFriend>();
+            var allactive = new List<UserFriend>();
+            using (var db = new pinit.Data.PinitEntities())
+            {
+                var _activeFriendWhoAskedMe = db.Friends.Where(x => x.RequestStatus.ToUpper() =="ACCEPTED" && x.TargetUser == username).OrderByDescending(x => x.DateModified).ToList();
+                var _activeFriendWhoIAsked = db.Friends.Where(x => x.RequestStatus.ToUpper() == "ACCEPTED" && x.SourceUser == username).OrderByDescending(x => x.DateModified).ToList();
+                foreach (var item in _activeFriendWhoAskedMe)
+                {
+                    var user = new UserFriend(item.SourceUser);
+                    user.FriendShipStatus = item;
+                    allactive.Add(user);
+                }
+
+                foreach (var item in _activeFriendWhoIAsked)
+                {
+                    var user = new UserFriend(item.TargetUser);
+                    user.FriendShipStatus = item;
+                    allactive.Add(user);
+                }
+
+                ActiveFriends = allactive.Take(5).ToList();
+
+            }
+
         }
 
     }

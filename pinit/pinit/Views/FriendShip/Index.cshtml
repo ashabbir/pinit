@@ -21,31 +21,8 @@
         </div><!-- panel panel-default-->
         @Html.Partial("_PendingFriendRequestPartial", Model.PendingFriends)
 
-
-        @if (Model.ActiveFriends.Count() > 0)
-        {
-            <div class="panel panel-success">
-                <div class="panel-heading">
-                    <h3 class="panel-title">Friends</h3>
-                </div>
-                <div class="panel-body">
-                    <ul class="list-group">
-                        @foreach (var item in Model.ActiveFriends)
-                        {
-                            <li class="list-group-item">
-                                <span class="badge">@Html.ActionLink("Boards", "Index", "FriendBoards", new { id = item.PersonalInfo.UserName }, null)</span>
-                                @Html.Label(item.PersonalInfo.FirstName)  @Html.Label(item.PersonalInfo.LastName)
-                            </li>
-                        }
-                    </ul>
-                </div>
-                <div class="panel-footer">
-                    <em class="text-info">You Current friends</em>
-                </div>
-            </div>
-
-        }
-
+        @Html.Partial("_ActiveFriendPartial", Model.ActiveFriends)
+       
 
         @if (Model.PendingRequests.Count() > 0)
         {

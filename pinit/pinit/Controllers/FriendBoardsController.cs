@@ -10,6 +10,7 @@ using pinit.Data;
 
 namespace pinit.Controllers
 {
+    [Authorize]
     public class FriendBoardsController : Controller
     {
         private PinitEntities db = new PinitEntities();
