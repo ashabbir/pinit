@@ -12,38 +12,7 @@
 <div class="jumbotron">
    this is where ill show u some of the boards you are following 
     its come be some thing like 
-    <ul class="list-inline">
-        <li>
-            <p>
-                @Html.ActionBoard("Details", new { id = 1 }, "~/Content/board.jpg", "boo")
-
-            </p>
-        </li>
-        <li>
-            <p>
-                @Html.ActionBoard("Details", new { id = 1 }, "~/Content/board.jpg", "boo")
-
-            </p>
-        </li>
-        <li>
-            <p>
-                @Html.ActionBoard("Details", new { id = 1 }, "~/Content/board.jpg", "boo")
-
-            </p>
-        </li>
-        <li>
-            <p>
-                @Html.ActionBoard("Details", new { id = 1 }, "~/Content/board.jpg", "boo")
-
-            </p>
-        </li>
-        <li>
-            <p>
-                @Html.ActionBoard("Details", new { id = 1 }, "~/Content/board.jpg", "boo")
-
-            </p>
-        </li>
-    </ul>
+    @Html.Partial("_BoardsPartial", Model.boards.Take(6))
 </div>
 
 
@@ -51,7 +20,7 @@
     <div class="center-block">
         <div class="panel panel-default">
             <div class="panel-body">
-                @Html.Partial("_BoardsPartial" , Model.boards.Take(6))
+                @Html.Partial("_BoardsPartial" , Model.boards.Take(9))
             </div><!-- /.panel-body -->
         </div><!-- panel panel-default-->
     </div><!--center -->
