@@ -32,11 +32,12 @@ namespace pinit.Controllers
                 ModelState.AddModelError("", error);
             }
 
-            var pin = db.Pins.Include(p => p.Comments).Include(p => p.Board).FirstOrDefault(p => p.PinId == id);
+            var pin = db.Pins.Include(p => p.Comments).Include(p => p.Board).Include( p=> p.PinTags).FirstOrDefault(p => p.PinId == id);
             if (pin == null)
             {
                 return HttpNotFound();
             }
+
             var comments = pin.Comments;
 
 
@@ -172,6 +173,7 @@ namespace pinit.Controllers
             var comments = db.Comments.Where(c => c.PinId == id).ToList();
             var repins = db.Repins.Where(rp => rp.PinId == id).ToList();
             var userlikes = db.UserLikes.Where(l => l.PinId == id).ToList();
+            var pintags = db.PinTags.Where(t => t.PinId == id).ToList();
             foreach (var item in userlikes)
             {
                 db.UserLikes.Remove(item);
@@ -184,9 +186,15 @@ namespace pinit.Controllers
             {
                 db.Repins.Remove(item);
             }
+
+            foreach (var item in pintags)
+            {
+                db.PinTags.Remove(item);
+            }
             var boardId = pin.BoardId;
 
             db.Pins.Remove(pin);
+
             db.SaveChanges();
             return RedirectToAction("Details", "Boards", new { id = boardId });
         }

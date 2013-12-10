@@ -25,7 +25,12 @@
             <div class="panel-body">
                 @Html.ErrorAlert()
                 @Html.PinTag(Model.Picture.ImageUrl, "pin")
+               
 
+                            @foreach (var tags in Model.PinTags)
+                {
+                    <span class="badge">@Html.Label(tags.Tag.TagName)</span>  
+                }
 
                 <hr />
                 @if (ViewBag.AllowComment)

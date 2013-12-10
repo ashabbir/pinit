@@ -44,7 +44,7 @@ namespace pinit.Controllers
             {
                 ModelState.AddModelError("", "pin Url Issue");
             }
-           
+
 
             if (id == null)
             {
@@ -156,7 +156,7 @@ namespace pinit.Controllers
 
 
             var boardfollow = db.BoardFollows.Where(f => f.BoardId == id).ToList();
-            if (boardfollow.Count() > 0) 
+            if (boardfollow.Count() > 0)
             {
                 foreach (var bf in boardfollow)
                 {
@@ -191,7 +191,7 @@ namespace pinit.Controllers
                     {
                         db.Repins.Remove(repin);
                     }
-                    
+
                     db.Pins.Remove(pin);
                 }
             }
@@ -202,19 +202,31 @@ namespace pinit.Controllers
         }
 
 
+
+
+
         // POST: /Boards/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult CreatePin(string txtPinUrl, int BoardId)
+        public ActionResult CreatePin(string txtPinUrl, int BoardId, string textarea)
         {
             string error = "Pin was not created";
             var success = false;
+            List<string> tags = new List<string>();
             if (string.IsNullOrWhiteSpace(txtPinUrl))
             {
                 return RedirectToAction("Details", new { id = BoardId, pinstatusid = PinStatusId.PinUrlIssue });
             }
+            if (!string.IsNullOrWhiteSpace(textarea))
+            {
+                tags = textarea.Replace("\"", "").Replace("[", "").Replace("]", "").Split(',').ToList();
+                tags.Remove("");
+            }
+
+
+
             //step 1 get the image save it in directory
             string imgLocation = "";
             if (txtPinUrl.DownloadImage(out imgLocation))
@@ -222,13 +234,40 @@ namespace pinit.Controllers
                 //step 2 create a pin throu exec UP_Pin '' , 1
                 using (var db = new PinitEntities())
                 {
-                    var result = db.FI_Pin(imgLocation, BoardId).ToList();
+                    var result = db.FI_PinWithId(imgLocation, BoardId).ToList();
+                   
+                    
                     if (result.Count() > 0)
                     {
                         success = result.FirstOrDefault().Success ?? false;
                         if (!success)
                         {
                             error = result.FirstOrDefault().msg;
+                        }
+                        else 
+                        {
+                            try
+                            {
+                                foreach (var tag in tags)
+                                {
+                                    var dbtag = db.Tags.FirstOrDefault(t => t.TagName.ToUpper().Trim() == tag.ToUpper().Trim());
+                                    if (dbtag == null)
+                                    {
+                                        dbtag = new Tag() { TagName = tag };
+                                        db.Tags.Add(dbtag);
+                                        db.SaveChanges();
+                                    }
+                                    var pid =  (int)result.FirstOrDefault().PinId.Value ;
+                                    db.PinTags.Add(new PinTag() { TagId = dbtag.TagId, PinId =  pid , DateTaged = DateTime.Now});
+                                    db.SaveChanges();
+                                }
+                            }
+                            catch (Exception ex)
+                            {
+                                var msg = ex.Message;
+                                
+                            }
+                           
                         }
                     }
                 }

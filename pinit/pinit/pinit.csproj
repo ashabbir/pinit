@@ -175,6 +175,7 @@
     <Compile Include="Controllers\FriendShipController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\PinController.cs" />
+    <Compile Include="Controllers\TagController.cs" />
     <Compile Include="Controllers\UserInfoController.cs" />
     <Compile Include="Data\Board.cs">
       <DependentUpon>PinitModel.tt</DependentUpon>
@@ -350,6 +351,25 @@
     <Content Include="SQLScripts\1-DBCreate.SQL" />
     <Content Include="SQLScripts\2-StoreProcs.SQL" />
     <Content Include="SQLScripts\3-TestCase.SQL" />
+    <Content Include="textext\css\arrow.png" />
+    <Content Include="textext\css\close.png" />
+    <Content Include="textext\css\textext.core.css" />
+    <Content Include="textext\css\textext.plugin.arrow.css" />
+    <Content Include="textext\css\textext.plugin.autocomplete.css" />
+    <Content Include="textext\css\textext.plugin.clear.css" />
+    <Content Include="textext\css\textext.plugin.focus.css" />
+    <Content Include="textext\css\textext.plugin.prompt.css" />
+    <Content Include="textext\css\textext.plugin.tags.css" />
+    <Content Include="textext\js\textext.core.js" />
+    <Content Include="textext\js\textext.plugin.ajax.js" />
+    <Content Include="textext\js\textext.plugin.arrow.js" />
+    <Content Include="textext\js\textext.plugin.autocomplete.js" />
+    <Content Include="textext\js\textext.plugin.clear.js" />
+    <Content Include="textext\js\textext.plugin.filter.js" />
+    <Content Include="textext\js\textext.plugin.focus.js" />
+    <Content Include="textext\js\textext.plugin.prompt.js" />
+    <Content Include="textext\js\textext.plugin.suggestions.js" />
+    <Content Include="textext\js\textext.plugin.tags.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -395,10 +415,18 @@
     <Content Include="Views\Shared\_ActiveFriendPartial.cshtml" />
     <Content Include="Views\Shared\_PendingRequestPartial.cshtml" />
     <Content Include="Views\Shared\_SearchFriendPartial.cshtml" />
+    <Content Include="textext\stylus\textext.core.styl" />
+    <Content Include="textext\stylus\textext.plugin.arrow.styl" />
+    <Content Include="textext\stylus\textext.plugin.autocomplete.styl" />
+    <Content Include="textext\stylus\textext.plugin.focus.styl" />
+    <Content Include="textext\stylus\textext.plugin.prompt.styl" />
+    <Content Include="textext\stylus\textext.plugin.tags.styl" />
+    <Content Include="textext\stylus\_common.styl" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="pinuploads\" />
+    <Folder Include="Views\Tag\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

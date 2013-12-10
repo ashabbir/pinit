@@ -15,5 +15,6 @@ namespace pinit.Data
     {
         public Nullable<bool> Success { get; set; }
         public string msg { get; set; }
+        public Nullable<decimal> PinId { get; set; }
     }
 }

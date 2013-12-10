@@ -835,6 +835,10 @@
             <End Role="UserInfo" EntitySet="UserInfoes" />
             <End Role="UserLike" EntitySet="UserLikes" />
           </AssociationSet>
+          <FunctionImport Name="FI_PinWithId" ReturnType="Collection(PinitModel.FI_Pin_Result)">
+            <Parameter Name="imgurl" Mode="In" Type="String" />
+            <Parameter Name="boardid" Mode="In" Type="Int32" />
+          </FunctionImport>
         </EntityContainer>
         <ComplexType Name="UP_AcceptOrRejectFriendShipRequest_Result">
           <Property Type="Boolean" Name="Success" Nullable="true" />
@@ -899,6 +903,7 @@
         <ComplexType Name="FI_Pin_Result">
           <Property Type="Boolean" Name="Success" Nullable="true" />
           <Property Type="String" Name="msg" Nullable="false" MaxLength="1" />
+          <Property Type="Decimal" Name="PinId" Nullable="true" Precision="38" Scale="0" />
         </ComplexType>
         <ComplexType Name="FI_AcceptRejectRequest_Result">
           <Property Type="Boolean" Name="Success" Nullable="true" />
@@ -1367,6 +1372,15 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="FI_PinWithId" FunctionName="PinitModel.Store.UP_Pin">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="PinitModel.FI_Pin_Result">
+                <ScalarProperty Name="Success" ColumnName="Success" />
+                <ScalarProperty Name="msg" ColumnName="msg" />
+                <ScalarProperty Name="PinId" ColumnName="PinId" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
