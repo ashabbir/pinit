@@ -698,6 +698,51 @@ BEGIN TRANSACTION
 
 GO
 
+USE [Pinit]
+GO
+
+/****** Object:  StoredProcedure [dbo].[UP_Pin]    Script Date: 12/9/2013 11:22:42 PM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+
+
+
+ALTER PROC [dbo].[UP_Pin] (
+@imgurl varchar(255),
+@boardid int)
+AS
+
+
+
+IF NOT EXISTS (Select * from Picture Where imageUrl = @imgurl)
+BEGIN
+	Insert into Picture(imageUrl) 
+	values (@imgurl)
+END
+
+Declare @pictureid as int
+
+Select @pictureid = pictureid from Picture Where imageUrl = @imgurl
+
+IF NOT EXISTS (Select * from Pin Where pictureid = @pictureid AND boardid = @boardid)
+BEGIN
+	Insert into Pin(pictureid, boardid) 
+	values (@pictureid, @boardid)
+	
+	Select CAST(1 as Bit) as Success, '' as msg , SCOPE_IDENTITY() as PinId
+	return
+END
+Select CAST(0 as Bit) as Success, 'User already has the image pined to this board'   as msg , 0 as PinId
+return
+
+
+GO
+
+
 
 
 
