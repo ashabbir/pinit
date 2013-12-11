@@ -19,22 +19,25 @@ NYU Poly project cs 6038
 * ~~add cascading deletes to pins~~
 
 ### Friendship frame work
-* user should be able to search other users by email or username 
+* ~~user should be able to search other users by email or username~~
 * ~~user should be able to send a friend request to other~~
 * ~~user should be able to deny or accept a request that was made by some one for friendship~~
 * user should be able to retract request that he sent out
 
 ### Comment framework
 * ~~user can add comments to pictures that he can see only. his pics / his friends pics~~
-
-### Repin
-* user should be able to repin
+* ~~cascade delete on baords should delete comments~~
+* ~~private baords should not be commentable by non friends~~
 
 ### tag framework
-* user can add tags to a board 
+* ~~user can add tags to a board~~ 
 * user can search for tags returns his boards and other boards that he is following or his friends boards
+* ~~cascade delete on boards should delete pin tags but not the tag dictionary~~
 
 ### Follow Frame work
 * user should be able to follow boards
+
+### Repin
+* user should be able to repin
 
 
