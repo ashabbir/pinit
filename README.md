@@ -17,6 +17,7 @@ NYU Poly project cs 6038
 * ~~user should be able to take a image url and pin it to his board~~
 * ~~user should be able to delete pins~~
 * ~~add cascading deletes to pins~~
+* user should be able to upload single or multi files 
 
 ### Friendship frame work
 * ~~user should be able to search other users by email or username~~
@@ -39,5 +40,9 @@ NYU Poly project cs 6038
 
 ### Repin
 * user should be able to repin
+* do a cascade delete on pin delete
+* deleting repin should not delete the master pin
+* comments go against the repin
+* likes go aginst the master pin
 
 
