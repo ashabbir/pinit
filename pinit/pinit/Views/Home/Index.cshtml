@@ -10,7 +10,14 @@
 
 
 <div class="jumbotron">
+    @if(Model.FollowPin.Count() > 0) {
     @Html.Partial("_PinsPartial", Model.FollowPin)
+    }
+    else 
+    {
+        <p>you are currently not following any thing</p>
+    }
+    
 </div>
 
 
