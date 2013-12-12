@@ -211,6 +211,9 @@
     <Compile Include="Data\FI_SendFriendShipRequest_Result.cs">
       <DependentUpon>PinitModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Data\FI_TagSearch_Result.cs">
+      <DependentUpon>PinitModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Data\FI_UpdateProfile_Result.cs">
       <DependentUpon>PinitModel.tt</DependentUpon>
     </Compile>
@@ -444,6 +447,8 @@
     <Content Include="Views\Stream\Details.cshtml" />
     <Content Include="Views\Stream\FollowBoard.cshtml" />
     <Content Include="Views\Stream\Delete.cshtml" />
+    <Content Include="Views\Tag\Search.cshtml" />
+    <Content Include="Views\Shared\_SearchTagPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

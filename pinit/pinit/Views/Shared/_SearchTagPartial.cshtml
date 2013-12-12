@@ -1,0 +1,17 @@
+﻿<div class="panel panel-info">
+    <div class="panel-body">
+
+        <div class="form-group">
+         
+                @using (Html.BeginForm("Search", "Tag", FormMethod.Get))
+                {
+                    <ul class="list-inline">
+                        <li>@Html.TextBox("SearchTag", null, new { @class = "form-control ", @placeholder = "Enter Tag" })</li>
+                        <li><input type="submit" value="Search" class="btn btn-sm btn-primary" /></li>
+                    </ul>
+
+                }
+          
+        </div>
+    </div>
+</div>

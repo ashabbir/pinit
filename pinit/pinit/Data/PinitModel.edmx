@@ -854,10 +854,13 @@
             <Parameter Name="streamid" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="UP_FollowTop5" ReturnType="Collection(PinitModel.UP_FollowTop5_Result)">
-            <Parameter Name="username" Mode="In" Type="String" />
+          <Parameter Name="username" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="FI_Follow5" ReturnType="Collection(PinitModel.FI_Follow5_Result)">
-            <Parameter Name="username" Mode="In" Type="String" />
+          <Parameter Name="username" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="FI_TagSearch" ReturnType="Collection(PinitModel.FI_TagSearch_Result)">
+            <Parameter Name="KeyWork" Mode="In" Type="String" />
           </FunctionImport>
         </EntityContainer>
         <ComplexType Name="UP_AcceptOrRejectFriendShipRequest_Result">
@@ -1106,6 +1109,12 @@
           <Property Type="Int32" Name="PinId" Nullable="false" />
           <Property Type="String" Name="ImageUrl" Nullable="false" MaxLength="255" />
           <Property Type="DateTime" Name="DateUploaded" Nullable="false" Precision="23" />
+        </ComplexType>
+        <ComplexType Name="FI_TagSearch_Result">
+          <Property Type="Int32" Name="pinid" Nullable="false" />
+          <Property Type="DateTime" Name="DateUploaded" Nullable="false" Precision="23" />
+          <Property Type="String" Name="ImageUrl" Nullable="false" MaxLength="255" />
+          <Property Type="Int32" Name="PictureId" Nullable="false" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -1464,6 +1473,16 @@
                 <ScalarProperty Name="PinId" ColumnName="PinId" />
                 <ScalarProperty Name="ImageUrl" ColumnName="ImageUrl" />
                 <ScalarProperty Name="DateUploaded" ColumnName="DateUploaded" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="FI_TagSearch" FunctionName="PinitModel.Store.UP_KeyWordSearchOnTags">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="PinitModel.FI_TagSearch_Result">
+                <ScalarProperty Name="pinid" ColumnName="pinid" />
+                <ScalarProperty Name="DateUploaded" ColumnName="DateUploaded" />
+                <ScalarProperty Name="ImageUrl" ColumnName="ImageUrl" />
+                <ScalarProperty Name="PictureId" ColumnName="PictureId" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

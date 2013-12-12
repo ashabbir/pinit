@@ -49,6 +49,42 @@ namespace pinit.Controllers
             return View(db.Tags.ToList());
         }
 
+
+
+        // GET: /Tag/Search/aaa
+        public ActionResult Search(string SearchTag)
+        {
+            ViewBag.message = "";
+            var pins = new List<Pin>();
+
+            if (string.IsNullOrWhiteSpace(SearchTag))
+            {
+                ViewBag.message = "Enter Search Criteria";
+                return View(pins);
+            }
+            var relatedPins = db.FI_TagSearch(SearchTag).ToList();
+            if (relatedPins.Count() == 0)
+            {
+                ViewBag.message = "no results to display";
+            }
+            foreach (var item in relatedPins)
+            {
+                var pic = new Picture() 
+                {
+                    PictureId = item.PictureId,
+                    ImageUrl = item.ImageUrl
+                };
+                pins.Add(new Pin()
+                {
+                    PinId = item.pinid,
+                    Picture = pic
+                });
+            }
+            ViewBag.message = pins.Count() + " pins found";
+            return View(pins);
+        }
+
+
         // GET: /Tag/Details/5
         public ActionResult Details(int? id)
         {

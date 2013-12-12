@@ -436,5 +436,14 @@ namespace pinit.Data
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<FI_Follow5_Result>("FI_Follow5", usernameParameter);
         }
+    
+        public virtual ObjectResult<FI_TagSearch_Result> FI_TagSearch(string keyWork)
+        {
+            var keyWorkParameter = keyWork != null ?
+                new ObjectParameter("KeyWork", keyWork) :
+                new ObjectParameter("KeyWork", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<FI_TagSearch_Result>("FI_TagSearch", keyWorkParameter);
+        }
     }
 }

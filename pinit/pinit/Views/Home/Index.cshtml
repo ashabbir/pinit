@@ -10,19 +10,21 @@
 
 
 <div class="jumbotron">
-    @if(Model.FollowPin.Count() > 0) {
-    @Html.Partial("_PinsPartial", Model.FollowPin)
+    @if (Model.FollowPin.Count() > 0)
+    {
+        <p class="text-info">Latest 5 pins from all streams</p>
+        @Html.Partial("_PinsPartial", Model.FollowPin)
     }
-    else 
+    else
     {
         <p>you are currently not following any thing</p>
     }
-    
+
 </div>
 
 
 
-@Html.Partial("_BoardsPartial" , Model.boards.Take(9))
+@Html.Partial("_BoardsPartial", Model.boards.Take(9))
 
 @Html.Partial("_ActiveFriendPartial", Model.ActiveFriends)
 
