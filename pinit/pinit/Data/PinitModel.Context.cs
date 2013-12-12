@@ -445,5 +445,18 @@ namespace pinit.Data
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<FI_TagSearch_Result>("FI_TagSearch", keyWorkParameter);
         }
+    
+        public virtual ObjectResult<FI_Repin_Result> FI_Repin(Nullable<int> pinid, Nullable<int> boardid)
+        {
+            var pinidParameter = pinid.HasValue ?
+                new ObjectParameter("pinid", pinid) :
+                new ObjectParameter("pinid", typeof(int));
+    
+            var boardidParameter = boardid.HasValue ?
+                new ObjectParameter("boardid", boardid) :
+                new ObjectParameter("boardid", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<FI_Repin_Result>("FI_Repin", pinidParameter, boardidParameter);
+        }
     }
 }

@@ -25,14 +25,18 @@
             <div class="panel-body">
                 @Html.ErrorAlert()
                 @Html.PinTag(Model.Picture.ImageUrl, "pin")
-               
+            @if (Model.Board.BoardOwner != User.Identity.Name) 
+            {
+                 @Html.ActionLink("Repin", "Repin", "Boards", new { id = Model.PinId }, null)
 
-                            @foreach (var tags in Model.PinTags)
+            }
+               
+                @foreach (var tags in Model.PinTags)
                 {
-                    <span class="badge">@Html.Label(tags.Tag.TagName)</span>  
+                    <span class="badge">@Html.Label(tags.Tag.TagName)</span>
                 }
 
-                <hr />
+               
                 @if (ViewBag.AllowComment)
                 {
                     if (Model.Comments.Count() > 0)
@@ -68,7 +72,7 @@
                         <li>  @Html.ActionLink("Back", "Details", "Boards", new { id = Model.BoardId }, null) |</li>
                         <li>  @Html.Partial("_AddLikePartial", newLike) </li>
                     </ul>
-                  
+
                 }
             </div>
 

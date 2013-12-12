@@ -74,7 +74,6 @@ namespace System.Web.Mvc.Html
             anchorBuilder.InnerHtml = imgHtml; // include the <img> tag inside
             string anchorHtml = anchorBuilder.ToString(TagRenderMode.Normal);
 
-
             return MvcHtmlString.Create(anchorHtml);
         }
 

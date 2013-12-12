@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using pinit.Data;
+using pinit.Helpers;
 using Microsoft.AspNet.Identity;
 
 namespace pinit.Controllers
@@ -169,33 +170,19 @@ namespace pinit.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Pin pin = db.Pins.Include(p => p.UserLikes).FirstOrDefault(p => p.PinId == id);
-            var comments = db.Comments.Where(c => c.PinId == id).ToList();
-            var repins = db.Repins.Where(rp => rp.PinId == id).ToList();
-            var userlikes = db.UserLikes.Where(l => l.PinId == id).ToList();
-            var pintags = db.PinTags.Where(t => t.PinId == id).ToList();
-            foreach (var item in userlikes)
-            {
-                db.UserLikes.Remove(item);
-            }
-            foreach (var item in comments)
-            {
-                db.Comments.Remove(item);
-            }
-            foreach (var item in repins)
-            {
-                db.Repins.Remove(item);
-            }
 
-            foreach (var item in pintags)
-            {
-                db.PinTags.Remove(item);
-            }
-            var boardId = pin.BoardId;
-
-            db.Pins.Remove(pin);
-
-            db.SaveChanges();
+            /*
+                when we delete a pin
+                
+                1- delete that pin 
+                2- delete comments on it
+                3- delete likes on it
+                4- delete all repins where its the target
+                5- delete att pins where repin target > pinid is present
+                6- delete tags for the pin 
+            */
+            var boardId = db.Pins.FirstOrDefault(p => p.PinId == id).BoardId;
+            StaticHelper.DeletePin(id);    
             return RedirectToAction("Details", "Boards", new { id = boardId });
         }
 

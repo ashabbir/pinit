@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using pinit.Data;
+using pinit.Models;
 using pinit.Helpers;
 using Microsoft.AspNet.Identity;
 
@@ -33,6 +34,7 @@ namespace pinit.Controllers
                 pinstatusid == PinStatusId.PinAdded ? "Pin was added."
                 : pinstatusid == PinStatusId.PinDeleted ? "Pin was deleted."
                  : pinstatusid == PinStatusId.PinUrlIssue ? "Pin Url Issue."
+                 : pinstatusid == PinStatusId.RePinError ? "Pin Url Issue."
                 : "";
 
             if (pinstatusid == PinStatusId.Error)
@@ -43,6 +45,10 @@ namespace pinit.Controllers
             else if (pinstatusid == PinStatusId.PinUrlIssue)
             {
                 ModelState.AddModelError("", "pin Url Issue");
+            }
+            else if (pinstatusid == PinStatusId.RePinError) 
+            {
+                ModelState.AddModelError("", ViewBag.StatusMessage);
             }
 
 
@@ -169,40 +175,18 @@ namespace pinit.Controllers
                 }
             }
 
-
+            db.SaveChanges();
 
             if (pins.Count() > 0)
             {
                 foreach (var pin in pins)
                 {
-                    var repins = db.Repins.Where(r => r.TargetPinId == pin.PinId).ToList();
-                    var comments = db.Comments.Where(c => c.PinId == pin.PinId).ToList();
-                    var userlikes = db.UserLikes.Where(l => l.PinId == pin.PinId).ToList();
-                    var pintags = db.PinTags.Where(t => t.PinId == pin.PinId).ToList();
-
-                    foreach (var item in pintags)
-                    {
-                        db.PinTags.Remove(item);
-                    }
-                    foreach (var item in comments)
-                    {
-                        db.Comments.Remove(item);
-                    }
-                    foreach (var item in userlikes)
-                    {
-                        db.UserLikes.Remove(item);
-                    }
-                    foreach (var repin in repins)
-                    {
-                        db.Repins.Remove(repin);
-                    }
-
-                    db.Pins.Remove(pin);
+                    StaticHelper.DeletePin(pin.PinId);
                 }
             }
 
-            db.Boards.Remove(board);
-            db.SaveChanges();
+
+            StaticHelper.DeleteBoard(id);
             return RedirectToAction("Index");
         }
 
@@ -291,6 +275,66 @@ namespace pinit.Controllers
         }
 
 
+
+        //
+        // GET: /Baord/Repin/1 where 1 is the srouce pinid
+        [HttpGet]
+        public ActionResult Repin(int? id)
+        {
+            BoardDropDown model = new BoardDropDown();
+            model.PinId = (int)id;
+            model.FillMe(User.Identity.GetUserName());
+            return View(model);
+        }
+
+
+
+        // POST: /Boards/Repin
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Repin(BoardDropDown model)
+        {
+            string error = "Pin was not created";
+            var success = false;
+            int SourcePinId = model.PinId;
+            var BoardId = model.BoardId;
+            //step 1 get the image save it in directory
+           
+            if (true)
+            {
+                //step 2 create a pin throu exec UP_Pin '' , 1
+                using (var db = new PinitEntities())
+                {
+                    var result = db.FI_Repin(SourcePinId, BoardId).ToList();
+
+
+                    if (result.Count() > 0)
+                    {
+                        success = result.FirstOrDefault().Success ?? false;
+                        if (!success)
+                        {
+                            error = result.FirstOrDefault().msg;
+                        }
+                       
+                    }
+                }
+            }
+
+
+            if (success)
+            {
+                return RedirectToAction("Details", new { id = BoardId });
+            }
+            else
+            {
+                ViewBag.Error = error;
+                return RedirectToAction("Details", new { id = BoardId, pinstatusid = PinStatusId.RePinError });
+            }
+        }
+
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)
@@ -306,6 +350,7 @@ namespace pinit.Controllers
             PinDeleted,
             PinPresent,
             PinUrlIssue,
+            RePinError,
             Error
         }
 

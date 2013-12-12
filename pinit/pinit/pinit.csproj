@@ -208,6 +208,9 @@
     <Compile Include="Data\FI_PossibleFriend_Result.cs">
       <DependentUpon>PinitModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Data\FI_Repin_Result.cs">
+      <DependentUpon>PinitModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Data\FI_SendFriendShipRequest_Result.cs">
       <DependentUpon>PinitModel.tt</DependentUpon>
     </Compile>
@@ -315,10 +318,12 @@
     </Compile>
     <Compile Include="Helpers\CustomExtention.cs" />
     <Compile Include="Helpers\HtmlHelperExtention.cs" />
+    <Compile Include="Helpers\StaticHelper.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\FriendShip.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\OverviewModel.cs" />
+    <Compile Include="Models\BoardDropDown.cs" />
     <Compile Include="Models\StreamDropDown.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
@@ -449,6 +454,7 @@
     <Content Include="Views\Stream\Delete.cshtml" />
     <Content Include="Views\Tag\Search.cshtml" />
     <Content Include="Views\Shared\_SearchTagPartial.cshtml" />
+    <Content Include="Views\Boards\Repin.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
