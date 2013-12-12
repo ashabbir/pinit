@@ -2,15 +2,17 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using pinit.Data;
 
 namespace pinit.Models
 {
     public class OverviewModel
     {
-        public List<pinit.Data.Board> boards { get; set; }
-        public List<pinit.Models.UserFriend> PendingFriendRequests { get; set; }
-        public List<pinit.Models.UserFriend> ActiveFriends { get; set; }
+        public List<Board> boards { get; set; }
+        public List<UserFriend> PendingFriendRequests { get; set; }
+        public List<UserFriend> ActiveFriends { get; set; }
         public string username { get; set; }
+        public List<Pin> FollowPin { get; set; }
 
 
         public OverviewModel(string _username)
@@ -19,16 +21,17 @@ namespace pinit.Models
             LoadBoards();
             LoadPendingFriendRequest();
             LoadActiveFriends();
+            LoadFollowStream();
         }
 
 
-        public void SetUserName(string _username) 
+        public void SetUserName(string _username)
         {
             username = _username;
         }
 
 
-        public void LoadBoards() 
+        public void LoadBoards()
         {
             boards = new List<Data.Board>();
             using (var db = new pinit.Data.PinitEntities())
@@ -36,7 +39,7 @@ namespace pinit.Models
                 boards = db.Boards.Include("Pins").Where(b => b.BoardOwner == username).ToList();
                 foreach (var item in boards)
                 {
-                    if (item.Pins.Count() > 0) 
+                    if (item.Pins.Count() > 0)
                     {
                         var p = item.Pins.FirstOrDefault().Picture;
                     }
@@ -48,7 +51,8 @@ namespace pinit.Models
         public void LoadPendingFriendRequest()
         {
             PendingFriendRequests = new List<UserFriend>();
-            using (var db = new pinit.Data.PinitEntities()) {
+            using (var db = new pinit.Data.PinitEntities())
+            {
                 var _pendingfriends = db.Friends.Where(x => x.RequestStatus == "requested" && x.TargetUser == username).ToList();
                 foreach (var item in _pendingfriends)
                 {
@@ -56,9 +60,9 @@ namespace pinit.Models
                     user.FriendShipStatus = item;
                     PendingFriendRequests.Add(user);
                 }
-            
+
             }
-            
+
         }
 
 
@@ -68,7 +72,7 @@ namespace pinit.Models
             var allactive = new List<UserFriend>();
             using (var db = new pinit.Data.PinitEntities())
             {
-                var _activeFriendWhoAskedMe = db.Friends.Where(x => x.RequestStatus.ToUpper() =="ACCEPTED" && x.TargetUser == username).OrderByDescending(x => x.DateModified).ToList();
+                var _activeFriendWhoAskedMe = db.Friends.Where(x => x.RequestStatus.ToUpper() == "ACCEPTED" && x.TargetUser == username).OrderByDescending(x => x.DateModified).ToList();
                 var _activeFriendWhoIAsked = db.Friends.Where(x => x.RequestStatus.ToUpper() == "ACCEPTED" && x.SourceUser == username).OrderByDescending(x => x.DateModified).ToList();
                 foreach (var item in _activeFriendWhoAskedMe)
                 {
@@ -86,6 +90,32 @@ namespace pinit.Models
 
                 ActiveFriends = allactive.Take(5).ToList();
 
+            }
+
+        }
+
+
+        public void LoadFollowStream()
+        {
+            FollowPin = new List<Pin>();
+
+            using (var db = new pinit.Data.PinitEntities())
+            {
+                var pins = db.FI_Follow5(username).ToList();
+                foreach (var item in pins)
+                {
+                    var pin = new Pin()
+                    {
+                        PinId = item.PinId
+                    };
+                    var pic = new Picture()
+                    {
+                        DateUploaded = item.DateUploaded,
+                        ImageUrl = item.ImageUrl
+                    };
+                    pin.Picture = pic;
+                    FollowPin.Add(pin);
+                }
             }
 
         }

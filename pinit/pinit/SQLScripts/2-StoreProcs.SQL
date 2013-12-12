@@ -836,6 +836,39 @@ return
 GO
 
 
+USE [Pinit]
+GO
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[UP_FollowTop5]') AND type in (N'P', N'PC'))
+DROP PROCEDURE [dbo].[UP_FollowTop5]
+GO
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+
+
+Create PROC [dbo].[UP_FollowTop5] (
+@username varchar(100))
+AS
+
+
+BEGIN
+	select top 5 Pin.PinId , picture.ImageUrl , picture.DateUploaded 
+	from 
+	 BoardFollow join FollowStream on FollowStream.StreamID = BoardFollow.StreamID join pin on pin.BoardId = BoardFollow.BoardId
+	join picture on picture.PictureId = pin.PictureId
+	where FollowStream.UserName = @username
+	order by picture.DateUploaded desc
+END
+
+
+return
+
+GO
+
+
 
 
 

@@ -418,5 +418,23 @@ namespace pinit.Data
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<FI_Follow_Result>("FI_Follow", boardidParameter, streamidParameter);
         }
+    
+        public virtual ObjectResult<UP_FollowTop5_Result> UP_FollowTop5(string username)
+        {
+            var usernameParameter = username != null ?
+                new ObjectParameter("username", username) :
+                new ObjectParameter("username", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<UP_FollowTop5_Result>("UP_FollowTop5", usernameParameter);
+        }
+    
+        public virtual ObjectResult<FI_Follow5_Result> FI_Follow5(string username)
+        {
+            var usernameParameter = username != null ?
+                new ObjectParameter("username", username) :
+                new ObjectParameter("username", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<FI_Follow5_Result>("FI_Follow5", usernameParameter);
+        }
     }
 }

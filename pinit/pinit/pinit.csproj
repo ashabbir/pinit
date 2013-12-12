@@ -193,6 +193,9 @@
     <Compile Include="Data\FI_DisplayStream_Result.cs">
       <DependentUpon>PinitModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Data\FI_Follow5_Result.cs">
+      <DependentUpon>PinitModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Data\FI_Follow_Result.cs">
       <DependentUpon>PinitModel.tt</DependentUpon>
     </Compile>
@@ -260,6 +263,9 @@
       <DependentUpon>PinitModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Data\UP_Display_Stream_Result.cs">
+      <DependentUpon>PinitModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\UP_FollowTop5_Result.cs">
       <DependentUpon>PinitModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Data\UP_Follow_Result.cs">

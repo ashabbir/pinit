@@ -327,6 +327,9 @@
           <Parameter Name="boardid" Type="int" Mode="In" />
           <Parameter Name="streamid" Type="int" Mode="In" />
         </Function>
+        <Function Name="UP_FollowTop5" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="username" Type="varchar" Mode="In" />
+        </Function>
         <Function Name="UP_KeyWordSearchOnTags" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="KeyWork" Type="varchar" Mode="In" />
         </Function>
@@ -850,6 +853,12 @@
             <Parameter Name="boardid" Mode="In" Type="Int32" />
             <Parameter Name="streamid" Mode="In" Type="Int32" />
           </FunctionImport>
+          <FunctionImport Name="UP_FollowTop5" ReturnType="Collection(PinitModel.UP_FollowTop5_Result)">
+            <Parameter Name="username" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="FI_Follow5" ReturnType="Collection(PinitModel.FI_Follow5_Result)">
+            <Parameter Name="username" Mode="In" Type="String" />
+          </FunctionImport>
         </EntityContainer>
         <ComplexType Name="UP_AcceptOrRejectFriendShipRequest_Result">
           <Property Type="Boolean" Name="Success" Nullable="true" />
@@ -1087,6 +1096,16 @@
         <ComplexType Name="FI_Follow_Result">
           <Property Type="Boolean" Name="Success" Nullable="true" />
           <Property Type="String" Name="msg" Nullable="false" MaxLength="1" />
+        </ComplexType>
+        <ComplexType Name="UP_FollowTop5_Result">
+          <Property Type="Int32" Name="PinId" Nullable="false" />
+          <Property Type="String" Name="ImageUrl" Nullable="false" MaxLength="255" />
+          <Property Type="DateTime" Name="DateUploaded" Nullable="false" Precision="23" />
+        </ComplexType>
+        <ComplexType Name="FI_Follow5_Result">
+          <Property Type="Int32" Name="PinId" Nullable="false" />
+          <Property Type="String" Name="ImageUrl" Nullable="false" MaxLength="255" />
+          <Property Type="DateTime" Name="DateUploaded" Nullable="false" Precision="23" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -1427,6 +1446,24 @@
               <ComplexTypeMapping TypeName="PinitModel.FI_Follow_Result">
                 <ScalarProperty Name="Success" ColumnName="Success" />
                 <ScalarProperty Name="msg" ColumnName="msg" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="UP_FollowTop5" FunctionName="PinitModel.Store.UP_FollowTop5">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="PinitModel.UP_FollowTop5_Result">
+                <ScalarProperty Name="PinId" ColumnName="PinId" />
+                <ScalarProperty Name="ImageUrl" ColumnName="ImageUrl" />
+                <ScalarProperty Name="DateUploaded" ColumnName="DateUploaded" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="FI_Follow5" FunctionName="PinitModel.Store.UP_FollowTop5">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="PinitModel.FI_Follow5_Result">
+                <ScalarProperty Name="PinId" ColumnName="PinId" />
+                <ScalarProperty Name="ImageUrl" ColumnName="ImageUrl" />
+                <ScalarProperty Name="DateUploaded" ColumnName="DateUploaded" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
