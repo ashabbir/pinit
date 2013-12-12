@@ -1,0 +1,90 @@
+﻿@model pinit.Models.StreamDropDownModel
+
+
+@{
+    ViewBag.Title = "Follow Board";
+}
+
+<div class="container theme-showcase">
+    <div class="center-block">
+
+        @Html.ErrorAlert(true)
+
+   
+  
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h3 class="panel-title">Add To a New Stream</h3>
+            </div>
+
+            <div class="panel-body">
+
+                @using (Html.BeginForm("CreateStreamForBoard", "Stream", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                {
+                    @Html.AntiForgeryToken()
+                    @Html.HiddenFor(m => m.BoardId)
+                    @Html.HiddenFor(m => m.HasStreams)
+                    <div class="form-horizontal">
+
+                     
+                        <div class="form-group">
+                            <div class="col-md-offset-4 col-md-4">
+                                @Html.EditorFor(model => model.StreamName, new { @class = "form-control", @placeholder = "Stream Name" })
+                                @Html.ValidationMessageFor(model => model.StreamName)
+                            </div>
+                        </div>
+
+
+
+
+
+
+                        <div class="form-group">
+                            <div class="col-md-offset-4 col-md-4">
+                                <input type="submit" value="Add to a new stream" class="btn btn-sm btn-primary" />
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div><!-- /.panel-body -->
+
+        </div><!-- panel panel-default-->
+        @if (Model.HasStreams)
+        {
+            <div class="panel panel-primary">
+
+
+                <div class="panel-heading">
+                    <h3 class="panel-title">Add To an Existing Stream</h3>
+                </div>
+
+                <div class="panel-body">
+                    @using (Html.BeginForm())
+                    {
+                        @Html.AntiForgeryToken()
+                        @Html.HiddenFor(m => m.BoardId)
+                        @Html.HiddenFor(m => m.HasStreams)
+                        <div class="form-group">
+                            <div class="col-md-offset-4 col-md-4">
+                                @Html.DropDownListFor(m => m.StreamsId, Model.Streams, new { @class = "form-control", @placeholder = "Stream Name" })
+                                @Html.ValidationMessageFor(m => m.StreamsId)
+                            </div>
+                        </div>
+
+
+                        <div class="form-group">
+                            <div class="col-md-offset-4 col-md-4">
+                                <input type="submit" value="Add to selected stream" class="btn btn-sm btn-primary" />
+                            </div>
+                        </div>
+
+
+                    }
+                </div><!-- /.panel-body -->
+
+
+
+            </div><!-- panel panel-default-->
+        }
+    </div><!--center -->
+</div> <!-- /container -->

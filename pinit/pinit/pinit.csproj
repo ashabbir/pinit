@@ -175,6 +175,7 @@
     <Compile Include="Controllers\FriendShipController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\PinController.cs" />
+    <Compile Include="Controllers\StreamController.cs" />
     <Compile Include="Controllers\TagController.cs" />
     <Compile Include="Controllers\UserInfoController.cs" />
     <Compile Include="Data\Board.cs">
@@ -187,6 +188,15 @@
       <DependentUpon>PinitModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Data\FI_AcceptRejectRequest_Result.cs">
+      <DependentUpon>PinitModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\FI_DisplayStream_Result.cs">
+      <DependentUpon>PinitModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\FI_Follow_Result.cs">
+      <DependentUpon>PinitModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\FI_New_Stream_Result.cs">
       <DependentUpon>PinitModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Data\FI_Pin_Result.cs">
@@ -300,6 +310,7 @@
     <Compile Include="Models\FriendShip.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\OverviewModel.cs" />
+    <Compile Include="Models\StreamDropDown.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -422,11 +433,15 @@
     <Content Include="textext\stylus\textext.plugin.prompt.styl" />
     <Content Include="textext\stylus\textext.plugin.tags.styl" />
     <Content Include="textext\stylus\_common.styl" />
+    <Content Include="Views\Stream\Index.cshtml" />
+    <Content Include="Views\Stream\CreateStream.cshtml" />
+    <Content Include="Views\Stream\Details.cshtml" />
+    <Content Include="Views\Stream\FollowBoard.cshtml" />
+    <Content Include="Views\Stream\Delete.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="pinuploads\" />
-    <Folder Include="Views\Tag\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

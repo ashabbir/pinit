@@ -743,6 +743,99 @@ return
 GO
 
 
+USE [Pinit]
+GO
+
+/****** Object:  StoredProcedure [dbo].[UP_New_Stream]    Script Date: 12/11/2013 11:21:36 PM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+
+
+ALTER PROC [dbo].[UP_New_Stream] (
+@streamname varchar(100) , @username varchar(100))
+AS
+
+IF NOT EXISTS (Select * from FollowStream Where streamname = @streamname and username = @username)
+BEGIN
+	Insert into FollowStream(streamname, username) 
+	values (@streamname, @username)
+		
+	Select CAST(1 as Bit) as Success, '' as msg , SCOPE_IDENTITY() as StreamId
+	return
+END
+
+Select CAST(0 as Bit) as Success, 'Stream already exists.'  as msg , 0 as StreamId
+return
+
+GO
+
+
+USE [Pinit]
+GO
+
+/****** Object:  StoredProcedure [dbo].[UP_Display_Stream]    Script Date: 12/11/2013 11:24:24 PM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+
+
+ALTER PROC [dbo].[UP_Display_Stream] (
+@streamid int)
+AS
+
+IF EXISTS (Select * from BoardFollow Where streamid = @streamid)
+BEGIN	-- this will return multiple tuples with 1,url the calling program will see the bit 1 and then get the image from URL
+	Select CAST(1 as Bit) as Success, ImageUrl from Picture as pic 
+	join Pin as p on pic.pictureid = p.pictureid
+	join Board as b on p.BoardId = b.boardid 
+	join BoardFollow as bf on b.boardid = bf.boardid where bf.streamid = @streamid
+	return
+END
+
+Select CAST(0 as Bit) as Success, 'No pins for this streamid.'  as ImageUrl
+return
+
+GO
+
+
+USE [Pinit]
+GO
+
+/****** Object:  StoredProcedure [dbo].[UP_New_Stream]    Script Date: 12/11/2013 11:21:36 PM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+
+
+ALTER PROC [dbo].[UP_New_Stream] (
+@streamname varchar(100) , @username varchar(100))
+AS
+
+IF NOT EXISTS (Select * from FollowStream Where streamname = @streamname and username = @username)
+BEGIN
+	Insert into FollowStream(streamname, username) 
+	values (@streamname, @username)
+		
+	Select CAST(1 as Bit) as Success, '' as msg , SCOPE_IDENTITY() as StreamId
+	return
+END
+
+Select CAST(0 as Bit) as Success, 'Stream already exists.'  as msg , CAST(0 as decimal) as StreamId
+return
+
+GO
+
+
 
 
 

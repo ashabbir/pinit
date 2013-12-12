@@ -1,0 +1,36 @@
+﻿@model List<pinit.Data.FI_DisplayStream_Result>
+
+@{
+    ViewBag.Title = "Stream";
+}
+
+<div class="panel panel-primary">
+    <div class="panel-heading">
+       Stream
+    </div>
+    <div class="panel-body">
+
+        @if (!Model.FirstOrDefault().Success.Value)
+        {
+            <p>there are no pins</p>
+        }
+        else
+        {
+
+            <ul class="list-inline">
+                @foreach (var item in Model)
+                {
+                    <li>
+                        <p>
+                            @Html.PinTag(item.ImageUrl, "img")
+                        </p>
+                    </li>
+                }
+            </ul>
+        }
+
+    </div><!-- /.panel-body -->
+    <div class="panel-footer">
+        @Html.ActionLink("Back", "Index")
+    </div>
+</div><!-- panel panel-default-->

@@ -34,14 +34,15 @@
                    @if (User.Identity.Name == Model.UserInfo.UserName)
                     {
 
-                            <li>  @Html.ActionLink("Edit board", "Edit", new { id = Model.BoardId }) |</li>
-                            <li>  @Html.ActionLink("Back to boards", "Index") |</li>
+                            <li>  @Html.ActionLink("Edit", "Edit", new { id = Model.BoardId }) |</li>
+                            <li>  @Html.ActionLink("Back", "Index") |</li>
                             <li> @Html.ActionLink("Delete", "Delete", new { id = Model.BoardId })</li>
 
                     }
                     else
                     {
-                            <li>  @Html.ActionLink("Back to friend's boards", "Index", "FriendBoards",  new { id = Model.UserInfo.UserName } , null) </li>
+                            <li>  @Html.ActionLink("Back", "Index", "FriendBoards",  new { id = Model.UserInfo.UserName } , null) </li>
+                            <li>  @Html.ActionLink("Follow", "FollowBoard", "Stream",  new { id = Model.BoardId } , null) </li>
                     }
 
                     <li>

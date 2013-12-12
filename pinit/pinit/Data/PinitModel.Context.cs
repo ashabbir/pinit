@@ -383,5 +383,40 @@ namespace pinit.Data
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<FI_Pin_Result>("FI_PinWithId", imgurlParameter, boardidParameter);
         }
+    
+        public virtual ObjectResult<FI_DisplayStream_Result> FI_DisplayStream(Nullable<int> streamid)
+        {
+            var streamidParameter = streamid.HasValue ?
+                new ObjectParameter("streamid", streamid) :
+                new ObjectParameter("streamid", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<FI_DisplayStream_Result>("FI_DisplayStream", streamidParameter);
+        }
+    
+        public virtual ObjectResult<FI_New_Stream_Result> FI_New_Stream(string streamname, string username)
+        {
+            var streamnameParameter = streamname != null ?
+                new ObjectParameter("streamname", streamname) :
+                new ObjectParameter("streamname", typeof(string));
+    
+            var usernameParameter = username != null ?
+                new ObjectParameter("username", username) :
+                new ObjectParameter("username", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<FI_New_Stream_Result>("FI_New_Stream", streamnameParameter, usernameParameter);
+        }
+    
+        public virtual ObjectResult<FI_Follow_Result> FI_Follow(Nullable<int> boardid, Nullable<int> streamid)
+        {
+            var boardidParameter = boardid.HasValue ?
+                new ObjectParameter("boardid", boardid) :
+                new ObjectParameter("boardid", typeof(int));
+    
+            var streamidParameter = streamid.HasValue ?
+                new ObjectParameter("streamid", streamid) :
+                new ObjectParameter("streamid", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<FI_Follow_Result>("FI_Follow", boardidParameter, streamidParameter);
+        }
     }
 }

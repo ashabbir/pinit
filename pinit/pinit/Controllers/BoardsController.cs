@@ -178,7 +178,12 @@ namespace pinit.Controllers
                     var repins = db.Repins.Where(r => r.TargetPinId == pin.PinId).ToList();
                     var comments = db.Comments.Where(c => c.PinId == pin.PinId).ToList();
                     var userlikes = db.UserLikes.Where(l => l.PinId == pin.PinId).ToList();
+                    var pintags = db.PinTags.Where(t => t.PinId == pin.PinId).ToList();
 
+                    foreach (var item in pintags)
+                    {
+                        db.PinTags.Remove(item);
+                    }
                     foreach (var item in comments)
                     {
                         db.Comments.Remove(item);

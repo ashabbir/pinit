@@ -30,7 +30,7 @@
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">Boards<b class="caret"></b></a>
                             <ul class="dropdown-menu">
-                                <li>@Html.ActionLink("My boards", "Index", "Boards")</li>
+                                <li>@Html.ActionLink("Boards", "Index", "Boards")</li>
                                 <li>@Html.ActionLink("Create", "Create", "Boards")</li>
                                 <li><a href="#">Following</a></li>
                             </ul>
@@ -38,10 +38,18 @@
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">Friends<b class="caret"></b></a>
                             <ul class="dropdown-menu">
-                                <li>@Html.ActionLink("Add Friend", "Index", "UserInfo", null, new { error = "" })</li>
                                 <li>@Html.ActionLink("Friends", "Index", "FriendShip", null , new { error = "" })</li>
+                                <li>@Html.ActionLink("Add", "Index", "UserInfo", null, new { error = "" })</li>
                             </ul>
                         </li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Streams<b class="caret"></b></a>
+                            <ul class="dropdown-menu">
+                                <li>@Html.ActionLink("Streams", "Index", "Stream")</li>
+                                <li>@Html.ActionLink("Create", "CreateStream", "Stream")</li>
+                            </ul>
+                        </li>
+
                         <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
                     </ul>
                     @Html.Partial("_LoginPartial")
