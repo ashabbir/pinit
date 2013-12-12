@@ -32,7 +32,7 @@ NYU Poly project cs 6038
 
 ### tag framework
 * ~~user can add tags to a board~~ 
-* user can search for tags returns his boards and other boards that he is following or his friends boards
+* ~~user can search for tags returns his boards and other boards that he is following or his friends boards~~
 * ~~cascade delete on boards should delete pin tags but not the tag dictionary~~
 
 ### Follow Frame work
