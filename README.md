@@ -39,10 +39,10 @@ NYU Poly project cs 6038
 * user should be able to follow boards
 
 ### Repin
-* user should be able to repin
-* do a cascade delete on pin delete
-* deleting repin should not delete the master pin
-* comments go against the repin
+* ~~user should be able to repin~~
+* ~~do a cascade delete on pin delete~~
+* ~~deleting repin should not delete the master pin~~
+* ~~comments go against the repin~~
 * likes go aginst the master pin
 
 
