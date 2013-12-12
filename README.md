@@ -36,7 +36,7 @@ NYU Poly project cs 6038
 * ~~cascade delete on boards should delete pin tags but not the tag dictionary~~
 
 ### Follow Frame work
-* user should be able to follow boards
+* ~~user should be able to follow boards~~
 
 ### Repin
 * ~~user should be able to repin~~
