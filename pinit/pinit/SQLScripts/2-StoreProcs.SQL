@@ -869,6 +869,44 @@ return
 GO
 
 
+USE [Pinit]
+GO
+
+/****** Object:  StoredProcedure [dbo].[UP_Repin]    Script Date: 12/12/2013 12:24:37 PM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+
+
+ALTER PROC [dbo].[UP_Repin] (
+@pinid int, -- this is the target or the pin i wana repin
+@boardid int) -- this is the board where i wana repin
+AS
+
+Declare @pictureid as int
+Select @pictureid = pictureid from Pin Where pinid = @pinid
+
+IF NOT EXISTS (Select * from Pin Where pictureid = @pictureid AND boardid = @boardid)
+BEGIN
+	Insert into Pin(pictureid, boardid) 
+	values (@pictureid, @boardid)
+	Declare @newpinid as int
+	set @newpinid = SCOPE_IDENTITY()
+	Insert into Repin(pinid, targetpinid) 
+	values (@newpinid, @pinid)
+	Select CAST(1 as Bit) as Success, '' as msg
+	return
+END
+
+Select CAST(0 as Bit) as Success, 'Request can not be modified as its already '   as msg
+return
+
+GO
+
+
 
 
 
