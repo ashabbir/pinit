@@ -32,17 +32,17 @@ NYU Poly project cs 6038
 
 ### tag framework
 * ~~user can add tags to a board~~ 
-* user can search for tags returns his boards and other boards that he is following or his friends boards
+* ~~user can search for tags returns his boards and other boards that he is following or his friends boards~~
 * ~~cascade delete on boards should delete pin tags but not the tag dictionary~~
 
 ### Follow Frame work
-* user should be able to follow boards
+* ~~user should be able to follow boards~~
 
 ### Repin
-* user should be able to repin
-* do a cascade delete on pin delete
-* deleting repin should not delete the master pin
-* comments go against the repin
+* ~~user should be able to repin~~
+* ~~do a cascade delete on pin delete~~
+* ~~deleting repin should not delete the master pin~~
+* ~~comments go against the repin~~
 * likes go aginst the master pin
 
 
