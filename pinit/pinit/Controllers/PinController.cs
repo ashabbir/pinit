@@ -79,20 +79,6 @@ namespace pinit.Controllers
 
 
 
-        // GET: /Pin/Delete/5
-        public ActionResult Delete(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Pin pin = db.Pins.Find(id);
-            if (pin == null)
-            {
-                return HttpNotFound();
-            }
-            return View(pin);
-        }
 
 
         //POST: /pin/addcomment
@@ -172,6 +158,27 @@ namespace pinit.Controllers
 
 
         }
+
+
+
+
+
+
+        // GET: /Pin/Delete/5
+        public ActionResult Delete(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Pin pin = db.Pins.Find(id);
+            if (pin == null)
+            {
+                return HttpNotFound();
+            }
+            return View(pin);
+        }
+
 
         // POST: /Pin/Delete/5
         [HttpPost, ActionName("Delete")]

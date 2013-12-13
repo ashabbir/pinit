@@ -7,6 +7,9 @@ using System.Web.Mvc;
 
 namespace pinit.Models
 {
+    /// <summary>
+    /// fill up dropdowns and show user existing streams
+    /// </summary>
     public class StreamDropDownModel
     {
         public List<Item> _stream;

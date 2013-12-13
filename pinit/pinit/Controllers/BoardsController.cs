@@ -19,6 +19,8 @@ namespace pinit.Controllers
     {
         private PinitEntities db = new PinitEntities();
 
+
+
         // GET: /Boards/
         public ActionResult Index()
         {
@@ -26,6 +28,9 @@ namespace pinit.Controllers
             var boards = db.Boards.Include(b => b.UserInfo).Where(b => b.BoardOwner == user);
             return View(boards.ToList());
         }
+
+
+
 
         // GET: /Boards/Details/5
         public ActionResult Details(int? id, PinStatusId? pinstatusid)
@@ -69,6 +74,11 @@ namespace pinit.Controllers
             return View(board);
         }
 
+
+
+
+
+
         // GET: /Boards/Create
         public ActionResult Create()
         {
@@ -77,8 +87,6 @@ namespace pinit.Controllers
         }
 
         // POST: /Boards/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "BoardId,BoardName,BoardOwner,DateCreated,PrivateComments")] Board board)
@@ -99,6 +107,9 @@ namespace pinit.Controllers
             ViewBag.BoardOwner = new SelectList(db.UserInfoes, "UserName", "FirstName", board.BoardOwner);
             return View(board);
         }
+
+
+
 
         // GET: /Boards/Edit/5
         public ActionResult Edit(int? id)
@@ -137,6 +148,9 @@ namespace pinit.Controllers
             ViewBag.BoardOwner = new SelectList(db.UserInfoes, "UserName", "FirstName", board.BoardOwner);
             return View(board);
         }
+
+
+
 
         // GET: /Boards/Delete/5
         public ActionResult Delete(int? id)
@@ -313,8 +327,6 @@ namespace pinit.Controllers
 
 
         // POST: /Boards/Repin
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Repin(BoardDropDown model)
@@ -356,8 +368,6 @@ namespace pinit.Controllers
                 return RedirectToAction("Details", new { id = BoardId, pinstatusid = PinStatusId.RePinError });
             }
         }
-
-
 
 
         [HttpPost]
@@ -429,6 +439,8 @@ namespace pinit.Controllers
         }
 
 
+
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)
@@ -438,6 +450,8 @@ namespace pinit.Controllers
             base.Dispose(disposing);
         }
 
+
+        #region helper
         public enum PinStatusId
         {
             PinAdded,
@@ -447,6 +461,6 @@ namespace pinit.Controllers
             RePinError,
             Error
         }
-
+        #endregion
     }
 }

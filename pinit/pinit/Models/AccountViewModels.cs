@@ -7,7 +7,10 @@ using pinit.Helpers;
 namespace pinit.Models
 {
     
-
+    /// <summary>
+    /// this is to manage change password feature
+    /// 
+    /// </summary>
     public class ManageUserViewModel
     {
         [Required]
@@ -48,7 +51,9 @@ namespace pinit.Models
 
 
 
-
+    /// <summary>
+    /// this is to manage login 
+    /// </summary>
     public class LoginViewModel
     {
         [Required]
@@ -61,9 +66,14 @@ namespace pinit.Models
         public string Password { get; set; }
 
   
+        /// <summary>
+        /// provide form authentication from mvc 3 custom to fit simple tables
+        /// </summary>
+        /// <param name="username"></param>
+        /// <param name="password"></param>
+        /// <returns></returns>
         public bool FormAuthentication(string username, string password)
         {
-
             using (var db = new PinitEntities())
             {
                 var userinfo = db.UserInfoes.FirstOrDefault(x => x.UserName == username && x.Password == password);
@@ -79,6 +89,11 @@ namespace pinit.Models
 
     }
 
+
+    /// <summary>
+    /// takes in username password first last name and email 
+    /// register account
+    /// </summary>
     public class RegisterViewModel
     {
         [Required]
@@ -147,6 +162,11 @@ namespace pinit.Models
         }
     }
 
+
+    /// <summary>
+    /// update profile model
+    /// for firstname lastname and email
+    /// </summary>
     public class UpdateUserinfoViewModel
     {
         

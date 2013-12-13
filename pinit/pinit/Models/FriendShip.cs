@@ -6,6 +6,10 @@ using pinit.Data;
 
 namespace pinit.Models
 {
+    /// <summary>
+    /// friendship logic is removed from the data base and brought in to models 
+    /// all friends are made into different groups 
+    /// </summary>
     public class FriendShip
     {
         public string UserName { get; set; }
@@ -34,6 +38,10 @@ namespace pinit.Models
         /// </summary>
         public List<UserFriend> DeniedRequest { get; set; }
 
+
+        /// <summary>
+        /// ctor
+        /// </summary>
         public FriendShip()
         {
             ActiveFriends = new List<UserFriend>();
@@ -43,11 +51,20 @@ namespace pinit.Models
             DeniedRequest = new List<UserFriend>();
         }
 
+
+        /// <summary>
+        /// ctor
+        /// </summary>
+        /// <param name="username"></param>
         public FriendShip(string username)
         {
             UserName = username;
         }
 
+        /// <summary>
+        /// gets all the friends to be friends rejects etc.
+        /// </summary>
+        /// <param name="myUserName"></param>
         public void FillMe(string myUserName)
         {
             UserName = myUserName;
@@ -117,7 +134,12 @@ namespace pinit.Models
             }
         }
 
-
+        /// <summary>
+        /// this will call the SP to accept or reject a request
+        /// </summary>
+        /// <param name="sourceUserName"></param>
+        /// <param name="status"></param>
+        /// <returns></returns>
         public string AcceptReject(string sourceUserName , bool status)
         {
             var toret = "";
@@ -146,16 +168,23 @@ namespace pinit.Models
         
     }
 
+
+    /// <summary>
+    /// just a place holder (think of it as project over a join) dont wana bring in every thing
+    /// </summary>
     public class UserFriend
     {
         public UserInfo PersonalInfo { get; set; }
         public Friend FriendShipStatus { get; set; }
+
 
         public UserFriend()
         {
             PersonalInfo = new UserInfo();
             FriendShipStatus = new Friend();
         }
+
+
         public UserFriend(string username)
         {
             PersonalInfo = new UserInfo();

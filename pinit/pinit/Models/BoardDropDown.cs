@@ -7,6 +7,9 @@ using System.Web.Mvc;
 
 namespace pinit.Models
 {
+    /// <summary>
+    /// fill up dropdowns and show user existing boards
+    /// </summary>
     public class BoardDropDown
     {
         public List<Item> _board;

@@ -16,7 +16,10 @@ namespace pinit.Controllers
         private PinitEntities db = new PinitEntities();
         List<string> tags;
 
-
+        /// <summary>
+        /// for ajax calls
+        /// </summary>
+        /// <returns></returns>
         public JsonResult GetTags()
         {
             if (tags == null) 
@@ -123,62 +126,7 @@ namespace pinit.Controllers
             return View(tag);
         }
 
-        // GET: /Tag/Edit/5
-        public ActionResult Edit(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Tag tag = db.Tags.Find(id);
-            if (tag == null)
-            {
-                return HttpNotFound();
-            }
-            return View(tag);
-        }
-
-        // POST: /Tag/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include="TagId,TagName")] Tag tag)
-        {
-            if (ModelState.IsValid)
-            {
-                db.Entry(tag).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-            return View(tag);
-        }
-
-        // GET: /Tag/Delete/5
-        public ActionResult Delete(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Tag tag = db.Tags.Find(id);
-            if (tag == null)
-            {
-                return HttpNotFound();
-            }
-            return View(tag);
-        }
-
-        // POST: /Tag/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
-        {
-            Tag tag = db.Tags.Find(id);
-            db.Tags.Remove(tag);
-            db.SaveChanges();
-            return RedirectToAction("Index");
-        }
+     
 
         protected override void Dispose(bool disposing)
         {

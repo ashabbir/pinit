@@ -6,6 +6,9 @@ using pinit.Data;
 
 namespace pinit.Models
 {
+    /// <summary>
+    /// mother of all models .. this here wil have every thing trying to break it apart to make it easy 
+    /// </summary>
     public class OverviewModel
     {
         public List<Board> boards { get; set; }
@@ -31,6 +34,9 @@ namespace pinit.Models
         }
 
 
+        /// <summary>
+        /// this will load my boards
+        /// </summary>
         public void LoadBoards()
         {
             boards = new List<Data.Board>();
@@ -48,6 +54,9 @@ namespace pinit.Models
         }
 
 
+        /// <summary>
+        /// this will load pending request for the overview model
+        /// </summary>
         public void LoadPendingFriendRequest()
         {
             PendingFriendRequests = new List<UserFriend>();
@@ -66,6 +75,9 @@ namespace pinit.Models
         }
 
 
+        /// <summary>
+        /// this will load active friends for the overview model
+        /// </summary>
         public void LoadActiveFriends()
         {
             ActiveFriends = new List<UserFriend>();
@@ -94,7 +106,9 @@ namespace pinit.Models
 
         }
 
-
+        /// <summary>
+        /// this will load follow streams for the overview model
+        /// </summary>
         public void LoadFollowStream()
         {
             FollowPin = new List<Pin>();
