@@ -59,6 +59,9 @@ namespace pinit.Controllers
             return View(stream);
         }
 
+
+        //
+        // GET: /Stram/CreateStream
         [HttpGet]
         public ActionResult CreateStream()
         {
@@ -66,6 +69,8 @@ namespace pinit.Controllers
         }
 
 
+        //
+        // Post: /Stram/CreateStream
         [HttpPost]
         public ActionResult CreateStream(FollowStream model)
         {
@@ -93,7 +98,8 @@ namespace pinit.Controllers
         }
 
 
-
+        //
+        // POST: /Stram/CreateStreamForBoard
         [HttpPost]
         public ActionResult CreateStreamForBoard(StreamDropDownModel model)
         {

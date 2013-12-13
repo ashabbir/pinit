@@ -10,6 +10,11 @@ namespace pinit.Helpers
 {
     public static class CustomExtention
     {
+
+        public static bool ValidExtention(this string source)
+        {
+            return (source.EndsWith(".png") || source.EndsWith(".jpg") || source.EndsWith(".jpeg") || source.EndsWith(".gif"));
+        }
         public static bool ValidateEmail(this string email)
         {
             try

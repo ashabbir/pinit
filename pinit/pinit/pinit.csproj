@@ -381,7 +381,6 @@
     <Content Include="Scripts\_references.js" />
     <Content Include="SQLScripts\1-DBCreate.SQL" />
     <Content Include="SQLScripts\2-StoreProcs.SQL" />
-    <Content Include="SQLScripts\3-TestCase.SQL" />
     <Content Include="textext\css\arrow.png" />
     <Content Include="textext\css\close.png" />
     <Content Include="textext\css\textext.core.css" />

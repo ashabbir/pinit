@@ -22,6 +22,7 @@ namespace pinit.Controllers
             return View(boards.ToList());
         }
 
+
         // GET: /FriendBoards/Details/5
         public ActionResult Details(int? id)
         {

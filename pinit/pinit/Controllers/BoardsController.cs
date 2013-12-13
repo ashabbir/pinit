@@ -41,6 +41,7 @@ namespace pinit.Controllers
                 : pinstatusid == PinStatusId.PinDeleted ? "Pin was deleted."
                  : pinstatusid == PinStatusId.PinUrlIssue ? "Pin Url Issue."
                  : pinstatusid == PinStatusId.RePinError ? "Pin Url Issue."
+                   : pinstatusid == PinStatusId.Extention ? "Invalid Extention."
                 : "";
 
             if (pinstatusid == PinStatusId.Error)
@@ -52,7 +53,7 @@ namespace pinit.Controllers
             {
                 ModelState.AddModelError("", "pin Url Issue");
             }
-            else if (pinstatusid == PinStatusId.RePinError)
+            else if (pinstatusid == PinStatusId.RePinError || pinstatusid == PinStatusId.Extention)
             {
                 ModelState.AddModelError("", ViewBag.StatusMessage);
             }
@@ -214,7 +215,7 @@ namespace pinit.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult CreatePin(string txtPinUrl,HttpPostedFileBase file, int BoardId, string textarea)
+        public ActionResult CreatePin(string txtPinUrl, HttpPostedFileBase file, int BoardId, string textarea)
         {
             string error = "Pin was not created";
             var success = false;
@@ -224,8 +225,6 @@ namespace pinit.Controllers
             if (string.IsNullOrWhiteSpace(txtPinUrl) && (file == null && file.ContentLength <= 0))
             {
                 return RedirectToAction("Details", new { id = BoardId, pinstatusid = PinStatusId.PinUrlIssue });
-
-              
             }
 
             if ((file != null && file.ContentLength > 0))
@@ -244,11 +243,17 @@ namespace pinit.Controllers
             //step 1 get the image save it in directory
             string imgLocation = "";
 
-            if (isFile) 
+            if (isFile)
             {
+                
                 downloadStatus = file.DownloadImage(out imgLocation);
-            } 
-            else 
+                if (!imgLocation.ValidExtention()) 
+                {
+                    ViewBag.Error = error;
+                    return RedirectToAction("Details", new { id = BoardId, pinstatusid = PinStatusId.Extention });
+                }
+            }
+            else
             {
                 downloadStatus = txtPinUrl.DownloadImage(out imgLocation);
             }
@@ -311,7 +316,7 @@ namespace pinit.Controllers
 
 
 
-        
+
 
         //
         // GET: /Baord/Repin/1 where 1 is the srouce pinid
@@ -396,7 +401,7 @@ namespace pinit.Controllers
                 {
                     board = db.Boards.Find(model.BoardId);
                 }
-                else 
+                else
                 {
                     board.BoardOwner = User.Identity.GetUserName();
                     board.DateCreated = DateTime.Now;
@@ -434,7 +439,7 @@ namespace pinit.Controllers
 
             }
             ModelState.AddModelError("", "Board was not created");
-           
+
             return View("Repin", model);
         }
 
@@ -458,6 +463,7 @@ namespace pinit.Controllers
             PinDeleted,
             PinPresent,
             PinUrlIssue,
+            Extention,
             RePinError,
             Error
         }
