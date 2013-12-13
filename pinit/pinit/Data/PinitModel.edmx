@@ -866,6 +866,10 @@
             <Parameter Name="pinid" Mode="In" Type="Int32" />
             <Parameter Name="boardid" Mode="In" Type="Int32" />
           </FunctionImport>
+          <FunctionImport Name="FI_Like" ReturnType="Collection(PinitModel.FI_Like_Result)">
+            <Parameter Name="pinid" Mode="In" Type="Int32" />
+            <Parameter Name="username" Mode="In" Type="String" />
+          </FunctionImport>
         </EntityContainer>
         <ComplexType Name="UP_AcceptOrRejectFriendShipRequest_Result">
           <Property Type="Boolean" Name="Success" Nullable="true" />
@@ -1129,6 +1133,10 @@
           <Property Type="DateTime" Name="DateUploaded" Nullable="false" Precision="23" />
           <Property Type="String" Name="ImageUrl" Nullable="false" MaxLength="255" />
           <Property Type="Int32" Name="PictureId" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="FI_Like_Result">
+          <Property Type="Boolean" Name="Success" Nullable="true" />
+          <Property Type="String" Name="msg" Nullable="false" MaxLength="1" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -1512,6 +1520,14 @@
           <FunctionImportMapping FunctionImportName="FI_Repin" FunctionName="PinitModel.Store.UP_Repin">
             <ResultMapping>
               <ComplexTypeMapping TypeName="PinitModel.FI_Repin_Result">
+                <ScalarProperty Name="Success" ColumnName="Success" />
+                <ScalarProperty Name="msg" ColumnName="msg" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="FI_Like" FunctionName="PinitModel.Store.UP_Like">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="PinitModel.FI_Like_Result">
                 <ScalarProperty Name="Success" ColumnName="Success" />
                 <ScalarProperty Name="msg" ColumnName="msg" />
               </ComplexTypeMapping>

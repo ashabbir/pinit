@@ -199,6 +199,9 @@
     <Compile Include="Data\FI_Follow_Result.cs">
       <DependentUpon>PinitModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Data\FI_Like_Result.cs">
+      <DependentUpon>PinitModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Data\FI_New_Stream_Result.cs">
       <DependentUpon>PinitModel.tt</DependentUpon>
     </Compile>

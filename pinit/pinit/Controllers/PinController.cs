@@ -147,15 +147,23 @@ namespace pinit.Controllers
                 {
                     using (var db = new PinitEntities())
                     {
-                        db.UserLikes.Add(model);
-                        db.SaveChanges();
+                       // db.UserLikes.Add(model);
+                       // db.SaveChanges();
+                        var res = db.FI_Like(model.PinId, model.UserName).FirstOrDefault();
+                        if (res != null) 
+                        {
+                            if (res.Success.Value == true) 
+                            {
+                                return RedirectToAction("Details", new { id = model.PinId });
+                            }
+                            return RedirectToAction("Details", new { id = model.PinId, error = res.msg });
+                        }
                     }
-                    return RedirectToAction("Details", new { id = model.PinId });
+                   
                 }
-                else
-                {
+               
                     return RedirectToAction("Details", new { id = model.PinId, error = "cant not like this right now please try again latter" });
-                }
+               
             }
             catch (Exception ex)
             {

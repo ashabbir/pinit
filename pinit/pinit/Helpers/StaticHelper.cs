@@ -21,6 +21,7 @@ namespace pinit.Helpers
                 if (pin == null) { return; }
                 DeleteRepin(id);
                 DeleteRepinTargets(id);
+                pin = db.Pins.Include(p => p.UserLikes).FirstOrDefault(p => p.PinId == id);
                 var comments = db.Comments.Where(c => c.PinId == id).ToList();
                 var userlikes = db.UserLikes.Where(l => l.PinId == id).ToList();
                 var pintags = db.PinTags.Where(t => t.PinId == id).ToList();
@@ -39,11 +40,7 @@ namespace pinit.Helpers
                 {
                     db.PinTags.Remove(item);
                 }
-
-
-
                 db.Pins.Remove(pin);
-
                 db.SaveChanges();
             }
         }
@@ -80,10 +77,15 @@ namespace pinit.Helpers
                 foreach (var item in tagetRepins)
                 {
                     DeletePin(item.PinId);
-                    db.Repins.Remove(item);
-                    db.SaveChanges();
+                    var repin = db.Repins.FirstOrDefault(p => p.RepinId == item.RepinId);
+                    if (repin != null) {
+                        db.Repins.Remove(repin);
+                        db.SaveChanges();
+                    
+                    }
+                   
                 }
-                db.SaveChanges();
+                
             }
 
         }

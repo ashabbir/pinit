@@ -22,6 +22,11 @@ namespace System.Web.Mvc.Html
             }
             var msg = " <p class='badge text-info'> " + count + " "
                 + likeword+ "</p>";
+
+            if (count == 0) 
+            {
+                msg = "";
+            }
             return MvcHtmlString.Create(msg);
         }
 
