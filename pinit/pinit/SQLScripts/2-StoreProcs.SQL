@@ -672,6 +672,18 @@ GO
 
 
 
+USE [Pinit]
+GO
+
+/****** Object:  StoredProcedure [dbo].[UP_UpdateProfile]    Script Date: 12/12/2013 10:03:59 PM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+
+
 
 ALTER PROC [dbo].[UP_UpdateProfile] (
 	@username varchar(100),
@@ -686,13 +698,17 @@ BEGIN TRANSACTION
 		where username = @username
 		COMMIT TRANSACTION
 		Select CAST(1 as Bit) as Success, '' as msg
-	END
+	END TRY
 	BEGIN CATCH
 	    ROLLBACK TRANSACTION
 	    DECLARE @Msg NVARCHAR(MAX)  
         SELECT @Msg='User profile could not be updated '+ ERROR_MESSAGE() 
 	    Select CAST(0 as Bit) as Success, @Msg as msg
 	END CATCH
+
+
+
+GO
 
 
 
@@ -905,6 +921,73 @@ Select CAST(0 as Bit) as Success, 'Request can not be modified as its already ' 
 return
 
 GO
+
+
+USE [Pinit]
+GO
+
+/****** Object:  StoredProcedure [dbo].[UP_Repin]    Script Date: 12/12/2013 12:24:37 PM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+
+
+ALTER PROC [dbo].[UP_Repin] (
+@pinid int, -- this is the target or the pin i wana repin
+@boardid int) -- this is the board where i wana repin
+AS
+
+Declare @pictureid as int
+Select @pictureid = pictureid from Pin Where pinid = @pinid
+
+IF NOT EXISTS (Select * from Pin Where pictureid = @pictureid AND boardid = @boardid)
+BEGIN
+	Insert into Pin(pictureid, boardid) 
+	values (@pictureid, @boardid)
+	Declare @newpinid as int
+	set @newpinid = SCOPE_IDENTITY()
+	Insert into Repin(pinid, targetpinid) 
+	values (@newpinid, @pinid)
+	Select CAST(1 as Bit) as Success, '' as msg
+	return
+END
+
+Select CAST(0 as Bit) as Success, 'Request can not be modified as its already '   as msg
+return
+
+GO
+
+USE [Pinit]
+GO
+
+/****** Object:  StoredProcedure [dbo].[UP_KeyWordSearchOnTags]    Script Date: 12/12/2013 11:26:35 AM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+
+
+ALTER PROC [dbo].[UP_KeyWordSearchOnTags] (
+@KeyWork varchar(255))
+AS
+	--select pinid From tag Join PinTag on tag.tagid = PinTag.tagid  where Contains(tag.tagname , @KeyWork)
+	--Just a temp to make it work on Express Version When deploying will Move it to Contains
+	select p.pinid , pic.DateUploaded ,pic.ImageUrl , pic.PictureId  
+	From tag Join PinTag on tag.tagid = PinTag.tagid 
+	join pin p on p.PinId = pintag.PinId 
+	join Picture pic on pic.PictureId = p.PictureId
+	 where tag.tagname like '%' + @KeyWork + '%'
+
+GO
+
+
+
+
 
 
 
