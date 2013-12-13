@@ -12,7 +12,12 @@ namespace System.Web.Mvc.Html
     public static class HtmlHelperExtention
     {
 
-
+        /// <summary>
+        ///this will display likes 1 like 10 likes etc in a badge
+        /// </summary>
+        /// <param name="html"></param>
+        /// <param name="count"></param>
+        /// <returns></returns>
         public static MvcHtmlString DisplayLikes(this HtmlHelper html, int count)
         {
             var likeword = "like";
@@ -30,6 +35,15 @@ namespace System.Web.Mvc.Html
             return MvcHtmlString.Create(msg);
         }
 
+
+        /// <summary>
+        /// this will display the comment in a well
+        /// </summary>
+        /// <param name="html"></param>
+        /// <param name="comment"></param>
+        /// <param name="by"></param>
+        /// <param name="on"></param>
+        /// <returns></returns>
         public static MvcHtmlString DisplayComment(this HtmlHelper html, string comment, string by, DateTime on) 
         {
              //<div class="well">
@@ -46,6 +60,13 @@ namespace System.Web.Mvc.Html
         }
 
 
+        /// <summary>
+        /// this will show the pin image
+        /// </summary>
+        /// <param name="html"></param>
+        /// <param name="imagePath"></param>
+        /// <param name="alt"></param>
+        /// <returns></returns>
         public static MvcHtmlString PinTag(this HtmlHelper html, string imagePath, string alt)
         {
             var url = new UrlHelper(html.ViewContext.RequestContext);
@@ -62,6 +83,17 @@ namespace System.Web.Mvc.Html
             return MvcHtmlString.Create(imgHtml);
         }
 
+        /// <summary>
+        /// this will show the image clickable for URL
+        /// </summary>
+        /// <param name="html"></param>
+        /// <param name="action"></param>
+        /// <param name="controller"></param>
+        /// <param name="routeValues"></param>
+        /// <param name="imagePath"></param>
+        /// <param name="alt"></param>
+        /// <param name="isMine"></param>
+        /// <returns></returns>
         public static MvcHtmlString PinTag(this HtmlHelper html, string action, string controller, object routeValues, string imagePath, string alt ,bool isMine = true)
         {
             var url = new UrlHelper(html.ViewContext.RequestContext);
@@ -83,7 +115,15 @@ namespace System.Web.Mvc.Html
         }
 
 
-
+        /// <summary>
+        /// this will show the board clickable to details
+        /// </summary>
+        /// <param name="html"></param>
+        /// <param name="action"></param>
+        /// <param name="routeValues"></param>
+        /// <param name="imagePath"></param>
+        /// <param name="alt"></param>
+        /// <returns></returns>
         public static MvcHtmlString ActionBoard(this HtmlHelper html, string action, object routeValues, string imagePath, string alt)
         {
             var url = new UrlHelper(html.ViewContext.RequestContext);
@@ -107,7 +147,16 @@ namespace System.Web.Mvc.Html
         }
 
 
-
+       /// <summary>
+        ///  this will show the board clickable to details
+       /// </summary>
+       /// <param name="html"></param>
+       /// <param name="action"></param>
+       /// <param name="controller"></param>
+       /// <param name="routeValues"></param>
+       /// <param name="imagePath"></param>
+       /// <param name="alt"></param>
+       /// <returns></returns>
         public static MvcHtmlString ActionBoard(this HtmlHelper html, string action, string controller ,object routeValues, string imagePath, string alt)
         {
             var url = new UrlHelper(html.ViewContext.RequestContext);
@@ -129,15 +178,18 @@ namespace System.Web.Mvc.Html
 
             return MvcHtmlString.Create(anchorHtml);
         }
+
+
+
+        /// <summary>
+        /// this will do the Bootstrap alert 
+        /// </summary>
+        /// <param name="htmlHelper"></param>
+        /// <param name="hasPropInfo"></param>
+        /// <returns></returns>
         public static MvcHtmlString ErrorAlert(this HtmlHelper htmlHelper, bool hasPropInfo = false)
         {
-            //if (ViewData.ModelState.Keys.Any(k => ViewData.ModelState[k].Errors.Count() > 0))
-            //          {
-            //              <div class="alert alert-danger">
-            //                  <button class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-            //                  @Html.ValidationSummary(false, "Errors: ")
-            //              </div>
-            //          }
+          
             var msg = "";
             if (!htmlHelper.ViewData.ModelState.IsValid)
             {
@@ -148,15 +200,16 @@ namespace System.Web.Mvc.Html
 
             return new MvcHtmlString(msg);
         }
+
+        /// <summary>
+        /// this will do the bootstrap alert
+        /// </summary>
+        /// <param name="htmlHelper"></param>
+        /// <param name="error"></param>
+        /// <returns></returns>
         public static MvcHtmlString ErrorAlert(this HtmlHelper htmlHelper, MvcHtmlString error)
         {
-            //if (ViewData.ModelState.Keys.Any(k => ViewData.ModelState[k].Errors.Count() > 0))
-            //          {
-            //              <div class="alert alert-danger">
-            //                  <button class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-            //                  @Html.ValidationSummary(false, "Errors: ")
-            //              </div>
-            //          }
+         
             var msg = "";
             if (!htmlHelper.ViewData.ModelState.IsValid)
             {
@@ -167,6 +220,13 @@ namespace System.Web.Mvc.Html
             return new MvcHtmlString(msg);
         }
 
+
+        /// <summary>
+        /// this will do bootstrap alert not that good
+        /// </summary>
+        /// <param name="helper"></param>
+        /// <param name="closeable"></param>
+        /// <returns></returns>
         public static MvcHtmlString ValidationSummaryBootstrap(this HtmlHelper helper, bool closeable)
         {
             # region Equivalent view markup
