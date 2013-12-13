@@ -46,7 +46,7 @@ namespace pinit.Controllers
             {
                 ModelState.AddModelError("", "pin Url Issue");
             }
-            else if (pinstatusid == PinStatusId.RePinError) 
+            else if (pinstatusid == PinStatusId.RePinError)
             {
                 ModelState.AddModelError("", ViewBag.StatusMessage);
             }
@@ -224,8 +224,8 @@ namespace pinit.Controllers
                 using (var db = new PinitEntities())
                 {
                     var result = db.FI_PinWithId(imgLocation, BoardId).ToList();
-                   
-                    
+
+
                     if (result.Count() > 0)
                     {
                         success = result.FirstOrDefault().Success ?? false;
@@ -233,7 +233,7 @@ namespace pinit.Controllers
                         {
                             error = result.FirstOrDefault().msg;
                         }
-                        else 
+                        else
                         {
                             try
                             {
@@ -246,17 +246,17 @@ namespace pinit.Controllers
                                         db.Tags.Add(dbtag);
                                         db.SaveChanges();
                                     }
-                                    var pid =  (int)result.FirstOrDefault().PinId.Value ;
-                                    db.PinTags.Add(new PinTag() { TagId = dbtag.TagId, PinId =  pid , DateTaged = DateTime.Now});
+                                    var pid = (int)result.FirstOrDefault().PinId.Value;
+                                    db.PinTags.Add(new PinTag() { TagId = dbtag.TagId, PinId = pid, DateTaged = DateTime.Now });
                                     db.SaveChanges();
                                 }
                             }
                             catch (Exception ex)
                             {
                                 var msg = ex.Message;
-                                
+
                             }
-                           
+
                         }
                     }
                 }
@@ -301,7 +301,7 @@ namespace pinit.Controllers
             int SourcePinId = model.PinId;
             var BoardId = model.BoardId;
             //step 1 get the image save it in directory
-           
+
             if (true)
             {
                 //step 2 create a pin throu exec UP_Pin '' , 1
@@ -317,7 +317,7 @@ namespace pinit.Controllers
                         {
                             error = result.FirstOrDefault().msg;
                         }
-                       
+
                     }
                 }
             }
@@ -332,6 +332,77 @@ namespace pinit.Controllers
                 ViewBag.Error = error;
                 return RedirectToAction("Details", new { id = BoardId, pinstatusid = PinStatusId.RePinError });
             }
+        }
+
+
+
+
+        [HttpPost]
+        public ActionResult RepinWithNewBoard(BoardDropDown model)
+        {
+            string error = "Pin was not created";
+            model.FillMe(User.Identity.GetUserName());
+            var success = false;
+            int SourcePinId = model.PinId;
+            var BoardId = 0;
+
+            if (model.BoardId == 0)
+            {
+                if (string.IsNullOrWhiteSpace(model.BoardName))
+                {
+                    ModelState.AddModelError("", "Board name is required");
+                    return View("Repin", model);
+                }
+            }
+
+            using (var db = new PinitEntities())
+            {
+
+                var board = new Board();
+                if (model.BoardId > 0)
+                {
+                    board = db.Boards.Find(model.BoardId);
+                }
+                else 
+                {
+                    board.BoardOwner = User.Identity.GetUserName();
+                    board.DateCreated = DateTime.Now;
+                    board.BoardName = model.BoardName;
+                }
+                if (ModelState.IsValid)
+                {
+                    if (model.BoardId == 0)
+                    {
+                        db.Boards.Add(board);
+                        db.SaveChanges();
+                    }
+                    BoardId = board.BoardId;
+                    var result = db.FI_Repin(SourcePinId, BoardId).ToList();
+                    if (result.Count() > 0)
+                    {
+                        success = result.FirstOrDefault().Success ?? false;
+                        if (!success)
+                        {
+                            error = result.FirstOrDefault().msg;
+                        }
+
+                    }
+                    if (success)
+                    {
+                        return RedirectToAction("Details", new { id = BoardId });
+                    }
+                    else
+                    {
+                        ViewBag.Error = error;
+                        return RedirectToAction("Details", new { id = BoardId, pinstatusid = PinStatusId.RePinError });
+                    }
+
+                }
+
+            }
+            ModelState.AddModelError("", "Board was not created");
+           
+            return View("Repin", model);
         }
 
 

@@ -81,6 +81,7 @@ namespace pinit.Helpers
                 {
                     DeletePin(item.PinId);
                     db.Repins.Remove(item);
+                    db.SaveChanges();
                 }
                 db.SaveChanges();
             }

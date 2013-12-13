@@ -19,7 +19,7 @@
 
             <div class="panel-body">
 
-                @using (Html.BeginForm("CreateStreamForBoard", "Stream", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                @using (Html.BeginForm("RepinWithNewBoard", "Boards", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
                 {
                     @Html.AntiForgeryToken()
                     @Html.HiddenFor(m => m.PinId)
@@ -41,7 +41,7 @@
 
                         <div class="form-group">
                             <div class="col-md-offset-4 col-md-4">
-                                <input type="submit" value="Add to a new stream" class="btn btn-sm btn-primary" />
+                                <input type="submit" value="Add to a new Board" class="btn btn-sm btn-primary" />
                             </div>
                         </div>
                     </div>
@@ -55,7 +55,7 @@
 
 
                 <div class="panel-heading">
-                    <h3 class="panel-title">Add To an Existing Stream</h3>
+                    <h3 class="panel-title">Add To an Existing Board</h3>
                 </div>
 
                 <div class="panel-body">
@@ -74,7 +74,7 @@
 
                         <div class="form-group">
                             <div class="col-md-offset-4 col-md-4">
-                                <input type="submit" value="Add to selected stream" class="btn btn-sm btn-primary" />
+                                <input type="submit" value="Add to selected Board" class="btn btn-sm btn-primary" />
                             </div>
                         </div>
 

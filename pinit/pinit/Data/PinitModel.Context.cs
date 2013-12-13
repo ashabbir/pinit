@@ -105,13 +105,13 @@ namespace pinit.Data
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<UP_Follow_Result>("UP_Follow", boardidParameter, streamidParameter);
         }
     
-        public virtual ObjectResult<Nullable<int>> UP_KeyWordSearchOnTags(string keyWork)
+        public virtual ObjectResult<UP_KeyWordSearchOnTags_Result> UP_KeyWordSearchOnTags(string keyWork)
         {
             var keyWorkParameter = keyWork != null ?
                 new ObjectParameter("KeyWork", keyWork) :
                 new ObjectParameter("KeyWork", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<int>>("UP_KeyWordSearchOnTags", keyWorkParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<UP_KeyWordSearchOnTags_Result>("UP_KeyWordSearchOnTags", keyWorkParameter);
         }
     
         public virtual ObjectResult<UP_Like_Result> UP_Like(Nullable<int> pinid, string username)

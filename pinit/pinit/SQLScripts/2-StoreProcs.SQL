@@ -988,6 +988,34 @@ GO
 
 
 
+USE [Pinit]
+GO
+
+/****** Object:  StoredProcedure [dbo].[UP_KeyWordSearchOnTags]    Script Date: 12/12/2013 10:26:27 PM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+
+
+
+ALTER PROC [dbo].[UP_KeyWordSearchOnTags] (
+@KeyWork varchar(255))
+AS
+	--select pinid From tag Join PinTag on tag.tagid = PinTag.tagid  where Contains(tag.tagname , @KeyWork)
+	--Just a temp to make it work on Express Version When deploying will Move it to Contains
+	select p.pinid , pic.DateUploaded ,pic.ImageUrl , pic.PictureId  
+	From tag Join PinTag on tag.tagid = PinTag.tagid 
+	join pin p on p.PinId = pintag.PinId 
+	join Picture pic on pic.PictureId = p.PictureId
+	 where tag.tagname like '%' + @KeyWork + '%'
+
+
+GO
+
+
 
 
 

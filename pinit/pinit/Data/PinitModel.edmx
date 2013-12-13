@@ -723,7 +723,7 @@
             <Parameter Name="boardid" Mode="In" Type="Int32" />
             <Parameter Name="streamid" Mode="In" Type="Int32" />
           </FunctionImport>
-          <FunctionImport Name="UP_KeyWordSearchOnTags" ReturnType="Collection(Int32)">
+          <FunctionImport Name="UP_KeyWordSearchOnTags" ReturnType="Collection(PinitModel.UP_KeyWordSearchOnTags_Result)">
           <Parameter Name="KeyWork" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="UP_Like" ReturnType="Collection(PinitModel.UP_Like_Result)">
@@ -1124,6 +1124,12 @@
           <Property Type="Boolean" Name="Success" Nullable="true" />
           <Property Type="String" Name="msg" Nullable="false" MaxLength="1" />
         </ComplexType>
+        <ComplexType Name="UP_KeyWordSearchOnTags_Result">
+          <Property Type="Int32" Name="pinid" Nullable="false" />
+          <Property Type="DateTime" Name="DateUploaded" Nullable="false" Precision="23" />
+          <Property Type="String" Name="ImageUrl" Nullable="false" MaxLength="255" />
+          <Property Type="Int32" Name="PictureId" Nullable="false" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1260,7 +1266,16 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="UP_KeyWordSearchOnTags" FunctionName="PinitModel.Store.UP_KeyWordSearchOnTags" />
+          <FunctionImportMapping FunctionImportName="UP_KeyWordSearchOnTags" FunctionName="PinitModel.Store.UP_KeyWordSearchOnTags" >
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="PinitModel.UP_KeyWordSearchOnTags_Result">
+                <ScalarProperty Name="pinid" ColumnName="pinid" />
+                <ScalarProperty Name="DateUploaded" ColumnName="DateUploaded" />
+                <ScalarProperty Name="ImageUrl" ColumnName="ImageUrl" />
+                <ScalarProperty Name="PictureId" ColumnName="PictureId" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="UP_Like" FunctionName="PinitModel.Store.UP_Like">
             <ResultMapping>
               <ComplexTypeMapping TypeName="PinitModel.UP_Like_Result">

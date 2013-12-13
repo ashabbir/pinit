@@ -277,6 +277,9 @@
     <Compile Include="Data\UP_Follow_Result.cs">
       <DependentUpon>PinitModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Data\UP_KeyWordSearchOnTags_Result.cs">
+      <DependentUpon>PinitModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Data\UP_Like_Result.cs">
       <DependentUpon>PinitModel.tt</DependentUpon>
     </Compile>
