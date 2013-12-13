@@ -46,7 +46,7 @@ namespace pinit.Helpers
 
                 using (BinaryReader br = new BinaryReader(responseStream))
                 {
-                    imageBytes = br.ReadBytes(500000);
+                    imageBytes = br.ReadBytes(2000000);
                     br.Close();
                 }
                 responseStream.Close();
@@ -72,6 +72,40 @@ namespace pinit.Helpers
             catch (Exception)
             {
                 
+
+            }
+            virualLocation = "";
+            return toreturn;
+        }
+
+
+
+        public static bool DownloadImage(this HttpPostedFileBase file, out string virualLocation)
+        {
+
+            //VirualLocatoin
+            virualLocation = ConfigurationManager.AppSettings.Get("VirualLocatoin");
+            var toreturn = false;
+            try
+            {
+                var fileName = Path.GetFileName(file.FileName);
+                // store the file inside ~/App_Data/uploads folder
+                //var path = Path.Combine(Server.MapPath("~/App_Data/uploads"), fileName);
+                
+                
+                var temp = HttpContext.Current.Server.MapPath("~/pinuploads/");
+                var dropLocation = temp;
+                var saveLocation = Path.Combine(dropLocation, fileName);
+                file.SaveAs(saveLocation);
+                
+                virualLocation = virualLocation + fileName;
+                //     /pinuploads/[filename]
+
+                return true;
+            }
+            catch (Exception)
+            {
+
 
             }
             virualLocation = "";

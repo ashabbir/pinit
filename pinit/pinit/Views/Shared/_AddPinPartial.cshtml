@@ -1,6 +1,6 @@
 ﻿@model pinit.Data.Board
 
-@using (Html.BeginForm("CreatePin", "Boards", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+@using (Html.BeginForm("CreatePin", "Boards", FormMethod.Post, new { @class = "form-horizontal", role = "form", enctype = "multipart/form-data" }))
 {
     @Html.ErrorAlert(true)
     @Html.AntiForgeryToken()
@@ -8,45 +8,38 @@
     <div class="form-group">
         <div class="col-md-10">
             <ul class="list-inline">
-                @*<li>  <input type="file" name="upload" value="" id="upload" class="form-control"></li>*@
-                <li>  @Html.TextBox("txtPinUrl", null, new { @class = "form-control", @placeholder = "Paste image url here" })  </li>
-                @*<li>  <textarea id="textarea" rows="1"></textarea> </li>*@
-                
-                <li>  <input class="btn btn-sm btn-primary" type="submit" value="Pin It" /></li>
+                <li>  <input type="file" name="file" class="form-control" placeholder="Upload File" /> </li> <li> <span class="badge"> OR </span></li>
+                <li>  @Html.TextBox("txtPinUrl", null, new { @class = "form-control btn btn-md", @placeholder = "Paste image url here" })  </li>
+                <li>  <input class="btn btn-sm btn-primary" type="submit" value="Pin It" /> </li>
             </ul>
-             @Html.TextArea("textarea", null, new {  @placeholder = "press enter for each tag", @rows = "1" })  
+            @Html.TextArea("textarea", null, new { @placeholder = "press enter for each tag", @rows = "1" })
         </div>
     </div>
-
-
-
 }
 
+<script type="text/javascript">
 
-    <script type="text/javascript">
-     
 
-        $(function () {
+    $(function () {
 
-            $('#textarea').textext({
-                plugins: 'autocomplete tags ajax',
-                ajax: {
-                    url: '/pinit/tag/gettags',
-                    dataType: 'json',
-                    cacheResults: true
-                },
-                ext : {
+        $('#textarea').textext({
+            plugins: 'autocomplete tags ajax',
+            ajax: {
+                url: '/pinit/tag/gettags',
+                dataType: 'json',
+                cacheResults: true
+            },
+            ext: {
                 itemManager: {
-                        itemToString: function(item)
-                        {
-                            return  item ;
-                        }
+                    itemToString: function (item) {
+                        return item;
+                    }
                 }
             }
-            })
-            ;
-            
-        });
-    </script>
+        })
+        ;
+
+    });
+</script>
 
 
