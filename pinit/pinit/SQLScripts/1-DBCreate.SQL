@@ -186,10 +186,10 @@ drop table userlike
 go
 
 Create Table UserLike(
+UserLikeId int IDENTITY(1,1) NOT NULL, -- THIS Makes It Auto Increment
 UserName varchar(100) not null,
 PinId int not null,
 DateLiked Datetime not null Default GetDate() ,
-primary key(UserName,PinId),
 Foreign Key (UserName) references userinfo (UserName),
 Foreign Key (PinId) references Pin (PinId),
 )
